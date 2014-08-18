@@ -1,0 +1,44 @@
+<resources>
+
+    <string name="app_name">Blurred System UI</string>
+    <string name="app_description">Developed by: SERAJR (2014) | 4.2+</string>
+    
+    <string name="about_menu_title">About&#8230;</string>
+	<string name="exit_menu_title">Exit !!</string>
+	
+	<string name="restart_menu_title">Restart System UI</string>
+	<string name="restart_menu_message">"System UI will be restarted now!
+
+Warning:
+Possible theme and/or wallpaper loss. Restart process can take a while (just wait)!!"</string>
+	
+	<string name="dialog_color_picker">Color Picker</string>
+    <string name="press_color_to_apply">Press on color to apply</string>
+    
+    <string name="blur_enabled_title">Enabled</string>
+    
+    <string name="blur_settings_category">Gaussian Blur Settings</string>
+    	<string name="blur_scale_title">Bitmap Scale</string>
+    	<string name="blur_radius_title">Blur Radius</string>
+    	<string name="blur_color_title">Color Filter</string>
+    	<string name="blur_benchmark_category_title">Blur Benchmark</string>
+    	<string name="blur_process_time_title">Blur Process Time</string>
+    	<string name="blur_process_update_summary">Press me to update data</string>
+    	<string name="blur_process_no_data_summary">No data! Swipe status bar down to get benchmark data!!</string>
+
+    <string name="translucent_background_category">Translucent Background</string>
+    	<string name="translucent_header_title">Header</string>
+    	<string name="translucent_header_summary">Topmost status bar expanded contents</string>
+    	<string name="translucent_quick_settings_title">Quick Settings</string>
+    	<string name="translucent_quick_settings_summary">Quick settings tiles and/or buttons</string>
+    	<string name="translucent_notifications_title">Notifications</string>
+    	<string name="translucent_notifications_summary">Note: Not all notifications may be reached due custom background</string>
+    	
+    <string name="adjustments_category">Adjustments</string>
+    	<string name="adjustments_fade_in_out_title">Blur Fade In/Out</string>
+    	<string name="adjustments_fade_in_out_summary">Enables fade in/out animation while opening/closing notifications panel</string>
+    	<string name="adjustments_start_margin_portrait_title">Start Margin - Portrait</string>
+    	<string name="adjustments_start_margin_landscape_title">Start Margin - Landscape</string>
+    	<string name="adjustments_start_margin_summary">Blurred background start margin</string>
+    	
+</resources>

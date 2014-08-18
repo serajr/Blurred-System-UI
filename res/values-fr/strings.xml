@@ -1,0 +1,43 @@
+<resources>
+
+    <string name="app_description">Développé par : SERAJR (2014) | 4.1+</string>
+    
+    <string name="about_menu_title">À propos</string>
+	<string name="exit_menu_title">Quitter</string>
+	
+	<string name="restart_menu_title">Redémarrer System UI</string>
+	<string name="restart_menu_message">"System UI va redémarrer maintenant !
+
+Attention :
+Perte possible du thème et/ou du fond d\'écran. Le redémarrage peut prendre un certain temps, veuillez patienter !"</string>
+	
+	<string name="dialog_color_picker">Définir une couleur</string>
+    <string name="press_color_to_apply">Appuyez sur la couleur pour appliquer</string>
+    
+    <string name="blur_enabled_title">Activé</string>
+    
+    <string name="blur_settings_title">Paramètres flou Gaussien</string>
+    	<string name="blur_scale_title">Échelle du bitmap</string>
+    	<string name="blur_radius_title">Rayon du flou</string>
+    	<string name="blur_color_title">Filtre de couleur</string>
+    	<string name="blur_benchmark_category_title">Benchmark du flou</string>
+    	<string name="blur_process_time_title">Temps de processus du flou</string>
+    	<string name="blur_process_update_summary">Appuyez ici pour mettre à jour les données</string>
+    	<string name="blur_process_no_data_summary">Aucune donnée ! Abaissez la barre d\'état pour obtenir les données !</string>
+
+    <string name="translucent_background_category">Fond translucide</string>
+    	<string name="translucent_header_title">En-tête</string>
+    	<string name="translucent_header_summary">Floute le haut des notifications et des raccourcis</string>
+    	<string name="translucent_quick_settings_title">Raccourcis</string>
+    	<string name="translucent_quick_settings_summary">Raccourcis et/ou boutons</string>
+    	<string name="translucent_notifications_title">Notifications</string>
+    	<string name="translucent_notifications_summary">Note : Les notifications ayant un fond personnalisé peuvent ne pas être floutées</string>		
+    	
+    <string name="adjustments_title">Ajustements</string>
+    	<string name="adjustments_fade_in_out_title">Flou fondu à l\'ouverture/fermeture</string>
+    	<string name="adjustments_fade_in_out_summary">Active un effet fondu lors de l\'ouverture/fermeture du volet des notifications</string>
+    	<string name="adjustments_start_margin_portrait_title">Marge initiale - portrait</string>
+    	<string name="adjustments_start_margin_landscape_title">Marge initiale - paysage</string>
+    	<string name="adjustments_start_margin_summary">Fond flouté de la marge initiale</string>
+    	
+</resources>

@@ -1,0 +1,8 @@
+<resources>
+
+    <style name="DeviceDefault" parent="android:Theme.DeviceDefault" />
+    <style name="DeviceDefault.Dialog" parent="android:Theme.DeviceDefault.Dialog" />
+    <style name="DeviceDefault.Light" parent="android:Theme.DeviceDefault.Light" />
+    <style name="DeviceDefault.Light.Dialog" parent="android:Theme.DeviceDefault.Light.Dialog" />
+	
+</resources>
