@@ -16,7 +16,7 @@ public class SystemUI_PanelView {
 	
 	public static void hook() {
 		
-		// esta classe não existe no JB 4.1 !!
+		// esta classe (PanelView) não existe no JB 4.1 !!
 		if (Utils.getAndroidAPILevel() <= 16)
 			return;
 		

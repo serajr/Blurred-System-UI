@@ -14,7 +14,6 @@ import android.renderscript.Allocation;
 import android.renderscript.Element;
 import android.renderscript.RenderScript;
 import android.renderscript.ScriptIntrinsicBlur;
-import android.util.Log;
 
 public class BlurUtils {
 	
@@ -22,7 +21,7 @@ public class BlurUtils {
 	
 	public static void init(Context context) {
 		
-		// guarda o context
+		// guarda
 		mContext = context;
 		
 		// inicia
@@ -41,6 +40,7 @@ public class BlurUtils {
 		private static boolean mOriginalBitmapSize;
 		
 		private int[] mScreenDimens;
+		private Bitmap mScreenBitmap;
 		
 		public static void setOnBlurTaskCallback(BlurTaskCallback callBack, boolean originalBitmapSize) {
 			
@@ -61,33 +61,23 @@ public class BlurUtils {
 		@Override
 		protected void onPreExecute() {
 			
-			long startMs = System.currentTimeMillis();
+			// obtém a screenshot
+			mScreenBitmap = DisplayUtils.takeSurfaceScreenshot(mContext);
 			
 			// obtém o tamamho real da tela
 			mScreenDimens = DisplayUtils.getRealScreenDimensions(mContext);
-			
-			// não comentar essa linha (utilizado pelo programa !!!)
-			Log.d("xx_blur_time", "onPreExecute: " + (System.currentTimeMillis() - startMs) + "ms");
 			
 		}
 		
 		@Override
 		protected Bitmap doInBackground(Void... arg0) {
 			
-			long startMs = System.currentTimeMillis();
-			
-			// obtém a screenshot
-			Bitmap screenBitmap = DisplayUtils.takeSurfaceScreenshot(mContext);
-			
-			// callback
-			mCallback.screenshotTaken(screenBitmap);
-			
 			// continua ?
-			if (screenBitmap == null)
+			if (mScreenBitmap == null)
 				return null;
 			
 			// diminui o bitmap
-			Bitmap scaled = Bitmap.createScaledBitmap(screenBitmap, mScreenDimens[0] / mScale, mScreenDimens[1] / mScale, true);
+			Bitmap scaled = Bitmap.createScaledBitmap(mScreenBitmap, mScreenDimens[0] / mScale, mScreenDimens[1] / mScale, true);
 			
 			// blur
 			if (Utils.getAndroidAPILevel() >= 17) {
@@ -106,17 +96,12 @@ public class BlurUtils {
 			if (mOriginalBitmapSize)
 				scaled = Bitmap.createScaledBitmap(scaled, mScreenDimens[0], mScreenDimens[1], true);
 			
-			// não comentar essa linha (utilizado pelo programa !!!)
-			Log.d("xx_blur_time", "doInBackground: " + (System.currentTimeMillis() - startMs) + "ms");
-			
 			return scaled;
 			
 		}
 
 		@Override
 		protected void onPostExecute(Bitmap bitmap) {
-			
-			long startMs = System.currentTimeMillis();
 			
 			if (bitmap != null) {
 				
@@ -133,6 +118,10 @@ public class BlurUtils {
 				// callback
 				mCallback.blurTaskDone(bitmap);
 				
+				// recicla e anula o bitmap original
+				mScreenBitmap.recycle();
+				mScreenBitmap = null;
+				
 			} else {
 				
 				// --------------------------
@@ -143,16 +132,10 @@ public class BlurUtils {
 				mCallback.blurTaskDone(null);
 				
 			}
-			
-			// não comentar essa linha (utilizado pelo programa !!!)
-			Log.d("xx_blur_time", "onPostExecute: " + (System.currentTimeMillis() - startMs) + "ms");
-			
 		}
 		
 		// interface
 		public static abstract interface BlurTaskCallback {
-			
-			public abstract void screenshotTaken(Bitmap screenBitmap);
 			
 		    public abstract void blurTaskDone(Bitmap blurredBitmap);
 		    

@@ -24,8 +24,6 @@ public class DisplayUtils {
 	private static int mBottomOffset = 0;
 	private static int mRightOffset = 0;
 	private static int mTopOffset = 0;
-	//private static Bitmap mPortraitScreenBitmap;
-	//private static Bitmap mLandscapeScreenBitmap;
 	
 	public static void setFullScreenActivity(Window window, View view) {
 		

@@ -3,7 +3,9 @@ package com.serajr.blurred.system.ui.hooks;
 import com.serajr.blurred.system.ui.R;
 import com.serajr.blurred.system.ui.Xposed;
 import com.serajr.blurred.system.ui.fragments.BlurSettings_Fragment;
+import com.serajr.utils.Utils;
 
+import android.content.res.Resources;
 import android.content.res.XModuleResources;
 import android.content.res.XResources;
 import android.graphics.Color;
@@ -372,6 +374,57 @@ public class SystemUI_TranslucentBackground {
 						    }
 						});
 					}
+					
+					// tw_quick_panel_quick_setting_button_bg (samsung)
+					resId = res.getIdentifier("tw_quick_panel_quick_setting_button_bg", "drawable", pkg);
+					if (resId != 0) {
+					
+						// troca
+						res.setReplacement(resId, new XResources.DrawableLoader() {
+							
+						    @Override
+						    public Drawable newDrawable(XResources res, int id) throws Throwable {
+						    	
+						    	// utiliza o qs_tile_background
+						    	return modRes.getDrawable(R.drawable.qs_tile_background);
+						        
+						    }
+						});
+					}
+					
+					// tw_quick_panel_quick_setting_button_round_bg (samsung)
+					resId = res.getIdentifier("tw_quick_panel_quick_setting_button_round_bg", "drawable", pkg);
+					if (resId != 0) {
+					
+						// troca
+						res.setReplacement(resId, new XResources.DrawableLoader() {
+							
+						    @Override
+						    public Drawable newDrawable(XResources res, int id) throws Throwable {
+						    	
+						    	// utiliza o qs_tile_background
+						    	return modRes.getDrawable(R.drawable.qs_tile_background);
+						        
+						    }
+						});
+					}
+					
+					// jbp_tw_quick_panel_quick_setting_button_bg
+					resId = res.getIdentifier("jbp_tw_quick_panel_quick_setting_button_bg", "drawable", pkg);
+					if (resId != 0) {
+					
+						// troca
+						res.setReplacement(resId, new XResources.DrawableLoader() {
+							
+						    @Override
+						    public Drawable newDrawable(XResources res, int id) throws Throwable {
+						    	
+						    	// utiliza o qs_tile_background
+						    	return modRes.getDrawable(R.drawable.qs_tile_background);
+						        
+						    }
+						});
+					}
 				}
 			}
 			
@@ -379,6 +432,102 @@ public class SystemUI_TranslucentBackground {
 			
 			XposedBridge.log(e);
 			
+		}
+	}
+	
+	public static void handleTranslucentBackgroundPrefs() {
+		
+		int resId;
+		View view;
+		XSharedPreferences prefs = Xposed.getXposedXSharedPreferences();
+		Resources res = SystemUI_PhoneStatusBar.mStatusBarWindow.getResources();
+		
+		// header
+		if (prefs.getBoolean(BlurSettings_Fragment.TRANSLUCENT_HEADER_PREFERENCE_KEY, BlurSettings_Fragment.TRANSLUCENT_HEADER_PREFERENCE_DEFAULT)) {
+			
+			// header
+			resId = res.getIdentifier("header", "id", Xposed.SYSTEM_UI_PACKAGE_NAME);
+			if (resId != 0) {
+				
+				view = SystemUI_PhoneStatusBar.mStatusBarWindow.findViewById(resId);
+				if (view != null)
+					view.setBackground(new ColorDrawable(Color.TRANSPARENT));
+				
+			}
+			
+			// header_background_image
+			resId = res.getIdentifier("header_background_image", "id", Xposed.SYSTEM_UI_PACKAGE_NAME);
+			if (resId != 0) {
+				
+				view = SystemUI_PhoneStatusBar.mStatusBarWindow.findViewById(resId);
+				if (view != null)
+					view.setVisibility(View.INVISIBLE);
+			
+			}
+			
+			// expand_header
+			resId = res.getIdentifier("expand_header", "id", Xposed.SYSTEM_UI_PACKAGE_NAME);
+			if (resId != 0) {
+				
+				view = SystemUI_PhoneStatusBar.mStatusBarWindow.findViewById(resId);
+				if (view != null)
+					view.setBackground(new ColorDrawable(Color.TRANSPARENT));
+				
+			}
+			
+			// ---------------------------------
+			// botão de limpar todos os recentes
+			// ---------------------------------
+			
+			// xperia e <= 4.3 ?
+			if (Utils.isSonyXperiaRom() &&
+				Utils.getAndroidAPILevel() <= 18) {
+				
+				// clear_all_button
+				resId = res.getIdentifier("clear_all_button", "id", Xposed.SYSTEM_UI_PACKAGE_NAME);
+				if (resId != 0) {
+					
+					view = SystemUI_PhoneStatusBar.mStatusBarWindow.findViewById(resId);
+					if (view != null)
+						view.setBackground(Xposed.getXposedModuleResources().getDrawable(R.drawable.somc_quick_settings_btn_default));
+				
+				}
+			}
+		}
+		
+		// quick settings
+		if (prefs.getBoolean(BlurSettings_Fragment.TRANSLUCENT_QUICK_SETTINGS_PREFERENCE_KEY, BlurSettings_Fragment.TRANSLUCENT_QUICK_SETTINGS_PREFERENCE_DEFAULT)) {
+			
+			// sliderConatiner (htc) 
+			view = SystemUI_PhoneStatusBar.mStatusBarWindow.findViewWithTag("sliderConatiner");
+			if (view != null)
+				view.setBackground(new ColorDrawable(Color.TRANSPARENT));
+			
+			// somente em casos onde o header tem esse id, que não é padrão xperia !!!
+			// possivelmente portado por alguém e essa pessoa alterou o nome do id !!!
+			resId = res.getIdentifier("expand_header", "id", Xposed.SYSTEM_UI_PACKAGE_NAME);
+			if (resId != 0) {
+			
+				// tools_row_0
+				resId = res.getIdentifier("tools_row_0", "id", Xposed.SYSTEM_UI_PACKAGE_NAME);
+				if (resId != 0) {
+					
+					view = SystemUI_PhoneStatusBar.mStatusBarWindow.findViewById(resId);
+					if (view != null)
+						view.setBackground(new ColorDrawable(Color.TRANSPARENT));
+				
+				}
+				
+				// tools_row_1
+				resId = res.getIdentifier("tools_row_1", "id", Xposed.SYSTEM_UI_PACKAGE_NAME);
+				if (resId != 0) {
+					
+					view = SystemUI_PhoneStatusBar.mStatusBarWindow.findViewById(resId);
+					if (view != null)
+						view.setBackground(new ColorDrawable(Color.TRANSPARENT));
+				
+				}
+			}
 		}
 	}
 }

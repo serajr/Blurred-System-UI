@@ -69,7 +69,8 @@ public class SystemUI_BaseStatusBar {
 					Entry entry = (Entry) param.args[0];
 		            
 					// seta o fundo transparente
-					setTranslucentNotificationBackground(entry);
+					if (entry != null)
+						setTranslucentNotificationBackground(entry);
 					
 				}
 			});
@@ -91,7 +92,8 @@ public class SystemUI_BaseStatusBar {
 						Entry entry = (Entry) param.args[0];
 			            
 						// seta o fundo transparente
-						setTranslucentNotificationBackground(entry);
+						if (entry != null)
+							setTranslucentNotificationBackground(entry);
 						
 					}
 				});	
@@ -120,7 +122,8 @@ public class SystemUI_BaseStatusBar {
 						Entry entry = mNotificationData.findByKey((IBinder) param.args[0]);
 			            
 						// seta o fundo transparente
-						setTranslucentNotificationBackground(entry);
+						if (entry != null)
+							setTranslucentNotificationBackground(entry);
 						
 					}
 				});
@@ -156,7 +159,8 @@ public class SystemUI_BaseStatusBar {
 			Entry entry = mNotificationData.get(i);
             
 			// seta o fundo transparente
-			setTranslucentNotificationBackground(entry);
+			if (entry != null)
+				setTranslucentNotificationBackground(entry);
 			
         }
 	}
@@ -165,7 +169,7 @@ public class SystemUI_BaseStatusBar {
 	
 		// vista root da notificação - somente remove os backgrounds !!
 		View row = Utils.getAndroidAPILevel() >= 19
-				// >= 4.4.2
+				// >= 4.4
 				// ExpandableNotificationRow row
 				? entry.row
 				// <= 4.3
@@ -217,7 +221,7 @@ public class SystemUI_BaseStatusBar {
 		    	// continua ?
 		    	if (child != null) { 
 		    		
-		    		// obté, o id
+		    		// obtém o id
 		    		int resId = child.getId();
 		    		
 		    		// id válido ?

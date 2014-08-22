@@ -1,6 +1,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
     
     <item
+        android:id="@+id/theme_menu"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="@string/theme_menu_title"/>
+    
+    <item
         android:id="@+id/restart_menu"
         android:orderInCategory="100"
         android:showAsAction="never"

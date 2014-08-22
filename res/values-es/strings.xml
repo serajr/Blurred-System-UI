@@ -1,43 +1,44 @@
 <resources>
 
-    <string name="app_description">Desarrollado por: SERAJR (2014) | 4.1+</string>
-    
-    <string name="about_menu_title">Acerca de:&#8230;</string>
-	<string name="exit_menu_title">Salir  !!</string>
-	
-	<string name="restart_menu_title">Reiniciar modulo System UI</string>
-	<string name="restart_menu_message">"El modulo System UI será reiniciado en este momento !
+    <string name="app_description">Desarrollada por: SERAJR (2014) | 4.1+</string>
+   
+    <string name="theme_menu_title">Tema</string>
+    <string name="theme_menu_message">¡El tema elegido se instalará como una aplicación aparte!</string>
+    <string name="light_theme_title">Claro</string>
+    <string name="dark_theme_title">Oscuro</string>
+    <string name="about_menu_title">Sobre&#8230;</string>
+	<string name="exit_menu_title">Salir</string>
+	<string name="restart_menu_title">Reiniciar System UI</string>
+	<string name="restart_menu_message">"¡La interfaz de usuario se reiniciará inmendiatamente!
 
-Alerta:
-Puede ser que se pierdan los temas o fondo de pantalla. El proceso de reinicio puede tardar un poco (por favor esperar)!!"</string>
+Advertencia:
+El tema/fondo de pantalla podría perderse. ¡El proceso de reinicio podría tardar un poco! (Simplemente  espera)"</string>
 	
-	<string name="dialog_color_picker">Selección de color</string>
-    <string name="press_color_to_apply">Presione sobre el color para aplicar</string>
+	<string name="dialog_color_picker">Selector de color</string>
+    <string name="press_color_to_apply">Pulsa en el color para aplicarlo</string>
     
-    <string name="blur_enabled_title">Activado</string>
+    <string name="panels_category">Paneles</string>
+    	<string name="panels_status_bar_expanded_title">Barra de estado expandida</string>
+    	<string name="panels_recent_apps_title">Aplicaciones recientes</string>
     
-    <string name="blur_settings_category">Ajustes de Desenfoque Gaussiano</string>
+    <string name="blur_settings_category">Ajustes del Desenfoque Gaussiano</string>
     	<string name="blur_scale_title">Escala de la imagen</string>
-    	<string name="blur_radius_title">Radio del desenfoque</string>
+    	<string name="blur_radius_title">Radio de desenfoque</string>
     	<string name="blur_color_title">Filtro de color</string>
-    	<string name="blur_benchmark_category_title">Medición del Rendimiento</string>
-    	<string name="blur_process_time_title">Tiempo de procesamiento de desenfoque</string>
-    	<string name="blur_process_update_summary">Presione acá para actualizar la medición</string>
-    	<string name="blur_process_no_data_summary">No hay datos! Favor deslize la barra de estado para obtener datos de la medición de rendimiento!!</string>
 
-    <string name="translucent_background_category">Fondo Semi Transparente</string>
-    	<string name="translucent_header_title">Cabecera</string>
-    	<string name="translucent_header_summary">Cabecera principal de los contenidos expandidos</string>
-    	<string name="translucent_quick_settings_title">Ajustes Rapidos</string>
-    	<string name="translucent_quick_settings_summary">Titulos de ajustes rapidos y/o botones</string>
+    <string name="translucent_background_category">Fondo translúcido</string>
+    	<string name="translucent_header_title">Encabezado</string>
+    	<string name="translucent_header_summary">Recuadros de los iconos/botones en notificaciones expandidas</string>
+    	<string name="translucent_quick_settings_title">Ajustes rápidos</string>
+    	<string name="translucent_quick_settings_summary">Fondo de los ajustes rápidos y/o botones</string>
     	<string name="translucent_notifications_title">Notificaciones</string>
-    	<string name="translucent_notifications_summary">Nota: No todas las notificaciones pueden ser procesados debido a fondos personalizados</string>
+    	<string name="translucent_notifications_summary">Nota: Algunas notificaciones no podrán ser procesadas en ciartas capas de personalización</string>
     	
     <string name="adjustments_category">Ajustes</string>
-    	<string name="adjustments_fade_in_out_title">Desvanecimiento del desenfoque In/Out</string>
-    	<string name="adjustments_fade_in_out_summary">Activa la animacion de desvanecimiento cuando se abre o cierra el panel de notificacion</string>
-    	<string name="adjustments_start_margin_portrait_title">Inicio de margen - Portrait</string>
-    	<string name="adjustments_start_margin_landscape_title">Inicio de margen - Landscape</string>
-    	<string name="adjustments_start_margin_summary">Margen de inicio del fondo desenfocado</string>
+    	<string name="adjustments_fade_in_out_title">Animación del desenfoque</string>
+    	<string name="adjustments_fade_in_out_summary">Habilita las animaciones al abrir o cerrar el panel de notificaciones</string>
+    	<string name="adjustments_start_margin_portrait_title">Margen - Retrato</string>
+    	<string name="adjustments_start_margin_landscape_title">Margen - Apaisado</string>
+    	<string name="adjustments_start_margin_summary">Empezar a desenfocar después del margen</string>
     	
 </resources>

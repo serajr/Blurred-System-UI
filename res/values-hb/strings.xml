@@ -1,0 +1,44 @@
+<resources>
+
+    <string name="app_description">פותח ע"י: SERAJR (2014) | 4.1+</string>
+   
+    <string name="theme_menu_title">צבע היישום</string>
+    <string name="theme_menu_message">צבע היישום יתעדכן בהפעלה הבאה!</string>
+    <string name="light_theme_title">בהיר</string>
+    <string name="dark_theme_title">כהה</string>
+    <string name="about_menu_title">אודות&#8230;</string>
+	<string name="exit_menu_title">יציאה!</string>
+	<string name="restart_menu_title">הפעל מחדש את הממשק</string>
+	<string name="restart_menu_message">"הממשק יפועל מחדש כעת
+
+אזהרה:
+רקעים או ערכות נושא עלולים להיעלם. תהליך ההפעלה יכל לקחת כמה רגעים!"</string>
+	
+	<string name="dialog_color_picker">בחירת צבע</string>
+    <string name="press_color_to_apply">לחץ על הצבע בכדי להחיל</string>
+    
+    <string name="panels_category">פנלים</string>
+    	<string name="panels_status_bar_expanded_title">שורת מצב</string>
+    	<string name="panels_recent_apps_title">תפריט יישומים אחרונים</string>
+    
+    <string name="blur_settings_category">Gaussian Blur הגדרות</string>
+    	<string name="blur_scale_title">Bitmap יחס</string>
+    	<string name="blur_radius_title">רמת טשטוש</string>
+    	<string name="blur_color_title">בחירת צבע</string>
+
+    <string name="translucent_background_category">רקע שקוף</string>
+    	<string name="translucent_header_title">כותרת</string>
+    	<string name="translucent_header_summary">פריטים עליונים בשורת המצב</string>
+    	<string name="translucent_quick_settings_title">הגדרות מהירות</string>
+    	<string name="translucent_quick_settings_summary">לחצנים והגדרות מהירות</string>
+    	<string name="translucent_notifications_title">התראות</string>
+    	<string name="translucent_notifications_summary">לא כל ההתראות יראו במצב טוב עקב הרגע</string>
+    	
+    <string name="adjustments_category">התאמות</string>
+    	<string name="adjustments_fade_in_out_title">אפקט פנים/חוץ</string>
+    	<string name="adjustments_fade_in_out_summary">אפשר אפקט פנים/חוץ כאשר שורת המצב יורדת</string>
+    	<string name="adjustments_start_margin_portrait_title">התחל מרווח - דיוקן</string>
+    	<string name="adjustments_start_margin_landscape_title">התחל מרווח - נוף</string>
+    	<string name="adjustments_start_margin_summary">מרווח התחלת רקע מטושטש</string>
+    	
+</resources>

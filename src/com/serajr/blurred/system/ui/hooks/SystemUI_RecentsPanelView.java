@@ -1,6 +1,7 @@
 package com.serajr.blurred.system.ui.hooks;
 
 import android.content.res.Resources;
+import android.content.res.Resources.NotFoundException;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.android.systemui.recent.RecentsPanelView;
+import com.serajr.blurred.system.ui.R;
 import com.serajr.blurred.system.ui.Xposed;
 import com.serajr.blurred.system.ui.fragments.BlurSettings_Fragment;
 import com.serajr.utils.BlurUtils;
@@ -25,8 +27,8 @@ import de.robv.android.xposed.XposedHelpers;
 public class SystemUI_RecentsPanelView {
 	
 	private static Bitmap mBlurredBitmap;
+	private static boolean mBlurredRecentAppsEnabled;
 	private static RecentsPanelView mRecentsPanelView;
-	private static boolean mBlurredRecentsPanelEnabled;
 	
 	public static void hook() {
 		
@@ -94,18 +96,18 @@ public class SystemUI_RecentsPanelView {
 	            protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
 					
 					// continua ?
-					if (!mBlurredRecentsPanelEnabled)
+					if (!mBlurredRecentAppsEnabled)
 						return;
 					
 					// obtém o recents_bg_protect
-					View recentsBgProtect = null;
-					int resId = mRecentsPanelView.getResources().getIdentifier("recents_bg_protect", "id", Xposed.SYSTEM_UI_PACKAGE_NAME);
-					if (resId != 0)						
-						recentsBgProtect = mRecentsPanelView.findViewById(resId);
+					View view = null;
+					int viewResId = mRecentsPanelView.getResources().getIdentifier("recents_bg_protect", "id", Xposed.SYSTEM_UI_PACKAGE_NAME);
+					if (viewResId != 0)						
+						view = mRecentsPanelView.findViewById(viewResId);
 					
 					// seta o fundo padrão transparente para o recents_bg_protect
-					if (recentsBgProtect != null)
-						recentsBgProtect.setBackground(new ColorDrawable(Color.TRANSPARENT));
+					if (view != null)
+						view.setBackground(new ColorDrawable(Color.TRANSPARENT));
 					
 				}
 			});
@@ -148,7 +150,7 @@ public class SystemUI_RecentsPanelView {
 	public static void updatePreferences(XSharedPreferences prefs) {
 		
 		// atualiza
-		mBlurredRecentsPanelEnabled = prefs.getBoolean(BlurSettings_Fragment.BLUR_ENABLED_PREFERENCE_KEY, BlurSettings_Fragment.BLUR_ENABLED_PREFERENCE_DEFAULT);
+		mBlurredRecentAppsEnabled = prefs.getBoolean(BlurSettings_Fragment.RECENT_APPS_ENABLED_PREFERENCE_KEY, BlurSettings_Fragment.RECENT_APPS_ENABLED_PREFERENCE_DEFAULT);
 		
 		// padrões
 		defaults();
@@ -169,14 +171,11 @@ public class SystemUI_RecentsPanelView {
 	public static void blur() {
 		
 		// continua ?
-		if (!mBlurredRecentsPanelEnabled)
+		if (!mBlurredRecentAppsEnabled)
 			return;
 		
 		// blur (true - retorna o bitmap no tamanho da tela !!!)
 		BlurUtils.BlurTask.setOnBlurTaskCallback(new BlurUtils.BlurTask.BlurTaskCallback() {
-	
-			@Override
-			public void screenshotTaken(Bitmap screenBitmap) {}
 			
 			@Override
 			public void blurTaskDone(Bitmap blurredBitmap) {
@@ -204,30 +203,46 @@ public class SystemUI_RecentsPanelView {
 		// seta o background padrão
 		// ------------------------
 		
-		int resId;
 		Resources res = mRecentsPanelView.getResources();
 		
 		// obtém o recents_bg_protect
-		View recentsBgProtect = null;
-		resId = res.getIdentifier("recents_bg_protect", "id", Xposed.SYSTEM_UI_PACKAGE_NAME);
-		if (resId != 0)						
-			recentsBgProtect = mRecentsPanelView.findViewById(resId);
+		View view = null;
+		int viewResId = res.getIdentifier("recents_bg_protect", "id", Xposed.SYSTEM_UI_PACKAGE_NAME);
+		if (viewResId != 0)
+			view = mRecentsPanelView.findViewById(viewResId);
 		
 		// obtém o fundo padrão
-		Drawable recentsBg = null;
-		resId = res.getIdentifier(
-				Utils.getAndroidAPILevel() >= 17
-					// >= 4.2 
-					? "status_bar_recents_background"
-					// <= 4.1
-					: "recents_bg_protect_tile",
-				"drawable", Xposed.SYSTEM_UI_PACKAGE_NAME);
-		if (resId != 0)
-			recentsBg = res.getDrawable(resId);
+		Drawable viewBg = null;
+		int viewBgResId = res.getIdentifier("status_bar_recents_background", "drawable", Xposed.SYSTEM_UI_PACKAGE_NAME);
+		if (viewBgResId != 0) {
+			
+			try {
+				
+				viewBg = res.getDrawable(viewBgResId);
+				
+			} catch (NotFoundException e) {
+				
+				// --------------------
+				// erro não esperado !!
+				// --------------------
+				
+				e.printStackTrace();
+				
+			}
+		}
 		
-		// seta o fundo padrão ou transparente para o recents_bg_protect
-		if (recentsBgProtect != null && recentsBg != null)
-			recentsBgProtect.setBackground(recentsBg);
+		// não encontrou o drawable por
+		// algum motivo inesperado !!!!
+		if (viewBg == null) {
+			
+			// carrega o drawable do módulo
+			viewBg = Xposed.getXposedModuleResources().getDrawable(R.drawable.status_bar_recents_background);
+			
+		}
+		
+		// seta o fundo padrão para o recents_bg_protect
+		if (view != null && viewBg != null)
+			view.setBackground(viewBg);
 		
 		// recicla e anula ?
 		if (mBlurredBitmap != null) {

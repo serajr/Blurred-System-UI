@@ -1,11 +1,14 @@
 <resources>
 	    
-    <string name="app_description">Desenvolvido por: SERAJR (2014) | 4.2+</string>
+    <string name="app_description">Desenvolvido por: SERAJR (2014) | 4.1+</string>
 
+    <string name="theme_menu_title">Tema do Aplicativo</string>
+    <string name="theme_menu_message">O tema escolhido será aplicado apenas em outra instância do aplicativo !!</string>
+    <string name="light_theme_title">Claro</string>
+    <string name="dark_theme_title">Escuro</string>
     <string name="about_menu_title">Sobre&#8230;</string>
 	<string name="exit_menu_title">Sair !!</string>
-    
-	<string name="restart_menu_title">Reiniciar System UI</string>
+    <string name="restart_menu_title">Reiniciar System UI</string>
 	<string name="restart_menu_message">"System UI será reiniciado agora!
 
 Aviso:
@@ -14,16 +17,14 @@ Possível perda do tema e/ou papel de parede. Processo de reinicialização pode
 	<string name="dialog_color_picker">Selecionador de Cor</string>
     <string name="press_color_to_apply">Toque na cor para aplicar</string>
     
-    <string name="blur_enabled_title">Habilitado</string>
+    <string name="panels_category">Painéis</string>
+    	<string name="panels_status_bar_expanded_title">Status Bar Expandida</string>
+    	<string name="panels_recent_apps_title">Aplicações Recentes</string>
     
     <string name="blur_settings_category">Config. Desfoque Gaussiano</string>
     	<string name="blur_scale_title">Escala do Bitmap</string>
     	<string name="blur_radius_title">Raio de Desfoque</string>
     	<string name="blur_color_title">Filtro de Cor</string>
-    	<string name="blur_benchmark_category_title">Medições do Desfoque</string>
-    	<string name="blur_process_time_title">Tempo dos Processos</string>
-    	<string name="blur_process_update_summary">Toque aqui para atualizar os dados</string>
-    	<string name="blur_process_no_data_summary">Sem dados! Arraste a barra de status para baixo para obter os dados!!</string>
 	
     <string name="translucent_background_category">Fundo Transparente</string>
     	<string name="translucent_header_title">Cabeçalho</string>

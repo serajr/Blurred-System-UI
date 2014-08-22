@@ -1,0 +1,44 @@
+<resources>
+
+    <string name="app_description">Napisane przez: SERAJR (2014) | 4.1+</string>
+   
+    <string name="theme_menu_title">Motyw</string>
+    <string name="theme_menu_message">Wybrany motyw zostanie aktywowany przy ponownym uruchomieniu aplikacji !!</string>
+    <string name="light_theme_title">Jasny</string>
+    <string name="dark_theme_title">Ciemny</string>
+    <string name="about_menu_title">O module&#8230;</string>
+	<string name="exit_menu_title">Wyjście !!</string>
+	<string name="restart_menu_title">Zrestartuj System UI</string>
+	<string name="restart_menu_message">"System UI zostanie teraz zrestartowany!
+
+Uwaga:
+Możliwa utrata motywu i/lub tapety. Proces restartowania może zająć chwilę (poczekaj)!!"</string>
+	
+	<string name="dialog_color_picker">Wybór koloru</string>
+    <string name="press_color_to_apply">Naciśnij kolor, aby aktywować</string>
+    
+    <string name="panels_category">Panele</string>
+    	<string name="panels_status_bar_expanded_title">Rozszerzony pasek stanu</string>
+    	<string name="panels_recent_apps_title">Ostatnio uruchomione aplikacjeRecent Applications</string>
+    
+    <string name="blur_settings_category">Ustawienia rozmycia</string>
+    	<string name="blur_scale_title">Skalowanie bitmapy</string>
+    	<string name="blur_radius_title">Promień rozmycia</string>
+    	<string name="blur_color_title">Filtr koloru</string>
+
+    <string name="translucent_background_category">Przeźroczyste tło</string>
+    	<string name="translucent_header_title">Nagłówek</string>
+    	<string name="translucent_header_summary">Zawartość górnej części rozszerzonego paska stanu</string>
+    	<string name="translucent_quick_settings_title">Szybkie ustawienia</string>
+    	<string name="translucent_quick_settings_summary">Kafelki szybkich ustawień i/lub przyciski</string>
+    	<string name="translucent_notifications_title">Powiadomienia</string>
+    	<string name="translucent_notifications_summary">Uwaga: Nie wszystkie powiadomienia mogą zostać rozmazane</string>
+    	
+    <string name="adjustments_category">Dostosuj</string>
+    	<string name="adjustments_fade_in_out_title">Rozmazanie We/Wy</string>
+    	<string name="adjustments_fade_in_out_summary">Włącza animcje We/Wy podczas otwierania/zamykania panelu powiadomień</string>
+    	<string name="adjustments_start_margin_portrait_title">Margines początkowy - Pionowo</string>
+    	<string name="adjustments_start_margin_landscape_title">Margines początkowy - Poziomo</string>
+    	<string name="adjustments_start_margin_summary">Margines początkowy rozmazanego tła</string>
+    	
+</resources>

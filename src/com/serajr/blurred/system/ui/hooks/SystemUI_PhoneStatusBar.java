@@ -4,20 +4,16 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Process;
 import android.view.View;
-
 import com.android.systemui.statusbar.phone.PhoneStatusBar;
 import com.android.systemui.statusbar.phone.StatusBarWindowView;
-import com.serajr.blurred.system.ui.R;
 import com.serajr.blurred.system.ui.Xposed;
 import com.serajr.blurred.system.ui.activities.BlurSettings_Activity;
 import com.serajr.blurred.system.ui.fragments.BlurSettings_Fragment;
@@ -32,14 +28,11 @@ import de.robv.android.xposed.XposedHelpers;
 public class SystemUI_PhoneStatusBar {
 	
 	public static int mStatusBarHeight;
+	public static int mCloseHandleHeight;
+	public static int mNavigationBarHeight;
+	public static StatusBarWindowView mStatusBarWindow;
 	
-	private static Context mContext;
-	private static Resources mResources;
-	private static int mCloseHandleHeight;
-	private static StatusBarWindowView mStatusBarWindow;
-	private static boolean mAdjustmentsStartMarginPortrait;
-	private static boolean mAdjustmentsStartMarginLandscape;
-	private static boolean mBlurredNotificationPanelEnabled;
+	private static boolean mBlurredStatusBarExpandedEnabled;
 	
 	public static void hook() {
 		
@@ -54,6 +47,10 @@ public class SystemUI_PhoneStatusBar {
 					// guarda
 					mStatusBarWindow = (StatusBarWindowView) XposedHelpers.getObjectField(param.thisObject, "mStatusBarWindow");
 					
+					// obtém os campos
+					Context context = mStatusBarWindow.getContext();
+					Resources res = context.getResources();
+					
 					// somente <= JB 4.1
 					if (Utils.getAndroidAPILevel() <= 16 &&
 						SystemUI_NotificationPanelView.mNotificationPanelView == null) {
@@ -65,7 +62,7 @@ public class SystemUI_PhoneStatusBar {
 						XposedHelpers.findAndHookMethod(SystemUI_NotificationPanelView.mNotificationPanelView.getClass(), "onMeasure", int.class, int.class, new XC_MethodHook() {
 							
 							@Override
-							protected void afterHookedMethod(final MethodHookParam param) throws Throwable {
+							protected void afterHookedMethod(MethodHookParam param) throws Throwable {
 							
 								// fade in/out ?
 								if (param.thisObject == SystemUI_NotificationPanelView.mNotificationPanelView)
@@ -79,19 +76,16 @@ public class SystemUI_PhoneStatusBar {
 						
 					}
 					
-					// obtém os campos
-					mContext = (Context) XposedHelpers.getObjectField(param.thisObject, "mContext");
-					mResources = mContext.getResources();
-					
 					// dimensões
-					mStatusBarHeight = mResources.getDimensionPixelSize(mResources.getIdentifier("status_bar_height", "dimen", Xposed.ANDROID_PACKAGE_NAME));
-					mCloseHandleHeight = mResources.getDimensionPixelSize(mResources.getIdentifier("close_handle_height", "dimen", Xposed.SYSTEM_UI_PACKAGE_NAME));
+					mStatusBarHeight = res.getDimensionPixelSize(res.getIdentifier("status_bar_height", "dimen", Xposed.ANDROID_PACKAGE_NAME));
+					mNavigationBarHeight = Utils.deviceHasOnScreenButtons(context) ? res.getDimensionPixelSize(res.getIdentifier("navigation_bar_height", "dimen", "android")) : 0;
+					mCloseHandleHeight = res.getDimensionPixelSize(res.getIdentifier("close_handle_height", "dimen", Xposed.SYSTEM_UI_PACKAGE_NAME));
 					
 					// inicia o blur
-					BlurUtils.init(mContext);
+					BlurUtils.init(context);
 					
 					// receiver
-					BroadcastReceiver br = new BroadcastReceiver() {
+					BroadcastReceiver receiver = new BroadcastReceiver() {
             			
                         @Override
                         public void onReceive(Context context, Intent intent) {
@@ -102,6 +96,9 @@ public class SystemUI_PhoneStatusBar {
     						// alterou a rotação
                         	if (action.equals(Intent.ACTION_CONFIGURATION_CHANGED)) {
 
+                        		// atualiza o layout do imageview ?
+                        		SystemUI_NotificationPanelView.updateBlurredBackgroundLayoutParams();
+                        		
                         		// recents
                         		SystemUI_RecentsPanelView.onConfigurationChanged();
                         		
@@ -115,14 +112,14 @@ public class SystemUI_PhoneStatusBar {
         						boolean mExpandedVisible = XposedHelpers.getBooleanField(param.thisObject, "mExpandedVisible");
         						
         						// habilitado ?
-        						if (mBlurredNotificationPanelEnabled && mExpandedVisible) {
+        						if (mBlurredStatusBarExpandedEnabled && mExpandedVisible) {
         					
         							// fecha o painel
         							XposedHelpers.callMethod(param.thisObject, 
         									Utils.getAndroidAPILevel() >= 17
-        										// >= 4.2.2
+        										// >= 4.2
         										? "makeExpandedInvisible"
-        										// <= 4.1.2
+        										// <= 4.1
         										: "performCollapse");
         						
         						}
@@ -169,18 +166,18 @@ public class SystemUI_PhoneStatusBar {
                     intent.addAction(Intent.ACTION_CONFIGURATION_CHANGED);
                     intent.addAction(BlurSettings_Fragment.BLURRED_SYSTEM_UI_UPDATE_INTENT);
                     intent.addAction(BlurSettings_Activity.BLURRED_SYSTEM_UI_KILL_SYSTEM_UI_INTENT);
-                    mContext.registerReceiver(br, intent);
+                    context.registerReceiver(receiver, intent);
                     
-                    // atualizam as preferências
+            		// atualizam as preferências
             		updatePreferences();
             		
             		// fundos transparentes (preferências necessitam de reboot)
             		// então somente passa por aqui no primeiro boot da rom !!!
-            		handleTranslucentHeaderPref();
+            		SystemUI_TranslucentBackground.handleTranslucentBackgroundPrefs();
             		
 				}
 			});
-			
+							
 			// makeExpandedVisible
 			XposedBridge.hookMethod(
 					Utils.getAndroidAPILevel() >= 19
@@ -194,55 +191,37 @@ public class SystemUI_PhoneStatusBar {
 				protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
 					
 					// habilitado ?
-					if (!mBlurredNotificationPanelEnabled)
+					if (!mBlurredStatusBarExpandedEnabled)
 						return;
 					
-					// paddings
-					int left = mCloseHandleHeight;
-					int top = mCloseHandleHeight;
-					int orientation = mResources.getConfiguration().orientation;
-					
-					if (orientation == Configuration.ORIENTATION_PORTRAIT) {
-						
-						left = 0;
-						
-						// não utilizar o padding ?
-						if (!mAdjustmentsStartMarginPortrait)
-							top = 0;
-						
-					} else if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
-						
-						top = 0;
-						
-						// não utilizar o padding ?
-						if (!mAdjustmentsStartMarginLandscape)
-							left = 0;
-						
-					}
-					
-					// seta o padding da ImageView de acordo com a rotação e escolha do usuário
-					SystemUI_NotificationPanelView.mBlurredBackground.setPadding(left, top, 0, 0);
+					// não continua se o blur ja foi aplicado (previne um segundo blur) !!!
+					if (SystemUI_NotificationPanelView.mBlurredBackground.getTag().toString().equals("blur_applied"))
+						return;
 					
 					// blur
 					BlurUtils.BlurTask.setOnBlurTaskCallback(new BlurUtils.BlurTask.BlurTaskCallback() {
 						
 						@Override
-						public void screenshotTaken(Bitmap screenBitmap) {}
-						
-						@Override
 						public void blurTaskDone(Bitmap blurredBitmap) {
 							
-							// tudo ok ?
 							if (blurredBitmap != null) {
 							
+								// -------------------------
+								// bitmap criado com sucesso
+								// -------------------------
+								
 								// seta o bitmap já com o efeito de desfoque
 								SystemUI_NotificationPanelView.mBlurredBackground.setImageBitmap(blurredBitmap);
 								
-								// reseta o tag
-								SystemUI_NotificationPanelView.mBlurredBackground.setTag("ok");
+								// seta o tag de: blur aplicado 
+								SystemUI_NotificationPanelView.mBlurredBackground.setTag("blur_applied");
 							
 							} else {
 						
+								// ----------------------------
+								// bitmap nulo por algum motivo
+								// ----------------------------
+								
 								// seta o filtro de cor
 								SystemUI_NotificationPanelView.mBlurredBackground.setImageDrawable(new ColorDrawable(BlurUtils.BlurTask.mColorFilter));
 								
@@ -250,7 +229,7 @@ public class SystemUI_PhoneStatusBar {
 								if (SystemUI_NotificationPanelView.mBlurredBackground.getAlpha() != 1.0f)
 									SystemUI_NotificationPanelView.mBlurredBackground.setAlpha(1.0f);
 								
-								// seta o tag de erro
+								// seta o tag de: erro
 								SystemUI_NotificationPanelView.mBlurredBackground.setTag("error");
 								
 							}
@@ -295,6 +274,9 @@ public class SystemUI_PhoneStatusBar {
 						// limpa
 						SystemUI_NotificationPanelView.mBlurredBackground.setImageDrawable(null);
 						
+						// seta o tag de: pronto para receber o blur
+						SystemUI_NotificationPanelView.mBlurredBackground.setTag("ready_to_blur");
+						
 					}
 				}
 			});
@@ -311,68 +293,16 @@ public class SystemUI_PhoneStatusBar {
 		XSharedPreferences prefs = Xposed.getXposedXSharedPreferences();
 		
 		// atualiza
-		mBlurredNotificationPanelEnabled = prefs.getBoolean(BlurSettings_Fragment.BLUR_ENABLED_PREFERENCE_KEY, BlurSettings_Fragment.BLUR_ENABLED_PREFERENCE_DEFAULT);
-		
-		// atualiza
-		mAdjustmentsStartMarginPortrait = prefs.getBoolean(BlurSettings_Fragment.PORTRAIT_MARGIN_PREFERENCE_KEY, BlurSettings_Fragment.PORTRAIT_MARGIN_PREFERENCE_DEFAULT);
-		mAdjustmentsStartMarginLandscape = prefs.getBoolean(BlurSettings_Fragment.LANDSCAPE_MARGIN_PREFERENCE_KEY, BlurSettings_Fragment.LANDSCAPE_MARGIN_PREFERENCE_DEFAULT);
-		
-		// atualiza
+		mBlurredStatusBarExpandedEnabled = prefs.getBoolean(BlurSettings_Fragment.STATUS_BAR_EXPANDED_ENABLED_PREFERENCE_KEY, BlurSettings_Fragment.STATUS_BAR_EXPANDED_ENABLED_PREFERENCE_DEFAULT);
+		SystemUI_NotificationPanelView.updatePreferences(prefs);
+		SystemUI_BaseStatusBar.updatePreferences(prefs);
+		SystemUI_PanelView.updatePreferences(prefs);
+		SystemUI_RecentsPanelView.updatePreferences(prefs);
 		BlurUtils.BlurTask.updatePreferences(prefs);
 		
-		// atualiza
-		SystemUI_BaseStatusBar.updatePreferences(prefs);
-		
-		// atualiza
-		SystemUI_PanelView.updatePreferences(prefs);
-		
-		// atualiza
-		SystemUI_RecentsPanelView.updatePreferences(prefs);
-		
-		// ImageView visível ?
+		// visível ?
 		if (SystemUI_NotificationPanelView.mBlurredBackground != null)
-			SystemUI_NotificationPanelView.mBlurredBackground.setVisibility(mBlurredNotificationPanelEnabled ? View.VISIBLE : View.GONE);
+			SystemUI_NotificationPanelView.mBlurredBackground.setVisibility(mBlurredStatusBarExpandedEnabled ? View.VISIBLE : View.GONE);
 		
-	}
-		
-	private static void handleTranslucentHeaderPref() {
-		
-		boolean translucent = Xposed.getXposedXSharedPreferences().getBoolean(BlurSettings_Fragment.TRANSLUCENT_HEADER_PREFERENCE_KEY, BlurSettings_Fragment.TRANSLUCENT_HEADER_PREFERENCE_DEFAULT); 
-		
-		// ------
-		// header
-		// ------
-		
-		// procura
-		View header = mStatusBarWindow.findViewById(mResources.getIdentifier("header", "id", Xposed.SYSTEM_UI_PACKAGE_NAME));
-		
-		// continua ?
-		if (header == null)
-			return;
-		
-		// habilitado ?
-		if (translucent)
-			header.setBackground(new ColorDrawable(Color.TRANSPARENT));
-		
-		// ---------------------------------
-		// botão de limpar todos os recentes
-		// ---------------------------------
-		
-		// xperia e <= 4.3 ?
-		if (Utils.isSonyXperiaRom() &&
-			Utils.getAndroidAPILevel() <= 18) {
-			
-			// procura
-			View clearAll = mStatusBarWindow.findViewById(mResources.getIdentifier("clear_all_button", "id", Xposed.SYSTEM_UI_PACKAGE_NAME));
-			
-			// continua ?
-			if (clearAll == null)
-				return;
-			
-			// habilitado ?
-			if (translucent)
-				clearAll.setBackground(Xposed.getXposedModuleResources().getDrawable(R.drawable.somc_quick_settings_btn_default));
-			
-		}
 	}
 }

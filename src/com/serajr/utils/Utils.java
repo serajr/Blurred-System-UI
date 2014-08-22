@@ -3,7 +3,9 @@ package com.serajr.utils;
 import java.io.File;
 import java.util.ArrayList;
 
+import android.content.Context;
 import android.view.View;
+import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 
 public class Utils {
@@ -50,5 +52,11 @@ public class Utils {
 	    
 	    return result;
 	    
+	}
+	
+	public static boolean deviceHasOnScreenButtons(Context context) {
+		
+		return !ViewConfiguration.get(context).hasPermanentMenuKey();
+		
 	}
 }

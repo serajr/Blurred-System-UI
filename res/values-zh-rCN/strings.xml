@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <string name="app_description">开发by SERAJR(2014)，仅适用于4.1+系统</string>
+ 
+    <string name="theme_menu_title">应用主题</string>
+    <string name="theme_menu_message">重启应用程序以使主题生效！！</string>
+    <string name="light_theme_title">亮色</string>
+    <string name="dark_theme_title">暗色</string>
+    <string name="about_menu_title">关于</string>
+    <string name="exit_menu_title">退出</string>
+    <string name="restart_menu_title">重启SystemUI</string>
+    <string name="restart_menu_message">"系统用户界面将会重启！
+
+警告：
+可能导致主题或壁纸丢失。重启需要一点时间（请耐心等待）！！"</string>
+
+    <string name="dialog_color_picker">颜色选取器</string>
+    <string name="press_color_to_apply">点击颜色来应用</string>
+    
+    <string name="panels_category">面板</string>
+    	<string name="panels_status_bar_expanded_title">下拉通知面板</string>
+    	<string name="panels_recent_apps_title">最近任务面板</string>
+    
+    <string name="blur_settings_category">毛玻璃设置</string>
+	    <string name="blur_scale_title">位图模式</string>
+	    <string name="blur_radius_title">模糊半径</string>
+	    <string name="blur_color_title">滤色器</string>
+	
+    <string name="translucent_background_category">半透明背景</string>
+	    <string name="translucent_header_title">顶栏</string>
+	    <string name="translucent_header_summary">顶部状态栏的展开内容</string>
+	    <string name="translucent_quick_settings_title">快速设置</string>
+	    <string name="translucent_quick_settings_summary">快速设置标题瓷块或按钮</string>
+	    <string name="translucent_notifications_title">通知内容</string>
+	    <string name="translucent_notifications_summary">注意：并非所有通知内容的背景都可以透明到通知面板背景</string>
+	    
+    <string name="adjustments_category">调整</string>
+	    <string name="adjustments_fade_in_out_title">模糊淡入/淡出</string>
+	    <string name="adjustments_fade_in_out_summary">启用通知面板中的淡入淡出动画</string>
+	    <string name="adjustments_start_margin_portrait_title">起始幅度 - 竖屏</string>
+	    <string name="adjustments_start_margin_landscape_title">起始幅度 - 横屏</string>
+	    <string name="adjustments_start_margin_summary">模糊背景起始幅度</string>
+	    
+</resources>

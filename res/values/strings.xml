@@ -1,11 +1,14 @@
 <resources>
 
     <string name="app_name">Blurred System UI</string>
-    <string name="app_description">Developed by: SERAJR (2014) | 4.2+</string>
-    
+    <string name="app_description">Developed by: SERAJR (2014) | 4.1+</string>
+   
+    <string name="theme_menu_title">App Theme</string>
+    <string name="theme_menu_message">Chosen theme will be applied just at another application instance !!</string>
+    <string name="light_theme_title">Light</string>
+    <string name="dark_theme_title">Dark</string>
     <string name="about_menu_title">About&#8230;</string>
 	<string name="exit_menu_title">Exit !!</string>
-	
 	<string name="restart_menu_title">Restart System UI</string>
 	<string name="restart_menu_message">"System UI will be restarted now!
 
@@ -15,16 +18,14 @@ Possible theme and/or wallpaper loss. Restart process can take a while (just wai
 	<string name="dialog_color_picker">Color Picker</string>
     <string name="press_color_to_apply">Press on color to apply</string>
     
-    <string name="blur_enabled_title">Enabled</string>
+    <string name="panels_category">Panels</string>
+    	<string name="panels_status_bar_expanded_title">Status Bar Expanded</string>
+    	<string name="panels_recent_apps_title">Recent Applications</string>
     
     <string name="blur_settings_category">Gaussian Blur Settings</string>
     	<string name="blur_scale_title">Bitmap Scale</string>
     	<string name="blur_radius_title">Blur Radius</string>
     	<string name="blur_color_title">Color Filter</string>
-    	<string name="blur_benchmark_category_title">Blur Benchmark</string>
-    	<string name="blur_process_time_title">Blur Process Time</string>
-    	<string name="blur_process_update_summary">Press me to update data</string>
-    	<string name="blur_process_no_data_summary">No data! Swipe status bar down to get benchmark data!!</string>
 
     <string name="translucent_background_category">Translucent Background</string>
     	<string name="translucent_header_title">Header</string>

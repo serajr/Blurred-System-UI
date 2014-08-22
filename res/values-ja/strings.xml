@@ -1,0 +1,44 @@
+<resources>
+
+    <string name="app_description">開発者: SERAJR (2014) | 4.1+</string>
+   
+    <string name="theme_menu_title">アプリのテーマ</string>
+    <string name="theme_menu_message">選んだテーマはアプリを再起動すると反映されます!!</string>
+    <string name="light_theme_title">Light</string>
+    <string name="dark_theme_title">Dark</string>
+    <string name="about_menu_title">アプリ情報&#8230;</string>
+	<string name="exit_menu_title">終了</string>
+	<string name="restart_menu_title">システムUIの再起動</string>
+	<string name="restart_menu_message">"システムUIを再起動します!
+
+警告:
+テーマや壁紙の設定が失われるかもしれません。再起動には少し時間がかかります!!"</string>
+	
+	<string name="dialog_color_picker">カラーピッカー</string>
+    <string name="press_color_to_apply">色をタップすると適用します</string>
+    
+    <string name="panels_category">パネル</string>
+    	<string name="panels_status_bar_expanded_title">通知領域</string>
+    	<string name="panels_recent_apps_title">アプリ履歴</string>
+    
+    <string name="blur_settings_category">ガウスぼかし設定</string>
+    	<string name="blur_scale_title">Bitmapスケール</string>
+    	<string name="blur_radius_title">ぼかしの半径</string>
+    	<string name="blur_color_title">カラーフィルタ</string>
+
+    <string name="translucent_background_category">背景の透過</string>
+    	<string name="translucent_header_title">ヘッダ</string>
+    	<string name="translucent_header_summary">通知領域の一番上のコンテンツ</string>
+    	<string name="translucent_quick_settings_title">クイック設定</string>
+    	<string name="translucent_quick_settings_summary">クイック設定のタイル/ボタン</string>
+    	<string name="translucent_notifications_title">通知</string>
+    	<string name="translucent_notifications_summary">注意: カスタム背景が設定された通知は透過されません。</string>
+    	
+    <string name="adjustments_category">調整</string>
+    	<string name="adjustments_fade_in_out_title">ぼかしフェードイン/アウト</string>
+    	<string name="adjustments_fade_in_out_summary">通知領域を開くときのフェードイン/アウトアニメを有効にします。</string>
+    	<string name="adjustments_start_margin_portrait_title">開始マージン - 縦</string>
+    	<string name="adjustments_start_margin_landscape_title">開始マージン - 横</string>
+    	<string name="adjustments_start_margin_summary">背景の開始マージンをぼかします。</string>
+    	
+</resources>

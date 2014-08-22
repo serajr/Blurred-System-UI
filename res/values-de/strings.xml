@@ -1,0 +1,44 @@
+<resources>
+
+    <string name="app_description">Developed by: SERAJR (2014) | 4.1+</string>
+   
+    <string name="theme_menu_title">App-Theme</string>
+    <string name="theme_menu_message">Gewähltes Theme wird beim nächsten Start aktiviert!</string>
+    <string name="light_theme_title">Hell</string>
+    <string name="dark_theme_title">Dunkel</string>
+    <string name="about_menu_title">Über&#8230;</string>
+	<string name="exit_menu_title">Beenden</string>
+	<string name="restart_menu_title">System UI neustarten</string>
+	<string name="restart_menu_message">"System UI wird jetzt neugestartet!
+
+Achtung:
+Das Theme und/oder das Hintergrundbild kann verschwinden. Der Neustart wird einen Moment dauern (bitte warten)!"</string>
+	
+	<string name="dialog_color_picker">Farbwähler</string>
+    <string name="press_color_to_apply">Bitte Farbe auswählen</string>
+    
+    <string name="panels_category">Panels</string>
+    	<string name="panels_status_bar_expanded_title">Erweiterte Statusleiste</string>
+    	<string name="panels_recent_apps_title">Letzte Anwendungen</string>
+    
+    <string name="blur_settings_category">Gaußscher Weichzeichner Einstellungen</string>
+    	<string name="blur_scale_title">Bitmap Skala</string>
+    	<string name="blur_radius_title">Radius</string>
+    	<string name="blur_color_title">Farbfilter</string>
+
+    <string name="translucent_background_category">Durchsichtiger Hintergrund</string>
+    	<string name="translucent_header_title">Kopfzeile</string>
+    	<string name="translucent_header_summary">Oberster Bereich der erweiterten Statusleiste</string>
+    	<string name="translucent_quick_settings_title">Schnelleinstellungen</string>
+    	<string name="translucent_quick_settings_summary">Buttons/Symbole der Schnelleinstellungen</string>
+    	<string name="translucent_notifications_title">Benachrichtigungen</string>
+    	<string name="translucent_notifications_summary">Merke: Aufgrund benutzerdefinierter Hintergründe ändern sich nicht alle Benachrichtigungen</string>
+    	
+    <string name="adjustments_category">Optionen</string>
+    	<string name="adjustments_fade_in_out_title">Unschärfe Fade In/Out</string>
+    	<string name="adjustments_fade_in_out_summary">Aktiviert die Ein-/Ausblenden Animation während des Öffnens der Benachrichtigungsleiste</string>
+    	<string name="adjustments_start_margin_portrait_title">Seitenrand - Hochformat</string>
+    	<string name="adjustments_start_margin_landscape_title">Seitenrand - Querformat</string>
+    	<string name="adjustments_start_margin_summary">Leicht versetzte Unschärfe im Randbereich</string>
+    	
+</resources>

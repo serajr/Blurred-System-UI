@@ -11,32 +11,47 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.DialogInterface.OnClickListener;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 public class BlurSettings_Activity extends Activity {
 	
+	public static Context mContext;
 	public static String BLURRED_SYSTEM_UI_KILL_SYSTEM_UI_INTENT = "com.serajr.blurred.system.ui.KILL_SYSTEM_UI";
 	
-	public static Context mContext;
+	private String APP_THEME_SETTINGS_TAG = "serajr_blurred_system_ui_app_theme";
+	private String APP_THEME_SETTINGS_DEFAULT = "light";
 	
-	private String mInfo;
+	private String mAppInfo;
+	private String mAppTheme;
 	
 	@Override
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+		
+		// seta o tema escolhido ou o padrão
+		int themeResId = R.style.DeviceDefault_Light;
+		if (Settings.System.getString(getContentResolver(), APP_THEME_SETTINGS_TAG) != null)
+			themeResId = Settings.System.getString(getContentResolver(), APP_THEME_SETTINGS_TAG).equals(APP_THEME_SETTINGS_DEFAULT)
+					? R.style.DeviceDefault_Light
+					: R.style.DeviceDefault;
+		setTheme(themeResId);
+		
+		super.onCreate(savedInstanceState);
         
+		// guarda
+        mContext = this;
+		
         // tela cheia ?
         setFullScreenActivity();
-        
-        // guarda
-        mContext = this;
         
         // action bar
       	ActionBar actionBar = getActionBar();
@@ -45,8 +60,8 @@ public class BlurSettings_Activity extends Activity {
       	
       	try {
       		
-      		mInfo = getString(R.string.app_name) + " - v" + getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
-			actionBar.setTitle(mInfo);
+      		mAppInfo = getString(R.string.app_name) + " - v" + getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
+			actionBar.setTitle(mAppInfo);
 			
 		} catch (NameNotFoundException e) {
 			
@@ -72,6 +87,12 @@ public class BlurSettings_Activity extends Activity {
 		
 		switch (item.getItemId()) {
 	    		
+			case R.id.theme_menu:
+		        
+				// mostra o tema
+				showThemeDialog();
+				return true;
+			
 			case R.id.restart_menu:
 		        
 				// mostra o restart
@@ -120,6 +141,54 @@ public class BlurSettings_Activity extends Activity {
         }
 	}
 	
+	private void showThemeDialog() {
+		
+		// tema atual
+		mAppTheme = APP_THEME_SETTINGS_DEFAULT;
+		if (Settings.System.getString(getContentResolver(), APP_THEME_SETTINGS_TAG) != null)
+			mAppTheme = Settings.System.getString(getContentResolver(), APP_THEME_SETTINGS_TAG);
+		
+		AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+		builder.setTitle(R.string.theme_menu_title);
+        builder.setSingleChoiceItems(getResources().getStringArray(R.array.theme_entries), mAppTheme.equals(APP_THEME_SETTINGS_DEFAULT) ? 0 : 1, new OnClickListener() {
+			
+			public void onClick(DialogInterface dialog, int which) {
+				
+				// salva o tipo de informação selecionada
+				String[] values = mContext.getResources().getStringArray(R.array.theme_values);
+				mAppTheme = values[which];
+				
+			}
+		});
+		builder.setPositiveButton(android.R.string.ok, new OnClickListener() {
+			
+			public void onClick(DialogInterface dialog, int which) {
+				
+				// salva
+				Settings.System.putString(mContext.getContentResolver(), APP_THEME_SETTINGS_TAG, mAppTheme);
+				
+			    // fecha
+			    dialog.dismiss();
+			    
+			    // mostra a menssagem
+			    Toast.makeText(mContext, mContext.getResources().getString(R.string.theme_menu_message), Toast.LENGTH_LONG).show();
+			    
+			}
+		});
+		builder.setNegativeButton(android.R.string.cancel, new OnClickListener() {
+			
+			public void onClick(DialogInterface dialog, int which) {
+				
+				dialog.cancel();
+				
+			}
+		});
+        
+        AlertDialog dialog = builder.create();
+        dialog.show();
+		
+	}
+	
 	private void showRestartSystemUIDialog() {
 		
 		AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
@@ -159,7 +228,7 @@ public class BlurSettings_Activity extends Activity {
 		
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setIcon(R.drawable.blurred_system_ui);
-		builder.setTitle(mInfo);
+		builder.setTitle(mAppInfo);
         builder.setMessage(about);
         builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
         	
