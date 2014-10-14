@@ -1,5 +1,6 @@
 package com.serajr.blurred.system.ui.hooks;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 
 import android.annotation.SuppressLint;
@@ -55,8 +56,24 @@ public class SystemUI_BaseStatusBar {
 				}
 			});
 			
+			// acha o método exato
+			Method inflateViews;
+			try {
+				
+				// 2 parâmetros - Entry.class, ViewGroup.class
+				inflateViews = XposedHelpers.findMethodExact(BaseStatusBar.class, "inflateViews", Entry.class, ViewGroup.class);
+				
+			} catch (NoSuchMethodError e) {
+				
+				// erro, não encontrou com os 2 parâmetros acima !
+				
+				// 3 parâmetros - Entry.class, ViewGroup.class, int.class
+				inflateViews = XposedHelpers.findMethodExact(BaseStatusBar.class, "inflateViews", Entry.class, ViewGroup.class, int.class);
+				
+			}
+			
 			// inflateViews
-			XposedHelpers.findAndHookMethod(BaseStatusBar.class, "inflateViews", Entry.class, ViewGroup.class, new XC_MethodHook() {
+			XposedBridge.hookMethod(inflateViews, new XC_MethodHook() {
 				
 				@Override
 	            protected void afterHookedMethod(MethodHookParam param) throws Throwable {
@@ -65,6 +82,16 @@ public class SystemUI_BaseStatusBar {
 					if (!mTranslucentNotifications)
 						return;
 				
+					// heads up ?
+					ViewGroup parent = (ViewGroup) param.args[1];
+					if (SystemUI_HeadsUpNotificationView.mContentHolder != null) {
+						
+						// é ?
+						if (parent == SystemUI_HeadsUpNotificationView.mContentHolder)
+							return;
+					
+					}
+					
 					// obtém os dados da notificação
 					Entry entry = (Entry) param.args[0];
 		            
@@ -166,7 +193,7 @@ public class SystemUI_BaseStatusBar {
 	}
 	
 	private static void setTranslucentNotificationBackground(Entry entry) {
-	
+		
 		// vista root da notificação - somente remove os backgrounds !!
 		View row = Utils.getAndroidAPILevel() >= 19
 				// >= 4.4
@@ -179,7 +206,7 @@ public class SystemUI_BaseStatusBar {
 		// row
 		if (row != null)
 			setTranslucentNotificationBackground(row, false);
-
+		
 		// content
 		if (entry.content != null)
 			setTranslucentNotificationBackground(entry.content, true);
@@ -207,7 +234,7 @@ public class SystemUI_BaseStatusBar {
 	}
 	
 	private static void setTranslucentNotificationBackground(View view, boolean translucent) {
-				
+		
 		// notificações transparentes ?
 		if (mTranslucentNotifications) {
 			
@@ -234,13 +261,15 @@ public class SystemUI_BaseStatusBar {
 				    		
 				    		// existe um background ?
 				    		if (child.getBackground() != null) {
-				    	
+				    			
 				    			//Log.d("child_id_name", nameResIs + " | " + child.getClass().toString());
 				    			
 				    			// despresa se se for um desses id's...
 				    			if (nameResIs.contains("icon") ||
 				    				nameResIs.contains("glow") ||
-				    				nameResIs.contains("divider"))
+				    				nameResIs.contains("divider") ||
+				    				// heads up notifications background !!
+				    				nameResIs.contains("content_holder"))
 				    				continue;
 				    				
 			    				// remove o fundo e limpa o cache
@@ -255,14 +284,13 @@ public class SystemUI_BaseStatusBar {
 		    			} catch (NotFoundException e) {
 		    				
 		    				// erro !!!
-		    				e.printStackTrace();
 		    				continue;
 		    				
 		    			}
 		    		}
 		    	}
 		    }
-							    
+			
 		    // seta o background transparente
 			if (translucent)
 				view.setBackground(Xposed.getXposedModuleResources().getDrawable(R.drawable.notification_bg));

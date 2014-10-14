@@ -1,0 +1,40 @@
+﻿<resources>
+
+    <string name="app_description">Developed by: SERAJR (2014) | 4.1+</string>
+   
+    <string name="theme_menu_title">تم نرم افزار</string>
+    <string name="theme_menu_message">تم انتخاب شده در شروع مجدد نرم افزار انجام خواهد شد !!</string>
+    <string name="light_theme_title">روشن</string>
+    <string name="dark_theme_title">تاریک</string>
+    <string name="about_menu_title">درباره&#8230;</string>
+	<string name="exit_menu_title">خروج !!</string>
+	<string name="restart_menu_title"> شروع مجدد واسط کاربر سیستم</string>
+	<string name="restart_menu_message">"واسط کاربر سیستم شروع مجدد می شود
+
+اخطار:
+ممکن است تم یا پس زمینه ای را که برای صفحه خانه خود انتخاب کرده اید را از دست بدهید و ممکن است شروع مجدد کمی طول بکشد و صبر کنید تا عملیات شروع مجدد به اتمام برسد!!"</string>
+	
+	<string name="dialog_color_picker">انتخاب کننده رنگ</string>
+    <string name="press_color_to_apply">رنگ را برا انجام انتخاب کنید</string>
+    
+    <string name="panels_category">پانل اعلان</string>
+    	<string name="panels_status_bar_expanded_title">نوار اعلان گستردش یافته</string>
+    	<string name="panels_recent_apps_title">نرم افزار های اخیر</string>
+    
+    <string name="blur_settings_category">تنظیمات بلور گاوسی</string>
+    	<string name="blur_scale_title">مقیاس بیتمپ</string>
+    	<string name="blur_radius_title">شعاع بلور</string>
+    	
+    <string name="translucent_background_category">پس زمینه شفاف</string>
+    	<string name="translucent_header_title">سرآمد</string>
+    	<string name="translucent_header_summary">نوار اعلانها نیز دارای بلور باشد</string>
+    	<string name="translucent_quick_settings_title">تنظیمات سریع</string>
+    	<string name="translucent_quick_settings_summary">دگمه های تنظیمات سریع</string>
+    	<string name="translucent_notifications_title">اعلان ها</string>
+    	<string name="translucent_notifications_summary">نکته: ممکن است برخی از اعلان ها به دلیل داشتن رنگ پس زمینه غیر پیش فرض سیستم شفاف نشوند</string>
+    	
+    <string name="adjustments_category">تنظیم</string>
+    	<string name="adjustments_fade_in_out_title">نمایان و محو شدن بلور</string>
+    	<string name="adjustments_fade_in_out_summary">فعال کردن این گزینه سبب نمایش انمیشن نمایان و محو شدن در هنگام باز و بستن پانل اعلان می شود</string>
+    	
+</resources>

@@ -24,8 +24,7 @@ Możliwa utrata motywu i/lub tapety. Proces restartowania może zająć chwilę 
     <string name="blur_settings_category">Ustawienia rozmycia</string>
     	<string name="blur_scale_title">Skalowanie bitmapy</string>
     	<string name="blur_radius_title">Promień rozmycia</string>
-    	<string name="blur_color_title">Filtr koloru</string>
-
+    	
     <string name="translucent_background_category">Przeźroczyste tło</string>
     	<string name="translucent_header_title">Nagłówek</string>
     	<string name="translucent_header_summary">Zawartość górnej części rozszerzonego paska stanu</string>
@@ -37,8 +36,5 @@ Możliwa utrata motywu i/lub tapety. Proces restartowania może zająć chwilę 
     <string name="adjustments_category">Dostosuj</string>
     	<string name="adjustments_fade_in_out_title">Rozmazanie We/Wy</string>
     	<string name="adjustments_fade_in_out_summary">Włącza animcje We/Wy podczas otwierania/zamykania panelu powiadomień</string>
-    	<string name="adjustments_start_margin_portrait_title">Margines początkowy - Pionowo</string>
-    	<string name="adjustments_start_margin_landscape_title">Margines początkowy - Poziomo</string>
-    	<string name="adjustments_start_margin_summary">Margines początkowy rozmazanego tła</string>
     	
 </resources>

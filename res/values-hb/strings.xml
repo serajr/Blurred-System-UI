@@ -24,8 +24,7 @@
     <string name="blur_settings_category">Gaussian Blur הגדרות</string>
     	<string name="blur_scale_title">Bitmap יחס</string>
     	<string name="blur_radius_title">רמת טשטוש</string>
-    	<string name="blur_color_title">בחירת צבע</string>
-
+    	
     <string name="translucent_background_category">רקע שקוף</string>
     	<string name="translucent_header_title">כותרת</string>
     	<string name="translucent_header_summary">פריטים עליונים בשורת המצב</string>
@@ -37,8 +36,5 @@
     <string name="adjustments_category">התאמות</string>
     	<string name="adjustments_fade_in_out_title">אפקט פנים/חוץ</string>
     	<string name="adjustments_fade_in_out_summary">אפשר אפקט פנים/חוץ כאשר שורת המצב יורדת</string>
-    	<string name="adjustments_start_margin_portrait_title">התחל מרווח - דיוקן</string>
-    	<string name="adjustments_start_margin_landscape_title">התחל מרווח - נוף</string>
-    	<string name="adjustments_start_margin_summary">מרווח התחלת רקע מטושטש</string>
     	
 </resources>

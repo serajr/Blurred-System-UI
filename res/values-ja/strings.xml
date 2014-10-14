@@ -24,8 +24,7 @@
     <string name="blur_settings_category">ガウスぼかし設定</string>
     	<string name="blur_scale_title">Bitmapスケール</string>
     	<string name="blur_radius_title">ぼかしの半径</string>
-    	<string name="blur_color_title">カラーフィルタ</string>
-
+    	
     <string name="translucent_background_category">背景の透過</string>
     	<string name="translucent_header_title">ヘッダ</string>
     	<string name="translucent_header_summary">通知領域の一番上のコンテンツ</string>
@@ -37,8 +36,5 @@
     <string name="adjustments_category">調整</string>
     	<string name="adjustments_fade_in_out_title">ぼかしフェードイン/アウト</string>
     	<string name="adjustments_fade_in_out_summary">通知領域を開くときのフェードイン/アウトアニメを有効にします。</string>
-    	<string name="adjustments_start_margin_portrait_title">開始マージン - 縦</string>
-    	<string name="adjustments_start_margin_landscape_title">開始マージン - 横</string>
-    	<string name="adjustments_start_margin_summary">背景の開始マージンをぼかします。</string>
     	
 </resources>

@@ -24,21 +24,23 @@ Possível perda do tema e/ou papel de parede. Processo de reinicialização pode
     <string name="blur_settings_category">Config. Desfoque Gaussiano</string>
     	<string name="blur_scale_title">Escala do Bitmap</string>
     	<string name="blur_radius_title">Raio de Desfoque</string>
-    	<string name="blur_color_title">Filtro de Cor</string>
+    	<string name="blur_light_color_title">Filtro de Cor - Imagem Clara</string>
+    	<string name="blur_mixed_color_title">Filtro de Cor - Imagem Mista</string>
+    	<string name="blur_dark_color_title">Filtro de Cor - Imagem Escura</string>
 	
     <string name="translucent_background_category">Fundo Transparente</string>
     	<string name="translucent_header_title">Cabeçalho</string>
     	<string name="translucent_header_summary">Contéudo mais acima da barra de status expandida</string>
-    	<string name="translucent_quick_settings_title">Configurações Répidas</string>
+    	<string name="translucent_quick_settings_title">Configurações Rápidas</string>
     	<string name="translucent_quick_settings_summary">Botões de configurações rápidas</string>
     	<string name="translucent_notifications_title">Notificações</string>
     	<string name="translucent_notifications_summary">Nota: Nem todas as notificações serão alcançadas devido a fundos customizados</string>
+    	<string name="translucent_drag_handle_title">Barra da Alça de Arraste</string>
+    	<string name="opaque_title">Opaco</string>
+    	<string name="translucent_title">Transparente</string>
     	
     <string name="adjustments_category">Ajustes</string>
     	<string name="adjustments_fade_in_out_title">Desfoque Entrada/Saida</string>
     	<string name="adjustments_fade_in_out_summary">Habilita animação de entrada/saída enquanto abre/fecha o painel de notificações</string>
-    	<string name="adjustments_start_margin_portrait_title">Margem Inicial - Retrato</string>
-    	<string name="adjustments_start_margin_landscape_title">Margem Inicial - Paisagem</string>
-    	<string name="adjustments_start_margin_summary">Margem inicial do fundo desfocado</string>
     	
 </resources>

@@ -15,6 +15,7 @@ Attention :
 Perte possible du thème et/ou du fond d\'écran. Le redémarrage peut prendre un certain temps, veuillez patienter !"</string>
 	
 	<string name="dialog_color_picker">Définir une couleur</string>
+	<string name="press_color_to_apply">Appuyer sur une couleur</string>
    
     <string name="panels_category">Volets</string>
     	<string name="panels_status_bar_expanded_title">Notifications/Raccourcis</string>
@@ -23,8 +24,13 @@ Perte possible du thème et/ou du fond d\'écran. Le redémarrage peut prendre u
     <string name="blur_settings_title">Paramètres flou Gaussien</string>
     	<string name="blur_scale_title">Échelle du bitmap</string>
     	<string name="blur_radius_title">Rayon du flou</string>
-    	<string name="blur_color_title">Filtre de couleur</string>
-
+    	<string name="blur_light_color_title">Filtre de couleur - Fond clair</string>
+		<string name="blur_mixed_color_title">Filtre de couleur - Fond mixte</string>
+		<string name="blur_dark_color_title">Filtre de couleur - Fond sombre</string>
+		<string name="translucent_drag_handle_title">Barre de glissement</string>
+		<string name="opaque_title">Opaque</string>
+		<string name="translucent_title">Translucide</string>
+    	
     <string name="translucent_background_category">Fond translucide</string>
     	<string name="translucent_header_title">En-tête</string>
     	<string name="translucent_header_summary">Floute le haut des notifications et des raccourcis</string>
@@ -36,8 +42,5 @@ Perte possible du thème et/ou du fond d\'écran. Le redémarrage peut prendre u
     <string name="adjustments_title">Ajustements</string>
     	<string name="adjustments_fade_in_out_title">Flou fondu à l\'ouverture/fermeture</string>
     	<string name="adjustments_fade_in_out_summary">Active un effet fondu lors de l\'ouverture/fermeture du volet des notifications</string>
-    	<string name="adjustments_start_margin_portrait_title">Marge initiale - portrait</string>
-    	<string name="adjustments_start_margin_landscape_title">Marge initiale - paysage</string>
-    	<string name="adjustments_start_margin_summary">Fond flouté de la marge initiale</string>
-    	
+    	    	
 </resources>

@@ -25,7 +25,9 @@ Possible theme and/or wallpaper loss. Restart process can take a while (just wai
     <string name="blur_settings_category">Gaussian Blur Settings</string>
     	<string name="blur_scale_title">Bitmap Scale</string>
     	<string name="blur_radius_title">Blur Radius</string>
-    	<string name="blur_color_title">Color Filter</string>
+    	<string name="blur_light_color_title">Color Filter - Light Image</string>
+    	<string name="blur_mixed_color_title">Color Filter - Mixed Image</string>
+    	<string name="blur_dark_color_title">Color Filter - Dark Image</string>
 
     <string name="translucent_background_category">Translucent Background</string>
     	<string name="translucent_header_title">Header</string>
@@ -34,12 +36,12 @@ Possible theme and/or wallpaper loss. Restart process can take a while (just wai
     	<string name="translucent_quick_settings_summary">Quick settings tiles and/or buttons</string>
     	<string name="translucent_notifications_title">Notifications</string>
     	<string name="translucent_notifications_summary">Note: Not all notifications may be reached due custom background</string>
+    	<string name="translucent_drag_handle_title">Drag Handle Bar</string>
+    	<string name="opaque_title">Opaque</string>
+    	<string name="translucent_title">Translucent</string>
     	
     <string name="adjustments_category">Adjustments</string>
     	<string name="adjustments_fade_in_out_title">Blur Fade In/Out</string>
     	<string name="adjustments_fade_in_out_summary">Enables fade in/out animation while opening/closing notifications panel</string>
-    	<string name="adjustments_start_margin_portrait_title">Start Margin - Portrait</string>
-    	<string name="adjustments_start_margin_landscape_title">Start Margin - Landscape</string>
-    	<string name="adjustments_start_margin_summary">Blurred background start margin</string>
     	
 </resources>

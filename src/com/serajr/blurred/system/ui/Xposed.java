@@ -1,11 +1,13 @@
 package com.serajr.blurred.system.ui;
 
 import com.serajr.blurred.system.ui.hooks.SystemUI_BaseStatusBar;
+import com.serajr.blurred.system.ui.hooks.SystemUI_HeadsUpNotificationView;
 import com.serajr.blurred.system.ui.hooks.SystemUI_NotificationPanelView;
 import com.serajr.blurred.system.ui.hooks.SystemUI_PanelView;
 import com.serajr.blurred.system.ui.hooks.SystemUI_PhoneStatusBar;
 import com.serajr.blurred.system.ui.hooks.SystemUI_RecentsPanelView;
 import com.serajr.blurred.system.ui.hooks.SystemUI_TranslucentBackground;
+import com.serajr.utils.Utils;
 
 import android.content.res.XModuleResources;
 import de.robv.android.xposed.IXposedHookInitPackageResources;
@@ -53,14 +55,31 @@ public class Xposed implements IXposedHookZygoteInit, IXposedHookInitPackageReso
     		// recarregam as preferências
     		mXSharedPreferences.reload();
     		
-    		// hooks
-    		SystemUI_PhoneStatusBar.hook();
-    		SystemUI_BaseStatusBar.hook();
-    		SystemUI_PanelView.hook();
-    		SystemUI_NotificationPanelView.hook();
-    		SystemUI_RecentsPanelView.hook();
-    		SystemUI_TranslucentBackground.hook(true, false);
+    		if (Utils.getAndroidAPILevel() >= 16) {
+    			
+    			// -------
+    			// jb e kk
+    			// -------
     		
+    			// hooks
+        		SystemUI_PhoneStatusBar.hook();
+        		SystemUI_BaseStatusBar.hook();
+        		SystemUI_PanelView.hook();
+        		SystemUI_NotificationPanelView.hook();
+        		SystemUI_RecentsPanelView.hook();
+        		SystemUI_HeadsUpNotificationView.hook();
+        		SystemUI_TranslucentBackground.hook(true, false);
+    			
+    		} else if (Utils.getAndroidAPILevel() <= 15) {
+    			
+    			// ---
+    			// ics
+    			// ---
+    			
+    			// hooks
+    			com.serajr.blurred.system.ui.hooks.ics.SystemUI_PhoneStatusBar.hook();
+    			
+    		}   			
     	}
     }
     
@@ -76,9 +95,25 @@ public class Xposed implements IXposedHookZygoteInit, IXposedHookInitPackageReso
     		// recarregam as preferências
     		mXSharedPreferences.reload();
     		
-    		// hooks
-    		SystemUI_TranslucentBackground.hook(false, true);
+    		if (Utils.getAndroidAPILevel() >= 16) {
+    			
+    			// -------
+    			// jb e kk
+    			// -------
     		
+    			// hooks
+    			SystemUI_TranslucentBackground.hook(false, true);
+    			
+    		} else if (Utils.getAndroidAPILevel() <= 15) {
+    			
+    			// ---
+    			// ics
+    			// ---
+    			
+    			// hooks
+    			
+    			
+    		}
     	}
     }
     

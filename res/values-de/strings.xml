@@ -24,8 +24,7 @@ Das Theme und/oder das Hintergrundbild kann verschwinden. Der Neustart wird eine
     <string name="blur_settings_category">Gaußscher Weichzeichner Einstellungen</string>
     	<string name="blur_scale_title">Bitmap Skala</string>
     	<string name="blur_radius_title">Radius</string>
-    	<string name="blur_color_title">Farbfilter</string>
-
+    	
     <string name="translucent_background_category">Durchsichtiger Hintergrund</string>
     	<string name="translucent_header_title">Kopfzeile</string>
     	<string name="translucent_header_summary">Oberster Bereich der erweiterten Statusleiste</string>
@@ -37,8 +36,5 @@ Das Theme und/oder das Hintergrundbild kann verschwinden. Der Neustart wird eine
     <string name="adjustments_category">Optionen</string>
     	<string name="adjustments_fade_in_out_title">Unschärfe Fade In/Out</string>
     	<string name="adjustments_fade_in_out_summary">Aktiviert die Ein-/Ausblenden Animation während des Öffnens der Benachrichtigungsleiste</string>
-    	<string name="adjustments_start_margin_portrait_title">Seitenrand - Hochformat</string>
-    	<string name="adjustments_start_margin_landscape_title">Seitenrand - Querformat</string>
-    	<string name="adjustments_start_margin_summary">Leicht versetzte Unschärfe im Randbereich</string>
     	
 </resources>

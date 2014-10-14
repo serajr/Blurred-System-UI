@@ -2,110 +2,129 @@ package com.serajr.utils;
 
 import de.robv.android.xposed.XposedHelpers;
 import android.content.Context;
-import android.content.res.Configuration;
 import android.content.res.Resources;
-import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Matrix;
-import android.graphics.Point;
+import android.os.RemoteException;
+import android.os.ServiceManager;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
+import android.view.IWindowManager;
 import android.view.Surface;
 import android.view.SurfaceControl;
-import android.view.View;
-import android.view.ViewConfiguration;
-import android.view.Window;
 import android.view.WindowManager;
+import android.view.WindowManagerGlobal;
 
 public class DisplayUtils {
 	
-	private static int mBottomOffset = 0;
-	private static int mRightOffset = 0;
-	private static int mTopOffset = 0;
-	
-	public static void setFullScreenActivity(Window window, View view) {
+	public static int getDimensionForDensity(Resources res, int size) {
 		
-		int flags = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN |
-				    View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION | 
-                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
-		
-		// setam os flags
-		window.getDecorView().setSystemUiVisibility(flags);
-		
-		// setam as margens
-		view.setPadding(0, mTopOffset, mRightOffset, mBottomOffset);
-		view.requestLayout();
+		return (int) (size * res.getDisplayMetrics().density + 0.5f);
 		
 	}
 	
-	public static boolean deviceHasOnScreenButtons(Context context) {
+	public static boolean deviceHasNavigationBar() {
 		
-		return !ViewConfiguration.get(context).hasPermanentMenuKey();
+		try {
+			
+			IWindowManager wm = Utils.getAndroidAPILevel() >= 17
+					// >= 4.2
+					? WindowManagerGlobal.getWindowManagerService()
+					// <= 4.1
+					: IWindowManager.Stub.asInterface(ServiceManager.getService(Context.WINDOW_SERVICE));
+			
+			return wm.hasNavigationBar();
+			
+		} catch (RemoteException e) {
+			
+			e.printStackTrace();
+			
+		}
+		
+		return false;
 		
 	}
 	
-	public static int getActionBarHeight(Context context) {
+	public static int getDominantColorByPixelsSampling(Bitmap bitmap, int rows, int cols) {
+
+      	// ------------------------------------
+      	// por amostragem de pixels - by serajr
+      	// ------------------------------------
+	
+		// --------------------------------------------
+      	// ex.: 6 linhas e 6 colunas (x = início e fim) 
+      	// --------------------------------------------
+      	
+      	// x-----
+      	// ------
+      	// ------
+      	// ------
+      	// ------
+      	// ------
+      	// -----x
 		
-		TypedArray styledAttributes = context.getTheme().obtainStyledAttributes(
-        new int[] { android.R.attr.actionBarSize });
-		int actionBarSize = (int) styledAttributes.getDimension(0, 0);
-		styledAttributes.recycle();
+		// --------------------------------------------------------------------------------------
+		// método original: getDominantColor()
+		// http://dxr.mozilla.org/mozilla-central/source/mobile/android/base/gfx/BitmapUtils.java
+		// --------------------------------------------------------------------------------------
 		
-		return actionBarSize;
+		int width = bitmap.getWidth();
+		int height = bitmap.getHeight();
+		int xPortion = width / cols;
+		int yPortion = height / rows;
+		int maxBin = -1;
+		float[] hsv = new float[3];
+		int[] colorBins = new int[36];
+		float[] sumHue = new float[36];
+      	float[] sumSat = new float[36];
+      	float[] sumVal = new float[36];
+      	
+		for (int row = 0; row <= rows; row++) {
+		    
+			for (int col = 0; col <= cols; col++) {
+ 			
+				//Log.d("rows_cols", (row > 0 ? yPortion * row : 0) + " | " + (col > 0 ? xPortion * col : 0));
+				
+				// obtém o pixel da porção x e y
+				int pixel = bitmap.getPixel(
+						col > 0 ? (xPortion * col) - 1 : 0,
+						row > 0 ? (yPortion * row) - 1 : 0);
+				
+      			Color.colorToHSV(pixel, hsv);
+      			
+      			int bin = (int) Math.floor(hsv[0] / 10.0f);
+      			
+      			sumHue[bin] = sumHue[bin] + hsv[0];
+      			sumSat[bin] = sumSat[bin] + hsv[1];
+      			sumVal[bin] = sumVal[bin] + hsv[2];
+      			
+      			colorBins[bin]++;
+
+      			if (maxBin < 0 || colorBins[bin] > colorBins[maxBin])
+      				maxBin = bin;
+      			
+      		}
+		}
+		
+		if (maxBin < 0)
+      		return Color.argb(255, 255, 255, 255);
+
+      	hsv[0] = sumHue[maxBin] / colorBins[maxBin];
+      	hsv[1] = sumSat[maxBin] / colorBins[maxBin];
+      	hsv[2] = sumVal[maxBin] / colorBins[maxBin];
+      	
+      	return Color.HSVToColor(hsv);
 		
 	}
 	
-	public static void updateConfiguration(Context context, Display display, int actionBarHeight) {
+	public static double getColorLightness(int color) {
 		
-		Resources res = context.getResources();
-		boolean landscape = display.getRotation() == Configuration.ORIENTATION_LANDSCAPE ? true : false;
-		
-		// top
-		int statusBarHeightResId = res.getIdentifier("status_bar_height", "dimen", "android");
-		mTopOffset = statusBarHeightResId > 0 ? res.getDimensionPixelSize(statusBarHeightResId) : 0;
-		
-        // adiciona a action bar ao top
-        mTopOffset = mTopOffset + actionBarHeight;
-        
-        // bottom
-        int navigationBarHeightResId = res.getIdentifier("navigation_bar_height", "dimen", "android");
-        int bottomOffset = navigationBarHeightResId > 0 ? res.getDimensionPixelSize(navigationBarHeightResId) : 0;
-        
-        // não tem os botões na tela !!!
-        if (!deviceHasOnScreenButtons(context))
-        	bottomOffset = 0;
-        
-        // landscape ?
-        if (landscape) {
-        	
-        	mRightOffset = 0;
-        	mBottomOffset = bottomOffset;
-            return;
-            
-        }
-        
-        Point point = new Point();
-        Point point1 = new Point();
-        display.getSize(point);
-        display.getRealSize(point1);
-        
-        // inverte ?
-        if (point.x < point1.x) {
-        	
-        	mRightOffset = bottomOffset;
-        	mBottomOffset = 0;
-            return;
-            
-        } else {
-        	
-        	mRightOffset = 0;
-        	mBottomOffset = bottomOffset;
-            return;
-            
-        }
-    }
+	    return 1 - (0.299 * Color.red(color) + 0.587 * Color.green(color) + 0.114 * Color.blue(color)) / 255;
+	    
+	}
 	
 	public static int[] getRealScreenDimensions(Context context) {
 		
@@ -177,23 +196,108 @@ public class DisplayUtils {
         if (requiresRotation) {
         	
             // Rotate the screenshot to the current orientation
-            Bitmap ss = Bitmap.createBitmap(metrics.widthPixels, metrics.heightPixels, Bitmap.Config.ARGB_8888);
-            Canvas c = new Canvas(ss);
-            c.translate(ss.getWidth() / 2, ss.getHeight() / 2);
-            c.rotate(360f - degrees);
-            c.translate(-dims[0] / 2, -dims[1] / 2);
-            c.drawBitmap(screenBitmap, 0, 0, null);
-            c.setBitmap(null);
-            screenBitmap = ss;
+            Bitmap bitmap = Bitmap.createBitmap(metrics.widthPixels, metrics.heightPixels, Bitmap.Config.ARGB_8888);
+            Canvas canvas = new Canvas(bitmap);
+            canvas.translate(bitmap.getWidth() / 2, bitmap.getHeight() / 2);
+            canvas.rotate(360f - degrees);
+            canvas.translate(-dims[0] / 2, -dims[1] / 2);
+            canvas.drawBitmap(screenBitmap, 0, 0, null);
+            canvas.setBitmap(null);
+            screenBitmap = bitmap;
             
         }
         
+        // mutável
+        Bitmap mutable = screenBitmap.copy(Bitmap.Config.ARGB_8888, true);
+        
         // Optimizations
-        screenBitmap.setHasAlpha(false);
-        screenBitmap.prepareToDraw();
+        mutable.setHasAlpha(false);
+        mutable.prepareToDraw();
         
         // retorna
-        return screenBitmap;
+        return mutable;
+        
+    }
+	
+	public static Bitmap takeSurfaceScreenshot(Context context, int downScale) {
+		
+		WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+		Display display = wm.getDefaultDisplay();
+		DisplayMetrics metrics = new DisplayMetrics();
+		Matrix displayMatrix = new Matrix();
+		
+		Bitmap screenBitmap = null;
+		
+		display.getRealMetrics(metrics);
+        float[] dims = { metrics.widthPixels / downScale, metrics.heightPixels / downScale };
+        float degrees = getDegreesForRotation(display.getRotation());
+        boolean requiresRotation = (degrees > 0);
+        
+        if (requiresRotation) {
+        	
+            // Get the dimensions of the device in its native orientation
+        	displayMatrix.reset();
+        	displayMatrix.preRotate(-degrees);
+        	displayMatrix.mapPoints(dims);
+            dims[0] = Math.abs(dims[0]);
+            dims[1] = Math.abs(dims[1]);
+            
+        }
+        
+        if (Utils.getAndroidAPILevel() >= 18) {
+        	
+        	// >= 4.3
+        	screenBitmap = SurfaceControl.screenshot((int) dims[0], (int) dims[1]);
+        	
+        } else {
+        	
+        	// <= 4.2.2
+        	try {
+        	
+        		// reflection
+        		Class<?> Surface = Class.forName("android.view.Surface");
+        		screenBitmap = (Bitmap) XposedHelpers.callStaticMethod(Surface, "screenshot", (int) dims[0], (int) dims[1]); 
+        	    
+        	} catch (ClassNotFoundException e) {
+        		
+        	    e.printStackTrace();
+        		
+        	}
+        }
+        
+        // possível app que precisa de segurança rodando, ou
+        // o context não tem previlégios suficientes par tal 
+        if (screenBitmap == null) {
+        	
+        	// informa e retorna
+        	Log.i("serajr_blurred_system_ui", "Cannot take surface screenshot! Skipping blur feature!!");
+        	return null;
+        	
+        }
+        
+        if (requiresRotation) {
+        	
+            // Rotate the screenshot to the current orientation
+            Bitmap bitmap = Bitmap.createBitmap(metrics.widthPixels / downScale, metrics.heightPixels / downScale, Bitmap.Config.ARGB_8888);
+            Canvas canvas = new Canvas(bitmap);
+            canvas.translate(bitmap.getWidth() / 2, bitmap.getHeight() / 2);
+            canvas.rotate(360f - degrees);
+            canvas.translate(-dims[0] / 2, -dims[1] / 2);
+            canvas.drawBitmap(screenBitmap, 0, 0, null);
+            canvas.setBitmap(null);
+            screenBitmap = bitmap;
+            
+        }
+        
+        // mutável
+        Bitmap mutable = screenBitmap.copy(Bitmap.Config.ARGB_8888, true);
+        
+        // Optimizations
+        mutable.setHasAlpha(false);
+        mutable.prepareToDraw();
+        
+        // retorna
+        return mutable;
         
     }
 	

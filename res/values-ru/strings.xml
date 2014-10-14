@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <string name="app_description">Разработано: SERAJR (2014) | 4.1+</string>
+    
+    <string name="theme_menu_title">Тема приложения</string>
+    <string name="theme_menu_message">Выбранная тема будет применяться только в перезапущеном приложении !!</string>
+    <string name="light_theme_title">Светлый</string>
+    <string name="dark_theme_title">Темный</string>
+    <string name="about_menu_title">о програме…</string>
+    <string name="exit_menu_title">Выход !!</string>
+    <string name="restart_menu_title">Перезапуск System UI</string>
+    <string name="restart_menu_message">"System UI сейчас будет перезапущен!
+
+Предупреждение:
+Возможен сброс темы и/или обоев. Процесс перезагрузки может занять некоторое время (просто подождите)!"</string>
+
+    <string name="dialog_color_picker">Выбор цвета</string>
+    <string name="press_color_to_apply">Нажмите на цвет, чтобы применить</string>
+    
+    <string name="panels_category">Размытие в</string>
+    	<string name="panels_status_bar_expanded_title">Шторке</string>
+    	<string name="panels_recent_apps_title">Последних приложениях</string>
+    
+    <string name="blur_settings_category">Настройки размытия гаусса</string>
+    	<string name="blur_scale_title">Масштаб изображения</string>
+    	<string name="blur_radius_title">Радиус размытия</string>
+    	<string name="blur_light_color_title">Цвет фильтра - Светлое изображение</string>
+    	<string name="blur_mixed_color_title">Цвет фильтра - Смешанное изображение</string>
+    	<string name="blur_dark_color_title">Цвет фильтра - Темное изображение</string>
+    
+    <string name="translucent_background_category">Прозрачный фон</string>
+    	<string name="translucent_header_title">Заголовок</string>
+    	<string name="translucent_header_summary">Самая верхняя строка состояния расширять содержимое</string>
+    	<string name="translucent_quick_settings_title">Быстрые настройки</string>
+    	<string name="translucent_quick_settings_summary">Быстрые настройки плитки и / или кнопки</string>
+    	<string name="translucent_notifications_title">Уведомления</string>
+    	<string name="translucent_notifications_summary">Примечание: Не все уведомления могут получить прозрачный фон</string>
+    
+    <string name="adjustments_category">Регулировки</string>
+    	<string name="adjustments_fade_in_out_title">Размытие при открытии/закрытии</string>
+    	<string name="adjustments_fade_in_out_summary">Включает анимацию исчезновения/проявления во время открытия/закрытия панели уведомлений</string>
+    	
+</resources>

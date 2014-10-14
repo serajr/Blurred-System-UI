@@ -1,0 +1,40 @@
+<resources>
+
+    <string name="app_description">Developed by: SERAJR (2014) | 4.1+</string>
+   
+    <string name="theme_menu_title">App Thema</string>
+    <string name="theme_menu_message">De gekozen thema wordt toegepast bij een andere instante applicatie !!</string>
+    <string name="light_theme_title">Licht</string>
+    <string name="dark_theme_title">Donker</string>
+    <string name="about_menu_title">Over&#8230;</string>
+	<string name="exit_menu_title">Afsluiten !!</string>
+	<string name="restart_menu_title">Herstart System UI</string>
+	<string name="restart_menu_message">"SystemUI wordt nu geherstart !
+
+waarschuwing: 
+Mogelijke thema en/of achtergrond verliest. Herstart proces kan even duren (gewoon wachten) !!"</string>
+	
+	<string name="dialog_color_picker">Kleur kiezer</string>
+    <string name="press_color_to_apply">Druk op de kleur om toe te passen</string>
+    
+    <string name="panels_category">Panelen</string>
+    	<string name="panels_status_bar_expanded_title">Status Bar Uitgebreid</string>
+    	<string name="panels_recent_apps_title">Recente Applicaties</string>
+    
+    <string name="blur_settings_category">Gaussian Blur Instellingen</string>
+    	<string name="blur_scale_title">Bitmap Schaal</string>
+    	<string name="blur_radius_title">Blur Radius</string>
+    	
+    <string name="translucent_background_category">Doorschijnende Achtergrond</string>
+    	<string name="translucent_header_title">Header</string>
+    	<string name="translucent_header_summary">Bovenste statusbalk uitgebreide inhoud</string>
+    	<string name="translucent_quick_settings_title">Snelle Instellingen</string>
+    	<string name="translucent_quick_settings_summary">Snelle instellingen tegels en/of knoppen</string>
+    	<string name="translucent_notifications_title">Notificaties</string>
+    	<string name="translucent_notifications_summary">Opmerking: Niet alle meldingen kunnen worden bereikt als gevolg van aangepaste achtergrond</string>
+    	
+    <string name="adjustments_category">Aanpassingen</string>
+    	<string name="adjustments_fade_in_out_title">Blur Fade Aan/Uit</string>
+    	<string name="adjustments_fade_in_out_summary">Maakt fade aan/uit animatie terwijl paneel opent/sluit van meldingen</string>
+    	
+</resources>

@@ -24,8 +24,7 @@ Moguć gubitak teme i/ili pozadine. Proces restartanja može potrajati (samo če
     <string name="blur_settings_category">Postavke Gaussova zamagljena</string>
         <string name="blur_scale_title">Razmjer Bitmapa </string>
         <string name="blur_radius_title">Radijus zamagljena</string>
-        <string name="blur_color_title">Filter boje</string>
- 
+        
     <string name="translucent_background_category">Prozirna pozadina</string>
         <string name="translucent_header_title">Zaglavlje</string>
         <string name="translucent_header_summary">Najveći vrh spuštenog sadržaja</string>
@@ -37,8 +36,5 @@ Moguć gubitak teme i/ili pozadine. Proces restartanja može potrajati (samo če
     <string name="adjustments_category">Podešenja</string>
         <string name="adjustments_fade_in_out_title">Izbiljedi zamagljena u/van</string>
         <string name="adjustments_fade_in_out_summary">Omogućuje animaciju izbijeljivanja zamagljena tijekom spuštanja ploče obavijesti</string>
-        <string name="adjustments_start_margin_portrait_title"> Početna margina - Portret</string>
-        <string name="adjustments_start_margin_landscape_title">Početna margina - Pejsaž</string>
-        <string name="adjustments_start_margin_summary">Startna margina zamagljene pozadine</string>
          
 </resources>

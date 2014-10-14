@@ -1,10 +1,14 @@
 package com.serajr.blurred.system.ui.hooks;
 
+import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.Resources.NotFoundException;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
 import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
@@ -17,7 +21,10 @@ import com.serajr.blurred.system.ui.R;
 import com.serajr.blurred.system.ui.Xposed;
 import com.serajr.blurred.system.ui.fragments.BlurSettings_Fragment;
 import com.serajr.utils.BlurUtils;
+import com.serajr.utils.DisplayUtils;
 import com.serajr.utils.Utils;
+import com.serajr.utils.BlurUtils.BlurEngine;
+import com.serajr.utils.BlurUtils.BlurTaskCallback;
 
 import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XSharedPreferences;
@@ -26,7 +33,16 @@ import de.robv.android.xposed.XposedHelpers;
 
 public class SystemUI_RecentsPanelView {
 	
-	private static Bitmap mBlurredBitmap;
+	private static Rect mSrc;
+	private static Rect mDst;
+	private static Paint mPaint;
+	private static int mBlurScale;
+	private static int mBlurRadius;
+	private static BlurUtils mBlurUtils;
+	private static int mBlurDarkColorFilter;
+	private static int mBlurMixedColorFilter;
+	private static int mBlurLightColorFilter;
+	private static Bitmap mBlurredScreenBitmap;
 	private static boolean mBlurredRecentAppsEnabled;
 	private static RecentsPanelView mRecentsPanelView;
 	
@@ -73,16 +89,28 @@ public class SystemUI_RecentsPanelView {
 						// ----------------------------------------------------
 						
 						// continua ?
-						if (mBlurredBitmap != null) {
+						if (mBlurredScreenBitmap != null) {
 							
-							Canvas canvas = (Canvas) param.args[0]; 
+							// parâmetros
+							Canvas canvas = (Canvas) param.args[0];
 							
-							// limites
-							Rect src = new Rect(0, SystemUI_PhoneStatusBar.mStatusBarHeight, canvas.getWidth(), SystemUI_PhoneStatusBar.mStatusBarHeight + canvas.getHeight());
-							Rect dst = new Rect(0, 0, canvas.getWidth(), canvas.getHeight());
+							// verifica a localização (x, y) do mRecentsPanelView 
+							int[] location = new int[2];
+							mRecentsPanelView.getLocationOnScreen(location);
+							int x = location[0];
+							int y = location[1];
+							
+							//Log.d("location", "x: " + location[0] + " | y: " y);
+							
+							int canvasWidth = canvas.getWidth();
+							int canvasHeight = canvas.getHeight();
+							
+							// rects
+							mSrc.set(x, y, x + canvasWidth, y + canvasHeight);
+							mDst.set(0, 0, canvasWidth, canvasHeight);
 							
 							// desenha
-							((Canvas) param.args[0]).drawBitmap(mBlurredBitmap, src, dst, null);
+							canvas.drawBitmap(mBlurredScreenBitmap, mSrc, mDst, mPaint);
 							
 						}
 					}
@@ -150,6 +178,11 @@ public class SystemUI_RecentsPanelView {
 	public static void updatePreferences(XSharedPreferences prefs) {
 		
 		// atualiza
+		mBlurScale = Integer.parseInt(prefs.getString(BlurSettings_Fragment.BLUR_SCALE_PREFERENCE_KEY, BlurSettings_Fragment.BLUR_SCALE_PREFERENCE_DEFAULT));
+		mBlurRadius = Integer.parseInt(prefs.getString(BlurSettings_Fragment.BLUR_RADIUS_PREFERENCE_KEY, BlurSettings_Fragment.BLUR_RADIUS_PREFERENCE_DEFAULT));
+		mBlurDarkColorFilter = prefs.getInt(BlurSettings_Fragment.BLUR_DARK_COLOR_PREFERENCE_KEY, BlurSettings_Fragment.BLUR_DARK_COLOR_PREFERENCE_DEFAULT);
+		mBlurMixedColorFilter = prefs.getInt(BlurSettings_Fragment.BLUR_MIXED_COLOR_PREFERENCE_KEY, BlurSettings_Fragment.BLUR_MIXED_COLOR_PREFERENCE_DEFAULT);
+		mBlurLightColorFilter = prefs.getInt(BlurSettings_Fragment.BLUR_LIGHT_COLOR_PREFERENCE_KEY, BlurSettings_Fragment.BLUR_LIGHT_COLOR_PREFERENCE_DEFAULT);
 		mBlurredRecentAppsEnabled = prefs.getBoolean(BlurSettings_Fragment.RECENT_APPS_ENABLED_PREFERENCE_KEY, BlurSettings_Fragment.RECENT_APPS_ENABLED_PREFERENCE_DEFAULT);
 		
 		// padrões
@@ -174,22 +207,90 @@ public class SystemUI_RecentsPanelView {
 		if (!mBlurredRecentAppsEnabled)
 			return;
 		
-		// blur (true - retorna o bitmap no tamanho da tela !!!)
-		BlurUtils.BlurTask.setOnBlurTaskCallback(new BlurUtils.BlurTask.BlurTaskCallback() {
+		// guarda ?
+		if (mBlurUtils == null) {
+			
+			mBlurUtils = new BlurUtils(SystemUI_PhoneStatusBar.mStatusBarWindow.getContext());
+			
+			// cria o paint e os rects
+			mPaint = new Paint();
+			mPaint.setFlags(Paint.FILTER_BITMAP_FLAG);
+			mSrc = new Rect();
+			mDst = new Rect();
+			
+		}
+		
+		// callback
+		BlurTask.setBlurTaskCallback(new BlurTaskCallback() {
 			
 			@Override
 			public void blurTaskDone(Bitmap blurredBitmap) {
 				
-				// guarda
-				mBlurredBitmap = blurredBitmap;
+				// seta o bitmap
+				mBlurredScreenBitmap = blurredBitmap;
 				
-				// redesenha ?
-				if (mRecentsPanelView != null)
-					mRecentsPanelView.postInvalidate();
+				// ui thread
+				if (mRecentsPanelView != null) {
 				
+					mRecentsPanelView.post(new Runnable() {
+
+						@Override
+						public void run() {
+							
+							mRecentsPanelView.invalidate();
+							
+						}
+					});
+				}
 			}
-		}, true);
-		new BlurUtils.BlurTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+
+			@Override
+			public void dominantColor(int color) {
+				
+				// obtém a luminosidade da cor dominante
+				double lightness = DisplayUtils.getColorLightness(color);
+				
+				if (lightness >= 0.0 && color <= 1.0) {
+					
+					// --------------------------------------------------
+					// seta o filtro de cor de acordo com a cor dominante
+					// --------------------------------------------------
+					
+					if (lightness <= 0.33) {
+					
+						// imagem clara (mais perto do branco)
+						mPaint.setColorFilter(new PorterDuffColorFilter(mBlurLightColorFilter, PorterDuff.Mode.MULTIPLY));
+						
+					} else if (lightness >= 0.34 && lightness <= 0.66) {
+						
+						// imagem mista
+						mPaint.setColorFilter(new PorterDuffColorFilter(mBlurMixedColorFilter, PorterDuff.Mode.MULTIPLY));
+						
+					} else if (lightness >= 0.67 && lightness <= 1.0) {
+						
+						// imagem clara (mais perto do preto)
+						mPaint.setColorFilter(new PorterDuffColorFilter(mBlurDarkColorFilter, PorterDuff.Mode.MULTIPLY));
+						
+					}
+					
+				} else {
+					
+					// -------
+					// erro !!
+					// -------
+					
+					// seta a cor mista
+					mPaint.setColorFilter(new PorterDuffColorFilter(mBlurMixedColorFilter, PorterDuff.Mode.MULTIPLY));
+					
+				}
+			}
+		});
+		
+		// engine
+		BlurTask.setBlurEngine(BlurEngine.RenderScriptBlur);
+		
+		// blur
+		new BlurTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 		
 	}
 	
@@ -245,11 +346,117 @@ public class SystemUI_RecentsPanelView {
 			view.setBackground(viewBg);
 		
 		// recicla e anula ?
-		if (mBlurredBitmap != null) {
+		if (mBlurredScreenBitmap != null) {
 			
-			mBlurredBitmap.recycle();
-			mBlurredBitmap = null;
+			mBlurredScreenBitmap.recycle();
+			mBlurredScreenBitmap = null;
 			
+		}
+	}
+	
+	private static class BlurTask extends AsyncTask<Void, Void, Bitmap> {
+		
+		private static BlurEngine mBlurEngine;
+		private static BlurTaskCallback mCallback;
+		
+		private int[] mScreenDimens;
+		private Bitmap mScreenBitmap;
+			
+		public static void setBlurEngine(BlurEngine blurEngine) {
+			
+			mBlurEngine = blurEngine;
+			
+		}
+		
+		public static void setBlurTaskCallback(BlurTaskCallback callBack) {
+			
+		    mCallback = callBack;
+		    
+		}
+		
+		@Override
+		protected void onPreExecute() {
+			
+			Context context = mBlurUtils.getContext();
+			
+			// obtém o tamamho real da tela
+			mScreenDimens = DisplayUtils.getRealScreenDimensions(context);
+			
+			// obtém a screenshot da tela com escala reduzida
+			mScreenBitmap = DisplayUtils.takeSurfaceScreenshot(context, mBlurScale);
+			
+		}
+		
+		@Override
+		protected Bitmap doInBackground(Void... arg0) {
+			
+			try {
+				
+				// continua ?
+				if (mScreenBitmap == null)
+					return null;
+				
+				// calback
+				mCallback.dominantColor(DisplayUtils.getDominantColorByPixelsSampling(mScreenBitmap, 10, 10));
+				
+				// blur engine
+				if (mBlurEngine == BlurEngine.RenderScriptBlur) {
+				
+					if (Utils.getAndroidAPILevel() >= 17) {
+					
+						// >= 4.2.2
+						mScreenBitmap = mBlurUtils.renderScriptBlur(mScreenBitmap, mBlurRadius);
+					
+					} else {
+						
+						// <= 4.1.2
+						mScreenBitmap = mBlurUtils.stackBlur(mScreenBitmap, mBlurRadius);
+						
+					}
+					
+				} else if (mBlurEngine == BlurEngine.StackBlur) {
+					
+					mScreenBitmap = mBlurUtils.stackBlur(mScreenBitmap, mBlurRadius);
+					
+				} else if (mBlurEngine == BlurEngine.FastBlur) {
+					
+					mBlurUtils.fastBlur(mScreenBitmap, mBlurRadius);
+					
+				}
+				
+				// retorna escalado no tamanho da tela
+				return Bitmap.createScaledBitmap(mScreenBitmap, mScreenDimens[0], mScreenDimens[1], true);
+				
+			} catch (OutOfMemoryError e) {
+				
+				// erro
+				return null;
+				
+			}
+		}
+
+		@Override
+		protected void onPostExecute(Bitmap bitmap) {
+			
+			if (bitmap != null) {
+				
+				// -----------------------------
+				// bitmap criado com sucesso !!!
+				// -----------------------------
+				
+				// callback
+				mCallback.blurTaskDone(bitmap);
+				
+			} else {
+				
+				// --------------------------
+				// erro ao criar o bitmap !!!
+				// --------------------------
+					
+				// callback
+				mCallback.blurTaskDone(null);
+				
+			}
 		}
 	}
 }

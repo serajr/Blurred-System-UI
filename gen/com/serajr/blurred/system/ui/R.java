@@ -36,6 +36,9 @@ public final class R {
         public static final int status_bar_recents_background=0x7f020012;
         public static final int statusbar_tools_button_frame_bottom=0x7f020013;
         public static final int statusbar_tools_button_frame_top=0x7f020014;
+        public static final int tw_clear_button_bg=0x7f020015;
+        public static final int tw_clear_button_bg_focussed=0x7f020016;
+        public static final int tw_clear_button_bg_pressed=0x7f020017;
     }
     public static final class id {
         public static final int about_menu=0x7f090007;
@@ -56,24 +59,24 @@ public final class R {
     }
     public static final class string {
         public static final int about_menu_title=0x7f060006;
-        public static final int adjustments_category=0x7f06001a;
-        public static final int adjustments_fade_in_out_summary=0x7f06001c;
-        public static final int adjustments_fade_in_out_title=0x7f06001b;
-        public static final int adjustments_start_margin_landscape_title=0x7f06001e;
-        public static final int adjustments_start_margin_portrait_title=0x7f06001d;
-        public static final int adjustments_start_margin_summary=0x7f06001f;
-        public static final int adjustments_title=0x7f060021;
+        public static final int adjustments_category=0x7f06001f;
+        public static final int adjustments_fade_in_out_summary=0x7f060021;
+        public static final int adjustments_fade_in_out_title=0x7f060020;
+        public static final int adjustments_title=0x7f060023;
         public static final int app_description=0x7f060001;
         public static final int app_name=0x7f060000;
-        public static final int blur_color_title=0x7f060012;
+        public static final int blur_dark_color_title=0x7f060014;
+        public static final int blur_light_color_title=0x7f060012;
+        public static final int blur_mixed_color_title=0x7f060013;
         public static final int blur_radius_title=0x7f060011;
         public static final int blur_scale_title=0x7f060010;
         public static final int blur_settings_category=0x7f06000f;
-        public static final int blur_settings_title=0x7f060020;
+        public static final int blur_settings_title=0x7f060022;
         public static final int dark_theme_title=0x7f060005;
         public static final int dialog_color_picker=0x7f06000a;
         public static final int exit_menu_title=0x7f060007;
         public static final int light_theme_title=0x7f060004;
+        public static final int opaque_title=0x7f06001d;
         public static final int panels_category=0x7f06000c;
         public static final int panels_recent_apps_title=0x7f06000e;
         public static final int panels_status_bar_expanded_title=0x7f06000d;
@@ -82,17 +85,24 @@ public final class R {
         public static final int restart_menu_title=0x7f060008;
         public static final int theme_menu_message=0x7f060003;
         public static final int theme_menu_title=0x7f060002;
-        public static final int translucent_background_category=0x7f060013;
-        public static final int translucent_header_summary=0x7f060015;
-        public static final int translucent_header_title=0x7f060014;
-        public static final int translucent_notifications_summary=0x7f060019;
-        public static final int translucent_notifications_title=0x7f060018;
-        public static final int translucent_quick_settings_summary=0x7f060017;
-        public static final int translucent_quick_settings_title=0x7f060016;
+        public static final int translucent_background_category=0x7f060015;
+        public static final int translucent_drag_handle_title=0x7f06001c;
+        public static final int translucent_header_summary=0x7f060017;
+        public static final int translucent_header_title=0x7f060016;
+        public static final int translucent_notifications_summary=0x7f06001b;
+        public static final int translucent_notifications_title=0x7f06001a;
+        public static final int translucent_quick_settings_summary=0x7f060019;
+        public static final int translucent_quick_settings_title=0x7f060018;
+        public static final int translucent_title=0x7f06001e;
     }
     public static final class style {
         public static final int DeviceDefault=0x7f070001;
         public static final int DeviceDefault_Light=0x7f070002;
+        /**  xperia gray bars (adicionar com o apk manager)
+    	<item name="com.sonyericsson.uxp:extendedLookAndFeel">true</item>
+    	
+         */
+        public static final int DeviceDefault_Light_Xperia=0x7f070003;
         /**  tema translúcido para evitar a tela de splash ao iniciar 
          */
         public static final int Translucent=0x7f070000;

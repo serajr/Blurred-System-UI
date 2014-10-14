@@ -1,0 +1,40 @@
+<resources>
+
+    <string name="app_description">Dikembangkan oleh: SERAJR (2014) | 4.1+</string>
+   
+    <string name="theme_menu_title">Tema Aplikasi</string>
+    <string name="theme_menu_message">Tema yang dipilih akan diterapkan hanya pada contoh aplikasi lain !!</string>
+    <string name="light_theme_title">Terang</string>
+    <string name="dark_theme_title">Gelap</string>
+    <string name="about_menu_title">Tentang&#8230;</string>
+	<string name="exit_menu_title">Keluar !!</string>
+	<string name="restart_menu_title">Restart Sistem UI</string>
+	<string name="restart_menu_message">"Sistem UI akan direstart sekarang!!
+
+Perhatian:
+Kemungkinan tema dan / atau kehilangan wallpaper. Proses restart dapat memakan waktu cukup lama (tunggu) !!"</string>
+	
+	<string name="dialog_color_picker">Pilih Warna</string>
+    <string name="press_color_to_apply">Tekan pada warna untuk menerapkan</string>
+    
+    <string name="panels_category">Panel</string>
+    	<string name="panels_status_bar_expanded_title">Status Bar Diperluas</string>
+    	<string name="panels_recent_apps_title">Aplikasi Terbaru</string>
+    
+    <string name="blur_settings_category">Pengaturan Gaussian Blur</string>
+    	<string name="blur_scale_title">Skala Bitmap</string>
+    	<string name="blur_radius_title">Blur Radius</string>
+    	
+    <string name="translucent_background_category">Latar Belakang Transparan</string>
+    	<string name="translucent_header_title">Header</string>
+    	<string name="translucent_header_summary">Paling atas status bar diperluas</string>
+    	<string name="translucent_quick_settings_title">Pengaturan Cepat</string>
+    	<string name="translucent_quick_settings_summary">Pengaturan Cepat dan/atau tombol</string>
+    	<string name="translucent_notifications_title">Pemberitahuan</string>
+    	<string name="translucent_notifications_summary">Catatan: Tidak semua pemberitahuan dapat dihubungi latar belakang kustom</string>
+    	
+    <string name="adjustments_category">Penyesuaian</string>
+    	<string name="adjustments_fade_in_out_title">Animasi Blur kedalam/keluar</string>
+    	<string name="adjustments_fade_in_out_summary">Mengaktifkan Animasi kedalam/keluar sementara panel membuka/menutup pemberitahuan</string>
+    	
+</resources>

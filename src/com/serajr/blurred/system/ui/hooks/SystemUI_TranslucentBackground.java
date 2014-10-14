@@ -1,5 +1,8 @@
 package com.serajr.blurred.system.ui.hooks;
 
+import java.lang.reflect.Method;
+
+import com.android.systemui.statusbar.phone.PhoneStatusBar;
 import com.serajr.blurred.system.ui.R;
 import com.serajr.blurred.system.ui.Xposed;
 import com.serajr.blurred.system.ui.fragments.BlurSettings_Fragment;
@@ -12,6 +15,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.view.View;
+import android.widget.ScrollView;
 import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XSharedPreferences;
 import de.robv.android.xposed.XposedBridge;
@@ -30,14 +34,154 @@ public class SystemUI_TranslucentBackground {
 			// handleLoadPackage
 			if (handleLoadPackage) {
 				
+				// header
+				if (prefs.getBoolean(BlurSettings_Fragment.TRANSLUCENT_HEADER_PREFERENCE_KEY, BlurSettings_Fragment.TRANSLUCENT_HEADER_PREFERENCE_DEFAULT)) {
+					
+					try {
+						
+						// ----------------------------------------------------
+						// PhoneStatusBar - método flipToNotifications existe ?
+						// ----------------------------------------------------
+						
+						// flipToNotifications (samsung)
+						Method flipToNotifications = XposedHelpers.findMethodExact(PhoneStatusBar.class, "flipToNotifications");
+						XposedBridge.hookMethod(flipToNotifications, new XC_MethodHook() {
+							
+							@Override
+				            protected void afterHookedMethod(MethodHookParam param) throws Throwable {
+								
+								// -------------------------------------------
+								// PhoneStatusBar - campo mScrollView existe ?
+								// -------------------------------------------
+								
+								try {
+									
+									// seta o background
+									ScrollView mScrollView = (ScrollView) XposedHelpers.getObjectField(param.thisObject, "mScrollView");
+									if (mScrollView != null)
+										mScrollView.setBackground(new ColorDrawable(Color.TRANSPARENT));
+									
+								} catch (NoSuchFieldError e) {
+								
+									e.printStackTrace();
+									
+								}
+							}
+						});
+						
+					} catch (NoSuchMethodError e) {
+					
+						e.printStackTrace();
+						
+					}
+				}
+				
 				// quick settings
 				if (prefs.getBoolean(BlurSettings_Fragment.TRANSLUCENT_QUICK_SETTINGS_PREFERENCE_KEY, BlurSettings_Fragment.TRANSLUCENT_QUICK_SETTINGS_PREFERENCE_DEFAULT)) {
 				
 					try {
 						
+						// -----------------------------------------------
+						// PhoneStatusBar - método flipToSettings existe ?
+						// -----------------------------------------------
+						
+						// flipToSettings (samsung)
+						Method flipToSettings = XposedHelpers.findMethodExact(PhoneStatusBar.class, "flipToSettings");
+						XposedBridge.hookMethod(flipToSettings, new XC_MethodHook() {
+							
+							@Override
+				            protected void afterHookedMethod(MethodHookParam param) throws Throwable {
+								
+								// -------------------------------------------
+								// PhoneStatusBar - campo mScrollView existe ?
+								// -------------------------------------------
+								
+								try {
+									
+									// seta o background
+									ScrollView mScrollView = (ScrollView) XposedHelpers.getObjectField(param.thisObject, "mScrollView");
+									if (mScrollView != null)
+										mScrollView.setBackground(new ColorDrawable(Color.TRANSPARENT));
+									
+								} catch (NoSuchFieldError e) {
+								
+									e.printStackTrace();
+									
+								}
+							}
+						});
+						
+					} catch (NoSuchMethodError e) {
+					
+						e.printStackTrace();
+						
+					}
+					
+					try {
+						
+						// ---------------------------
+						// QuickSettingButton existe ?
+						// ---------------------------
+						
+						// samsung
+						Class<?> QuickSettingButton = XposedHelpers.findClass("com.android.systemui.statusbar.policy.quicksetting.QuickSettingButton", Xposed.getXposedClassLoader());
+						try {
+						
+							// -----------------------------------------------
+							// QuickSettingButton - método initLayout existe ?
+							// -----------------------------------------------
+
+							Method initLayout = XposedHelpers.findMethodExact(QuickSettingButton, "initLayout", int.class, int.class, int.class, int.class, int.class, int.class, int.class);
+							XposedBridge.hookMethod(initLayout, new XC_MethodHook() {
+								
+								@Override
+					            protected void afterHookedMethod(MethodHookParam param) throws Throwable {
+									
+									// seta o background
+									((View) param.thisObject).setBackground(new ColorDrawable(Color.TRANSPARENT));
+									
+								}
+							});
+							
+						} catch (NoSuchMethodError e) {
+							
+							e.printStackTrace();
+							
+						}
+						
+					} catch (ClassNotFoundError e) {
+					
+						e.printStackTrace();
+						
+					}
+					
+					try {
+						
 						// constructor (htc)
 						Class<?> QuickSettingsTileView = XposedHelpers.findClass("com.android.systemui.statusbar.phone.QuickSettingsTileView", Xposed.getXposedClassLoader());
 						XposedBridge.hookAllConstructors(QuickSettingsTileView, new XC_MethodHook() {
+							
+							@Override
+				            protected void afterHookedMethod(MethodHookParam param) throws Throwable {
+								
+								// seta o background
+								View view = (View) param.thisObject;
+								view.setBackground(modRes.getDrawable(R.drawable.qs_tile_background));
+								
+							}
+						});
+						
+					} catch (ClassNotFoundError e) {
+					
+						e.printStackTrace();
+						
+					}
+					
+					try {
+						
+						// constructor (motorola)
+						Class<?> QuickSettingsBasicTile = XposedHelpers.findClass("com.android.systemui.statusbar.phone.QuickSettingsBasicTile", Xposed.getXposedClassLoader());
+						XposedBridge.hookAllConstructors(QuickSettingsBasicTile, new XC_MethodHook() {
 							
 							@Override
 				            protected void afterHookedMethod(MethodHookParam param) throws Throwable {
@@ -82,6 +226,22 @@ public class SystemUI_TranslucentBackground {
 						});
 					}
 					
+					// jbp_notification_header_bg (samsung)
+					resId = res.getIdentifier("jbp_notification_header_bg", "drawable", pkg);
+					if (resId != 0) {
+					
+						// troca
+						res.setReplacement(resId, new XResources.DrawableLoader() {
+							
+						    @Override
+						    public Drawable newDrawable(XResources res, int id) throws Throwable {
+						    	
+						        return new ColorDrawable(Color.TRANSPARENT);
+						        
+						    }
+						});
+					}
+					
 					// somc_notification_header_bg (xperia)
 					resId = res.getIdentifier("somc_notification_header_bg", "drawable", pkg);
 					if (resId != 0) {
@@ -98,7 +258,7 @@ public class SystemUI_TranslucentBackground {
 						});
 					}
 					
-					// ic_notify_button_bg (nexus)
+					// ic_notify_button_bg (nexus / samsung)
 					resId = res.getIdentifier("ic_notify_button_bg", "drawable", pkg);
 					if (resId != 0) {
 					
@@ -141,6 +301,22 @@ public class SystemUI_TranslucentBackground {
 						    public Drawable newDrawable(XResources res, int id) throws Throwable {
 						    	
 						    	return new ColorDrawable(Color.TRANSPARENT);
+						        
+						    }
+						});
+					}
+					
+					// tw_clear_button_bg (samsung)
+					resId = res.getIdentifier("tw_clear_button_bg", "drawable", pkg);
+					if (resId != 0) {
+					
+						// troca
+						res.setReplacement(resId, new XResources.DrawableLoader() {
+							
+						    @Override
+						    public Drawable newDrawable(XResources res, int id) throws Throwable {
+						    	
+						    	return modRes.getDrawable(R.drawable.tw_clear_button_bg);
 						        
 						    }
 						});
@@ -198,7 +374,7 @@ public class SystemUI_TranslucentBackground {
 						});
 					}
 					
-					// qs_tile_background (cm)
+					// qs_tile_background (cm / motorola)
 					resId = res.getIdentifier("qs_tile_background", "drawable", pkg);
 					if (resId != 0) {
 					
@@ -409,7 +585,7 @@ public class SystemUI_TranslucentBackground {
 						});
 					}
 					
-					// jbp_tw_quick_panel_quick_setting_button_bg
+					// jbp_tw_quick_panel_quick_setting_button_bg (samsung)
 					resId = res.getIdentifier("jbp_tw_quick_panel_quick_setting_button_bg", "drawable", pkg);
 					if (resId != 0) {
 					
@@ -421,6 +597,38 @@ public class SystemUI_TranslucentBackground {
 						    	
 						    	// utiliza o qs_tile_background
 						    	return modRes.getDrawable(R.drawable.qs_tile_background);
+						        
+						    }
+						});
+					}
+					
+					// tw_quick_panel_quick_setting_button_bg_normal (samsung)
+					resId = res.getIdentifier("tw_quick_panel_quick_setting_button_bg_normal", "drawable", pkg);
+					if (resId != 0) {
+					
+						// troca
+						res.setReplacement(resId, new XResources.DrawableLoader() {
+							
+						    @Override
+						    public Drawable newDrawable(XResources res, int id) throws Throwable {
+						    	
+						        return new ColorDrawable(Color.TRANSPARENT);
+						        
+						    }
+						});
+					}
+					
+					// jbp_tw_quick_panel_quick_setting_button_bg_normal (samsung)
+					resId = res.getIdentifier("jbp_tw_quick_panel_quick_setting_button_bg_normal", "drawable", pkg);
+					if (resId != 0) {
+					
+						// troca
+						res.setReplacement(resId, new XResources.DrawableLoader() {
+							
+						    @Override
+						    public Drawable newDrawable(XResources res, int id) throws Throwable {
+						    	
+						        return new ColorDrawable(Color.TRANSPARENT);
 						        
 						    }
 						});
@@ -439,6 +647,7 @@ public class SystemUI_TranslucentBackground {
 		
 		int resId;
 		View view;
+		XModuleResources modRes = Xposed.getXposedModuleResources();
 		XSharedPreferences prefs = Xposed.getXposedXSharedPreferences();
 		Resources res = SystemUI_PhoneStatusBar.mStatusBarWindow.getResources();
 		
@@ -465,7 +674,8 @@ public class SystemUI_TranslucentBackground {
 			
 			}
 			
-			// expand_header
+			// somente em casos onde o header tem esse id, que não é padrão xperia !!!
+			// possivelmente portado por alguém e essa pessoa alterou o nome do id !!!
 			resId = res.getIdentifier("expand_header", "id", Xposed.SYSTEM_UI_PACKAGE_NAME);
 			if (resId != 0) {
 				
@@ -473,11 +683,36 @@ public class SystemUI_TranslucentBackground {
 				if (view != null)
 					view.setBackground(new ColorDrawable(Color.TRANSPARENT));
 				
+				// clock_expanded (o linearlayout parente desse id possivelmente tem o backcground codificado em #ff000000)
+				resId = res.getIdentifier("clock_expanded", "id", Xposed.SYSTEM_UI_PACKAGE_NAME);
+				if (resId != 0) {
+					
+					view = SystemUI_PhoneStatusBar.mStatusBarWindow.findViewById(resId);
+					if (view != null) {
+						
+						// obtém o parente do id clock_expanded 
+						view = (View) view.getParent();
+						if (view != null)
+							view.setBackground(new ColorDrawable(Color.TRANSPARENT));
+						
+					}
+				}
 			}
 			
-			// ---------------------------------
-			// botão de limpar todos os recentes
-			// ---------------------------------
+			// brightness_controller (samsung)
+			resId = res.getIdentifier("brightness_controller", "id", Xposed.SYSTEM_UI_PACKAGE_NAME);
+			if (resId != 0) {
+				
+				// brightness_slider
+				resId = res.getIdentifier("brightness_slider", "id", Xposed.SYSTEM_UI_PACKAGE_NAME);
+				if (resId != 0) {
+					
+					view = SystemUI_PhoneStatusBar.mStatusBarWindow.findViewById(resId);
+					if (view != null)
+						view.setBackground(new ColorDrawable(Color.TRANSPARENT));
+				
+				}
+			}
 			
 			// xperia e <= 4.3 ?
 			if (Utils.isSonyXperiaRom() &&
@@ -489,7 +724,7 @@ public class SystemUI_TranslucentBackground {
 					
 					view = SystemUI_PhoneStatusBar.mStatusBarWindow.findViewById(resId);
 					if (view != null)
-						view.setBackground(Xposed.getXposedModuleResources().getDrawable(R.drawable.somc_quick_settings_btn_default));
+						view.setBackground(modRes.getDrawable(R.drawable.somc_quick_settings_btn_default));
 				
 				}
 			}

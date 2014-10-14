@@ -25,8 +25,7 @@
     <string name="blur_settings_category">毛玻璃设置</string>
 	    <string name="blur_scale_title">位图模式</string>
 	    <string name="blur_radius_title">模糊半径</string>
-	    <string name="blur_color_title">滤色器</string>
-	
+	    
     <string name="translucent_background_category">半透明背景</string>
 	    <string name="translucent_header_title">顶栏</string>
 	    <string name="translucent_header_summary">顶部状态栏的展开内容</string>
@@ -38,8 +37,5 @@
     <string name="adjustments_category">调整</string>
 	    <string name="adjustments_fade_in_out_title">模糊淡入/淡出</string>
 	    <string name="adjustments_fade_in_out_summary">启用通知面板中的淡入淡出动画</string>
-	    <string name="adjustments_start_margin_portrait_title">起始幅度 - 竖屏</string>
-	    <string name="adjustments_start_margin_landscape_title">起始幅度 - 横屏</string>
-	    <string name="adjustments_start_margin_summary">模糊背景起始幅度</string>
 	    
 </resources>
