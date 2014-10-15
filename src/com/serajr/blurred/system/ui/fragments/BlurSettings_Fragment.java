@@ -64,23 +64,23 @@ public class BlurSettings_Fragment extends PreferenceFragment implements OnShare
 	private CharSequence[] mScaleEntries = { "10 (1:10)", "20 (1:20)", "30 (1:30)", "40 (1:40)", "50 (1:50)" };
 	
 	@Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        
-        // muito importante !!!
-        getPreferenceManager().setSharedPreferencesMode(Context.MODE_WORLD_READABLE);
-        
-        // adiciona em branco
-        addPreferencesFromResource(R.xml.preferences);
-        
-        // prefs
-        SharedPreferences prefs = getPreferenceManager().getSharedPreferences();
-        
-        // categoria - painéis
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+	        
+		// muito importante !!!
+	    getPreferenceManager().setSharedPreferencesMode(Context.MODE_WORLD_READABLE);
+	        
+	    // adiciona em branco
+	    addPreferencesFromResource(R.xml.preferences);
+	        
+	    // prefs
+	    SharedPreferences prefs = getPreferenceManager().getSharedPreferences();
+	        
+        // categoria - painÃ©is
         PreferenceCategory blur = new PreferenceCategory(getActivity());
         blur.setTitle(R.string.panels_category);
         getPreferenceScreen().addPreference(blur);
-        
+	        
         // status bar expandida
         SwitchPreference statusBarExpanded = new SwitchPreference(getActivity());
         statusBarExpanded.setKey(STATUS_BAR_EXPANDED_ENABLED_PREFERENCE_KEY);
@@ -88,14 +88,14 @@ public class BlurSettings_Fragment extends PreferenceFragment implements OnShare
         statusBarExpanded.setDefaultValue(STATUS_BAR_EXPANDED_ENABLED_PREFERENCE_DEFAULT);
         getPreferenceScreen().addPreference(statusBarExpanded);
         
-        // aplicações recentes
+        // aplicaÃ§Ãµes recentes
         SwitchPreference enabled = new SwitchPreference(getActivity());
         enabled.setKey(RECENT_APPS_ENABLED_PREFERENCE_KEY);
         enabled.setTitle(R.string.panels_recent_apps_title);
         enabled.setDefaultValue(RECENT_APPS_ENABLED_PREFERENCE_DEFAULT);
         getPreferenceScreen().addPreference(enabled);
         
-        // categoria - configurações do desfoque
+        // categoria - configuraÃ§Ãµes do desfoque
         PreferenceCategory blurSettings = new PreferenceCategory(getActivity());
         blurSettings.setTitle(R.string.blur_settings_category);
         getPreferenceScreen().addPreference(blurSettings);
@@ -170,7 +170,7 @@ public class BlurSettings_Fragment extends PreferenceFragment implements OnShare
         translucentQuickSettings.setDefaultValue(TRANSLUCENT_QUICK_SETTINGS_PREFERENCE_DEFAULT);
         getPreferenceScreen().addPreference(translucentQuickSettings);
         
-        // notificações transparentes
+        // notificaÃ§Ãµes transparentes
         CheckBoxPreference translucentNotifications = new CheckBoxPreference(getActivity());
         translucentNotifications.setKey(TRANSLUCENT_NOTIFICATIONS_PREFERENCE_KEY);
         translucentNotifications.setTitle(R.string.translucent_notifications_title);
@@ -178,7 +178,7 @@ public class BlurSettings_Fragment extends PreferenceFragment implements OnShare
         translucentNotifications.setDefaultValue(TRANSLUCENT_NOTIFICATIONS_PREFERENCE_DEFAULT);
         getPreferenceScreen().addPreference(translucentNotifications);
         
-        // barra da alça de arraste transparente
+        // barra da alÃ§a de arraste transparente
         CharSequence[] alphaEntries = { "0.0 - " + getString(R.string.translucent_title), "0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7", "0.8", "0.9", "1.0 - " + getString(R.string.opaque_title) };
         CharSequence[] alphaEntryValues = { "0.0", "0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7", "0.8", "0.9", "1.0" };
         ListPreference dragHandle = new ListPreference(getActivity());
@@ -202,16 +202,16 @@ public class BlurSettings_Fragment extends PreferenceFragment implements OnShare
         fadeInOut.setSummary(R.string.adjustments_fade_in_out_summary);
         fadeInOut.setDefaultValue(BLURRED_FADE_IN_OUT_PREFERENCE_DEFAULT);
         getPreferenceScreen().addPreference(fadeInOut);
-        
-    }
+	        
+	}
 	
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
-	    super.onViewCreated(view, savedInstanceState);
+    	super.onViewCreated(view, savedInstanceState);
 
-	    // adiciona o cabeçalho
-	    ListView lv = getListView();
-        TextView tv = new TextView(view.getContext());
+    	// adiciona o cabeÃ§alho
+    	ListView lv = getListView();
+    	TextView tv = new TextView(view.getContext());
         tv.setPadding(0, 0, 0, DisplayUtils.getDimensionForDensity(view.getResources(), 4));
         tv.setText(R.string.app_description);
         tv.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
@@ -240,8 +240,8 @@ public class BlurSettings_Fragment extends PreferenceFragment implements OnShare
 	@Override
 	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
 			
-		// se a preferência alterada necessita
-		// reiniciar, não envia o broadcast !!
+		// se a preferÃªncia alterada necessita
+		// reiniciar, nÃ£o envia o broadcast !!
 		if (key.equals(TRANSLUCENT_HEADER_PREFERENCE_KEY) ||
 			key.equals(TRANSLUCENT_QUICK_SETTINGS_PREFERENCE_KEY)) {
 			
@@ -266,7 +266,7 @@ public class BlurSettings_Fragment extends PreferenceFragment implements OnShare
 			
 		}
 		
-		// alça de arraste
+		// alÃ§a de arraste
 		if (key.equals(DRAG_HANDLE_TRANSLUCENCY_PREFERENCE_KEY)) {
 			
 			// atualiza o summary
@@ -274,7 +274,7 @@ public class BlurSettings_Fragment extends PreferenceFragment implements OnShare
 			
 		}
 		
-		// envia um intent para atualizar as preferências
+		// envia um intent para atualizar as preferÃªncias
 		Intent intent = new Intent(BLURRED_SYSTEM_UI_UPDATE_INTENT);
 		getActivity().sendBroadcast(intent);
 		
