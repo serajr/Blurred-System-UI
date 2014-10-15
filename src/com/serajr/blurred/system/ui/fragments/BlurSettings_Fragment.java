@@ -67,7 +67,7 @@ public class BlurSettings_Fragment extends PreferenceFragment implements OnShare
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 	        
-		// muito importante !!!
+		// muito importante !!!!
 	    	getPreferenceManager().setSharedPreferencesMode(Context.MODE_WORLD_READABLE);
 	        
 	    	// adiciona em branco
