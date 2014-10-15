@@ -36,129 +36,129 @@ public class Xposed implements IXposedHookZygoteInit, IXposedHookInitPackageReso
 		mModulePath = startupParam.modulePath;
 		mXSharedPreferences = new XSharedPreferences(MODULE_PACKAGE_NAME);
 		
-		// recarregam as preferências
+		// recarregam as preferÃªncias
 		//mXSharedPreferences.reload();
 		
 	}
 	
 	@Override
-    public void handleLoadPackage(LoadPackageParam lpparam) throws Throwable {
+    	public void handleLoadPackage(LoadPackageParam lpparam) throws Throwable {
     	
-    	mClassLoader = lpparam.classLoader;
-    	
-    	// SYSTEM UI
-    	if (lpparam.packageName.equals(SYSTEM_UI_PACKAGE_NAME)) {
-    		
-    		// setam os class loaderes parentes
-    		setParentClassLoaders(lpparam);
-    	
-    		// recarregam as preferências
-    		mXSharedPreferences.reload();
-    		
-    		if (Utils.getAndroidAPILevel() >= 16) {
-    			
-    			// -------
-    			// jb e kk
-    			// -------
-    		
-    			// hooks
-        		SystemUI_PhoneStatusBar.hook();
-        		SystemUI_BaseStatusBar.hook();
-        		SystemUI_PanelView.hook();
-        		SystemUI_NotificationPanelView.hook();
-        		SystemUI_RecentsPanelView.hook();
-        		SystemUI_HeadsUpNotificationView.hook();
-        		SystemUI_TranslucentBackground.hook(true, false);
-    			
-    		} else if (Utils.getAndroidAPILevel() <= 15) {
-    			
-    			// ---
-    			// ics
-    			// ---
-    			
-    			// hooks
-    			com.serajr.blurred.system.ui.hooks.ics.SystemUI_PhoneStatusBar.hook();
-    			
-    		}   			
+	    	mClassLoader = lpparam.classLoader;
+	    	
+	    	// SYSTEM UI
+	    	if (lpparam.packageName.equals(SYSTEM_UI_PACKAGE_NAME)) {
+	    		
+	    		// setam os class loaderes parentes
+	    		setParentClassLoaders(lpparam);
+	    	
+	    		// recarregam as preferÃªncias
+	    		mXSharedPreferences.reload();
+	    		
+	    		if (Utils.getAndroidAPILevel() >= 16) {
+	    			
+	    			// -------
+	    			// jb e kk
+	    			// -------
+	    		
+	    			// hooks
+	        		SystemUI_PhoneStatusBar.hook();
+	        		SystemUI_BaseStatusBar.hook();
+	        		SystemUI_PanelView.hook();
+	        		SystemUI_NotificationPanelView.hook();
+	        		SystemUI_RecentsPanelView.hook();
+	        		SystemUI_HeadsUpNotificationView.hook();
+	        		SystemUI_TranslucentBackground.hook(true, false);
+	    			
+	    		} else if (Utils.getAndroidAPILevel() <= 15) {
+	    			
+	    			// ---
+	    			// ics
+	    			// ---
+	    			
+	    			// hooks
+	    			com.serajr.blurred.system.ui.hooks.ics.SystemUI_PhoneStatusBar.hook();
+	    			
+	    		}   			
+	    	}
     	}
-    }
     
-    @Override
+    	@Override
 	public void handleInitPackageResources(InitPackageResourcesParam resparam) throws Throwable {
     	
 		mInitPackageResourcesParam = resparam;
-    	mXModuleResources = XModuleResources.createInstance(mModulePath, resparam.res);
+    		mXModuleResources = XModuleResources.createInstance(mModulePath, resparam.res);
     	
-    	// SYSTEM UI
-    	if (resparam.packageName.equals(SYSTEM_UI_PACKAGE_NAME)) {
-    		
-    		// recarregam as preferências
-    		mXSharedPreferences.reload();
-    		
-    		if (Utils.getAndroidAPILevel() >= 16) {
-    			
-    			// -------
-    			// jb e kk
-    			// -------
-    		
-    			// hooks
-    			SystemUI_TranslucentBackground.hook(false, true);
-    			
-    		} else if (Utils.getAndroidAPILevel() <= 15) {
-    			
-    			// ---
-    			// ics
-    			// ---
-    			
-    			// hooks
-    			
-    			
-    		}
+	    	// SYSTEM UI
+	    	if (resparam.packageName.equals(SYSTEM_UI_PACKAGE_NAME)) {
+	    		
+	    		// recarregam as preferÃªncias
+	    		mXSharedPreferences.reload();
+	    		
+	    		if (Utils.getAndroidAPILevel() >= 16) {
+	    			
+	    			// -------
+	    			// jb e kk
+	    			// -------
+	    		
+	    			// hooks
+	    			SystemUI_TranslucentBackground.hook(false, true);
+	    			
+	    		} else if (Utils.getAndroidAPILevel() <= 15) {
+	    			
+	    			// ---
+	    			// ics
+	    			// ---
+	    			
+	    			// hooks
+	    			
+	    			
+	    		}
+	    	}
     	}
-    }
     
-    private void setParentClassLoaders(LoadPackageParam lpparam) throws Throwable {
+    	private void setParentClassLoaders(LoadPackageParam lpparam) throws Throwable {
     	
-    	// todos os classloaders
-    	ClassLoader packge = lpparam.classLoader;
-    	ClassLoader module = getClass().getClassLoader();
-    	ClassLoader xposed = module.getParent();
+	    	// todos os classloaders
+	    	ClassLoader packge = lpparam.classLoader;
+	    	ClassLoader module = getClass().getClassLoader();
+	    	ClassLoader xposed = module.getParent();
+	    	
+	    	// package classloader parente Ã©: xposed classloader 
+	    	XposedHelpers.setObjectField(packge, "parent", xposed);
+	    	
+	    	// mÃ³dulo parente classcloader Ã©: package classloader
+	    	XposedHelpers.setObjectField(module, "parent", packge);
     	
-    	// package classloader parente é: xposed classloader 
-    	XposedHelpers.setObjectField(packge, "parent", xposed);
-    	
-    	// módulo parente classcloader é: package classloader
-    	XposedHelpers.setObjectField(module, "parent", packge);
-    	
-    }
+    	}
     
-    public static ClassLoader getXposedClassLoader() {
+    	public static ClassLoader getXposedClassLoader() {
     	
-    	return mClassLoader;
+    		return mClassLoader;
     	
-    }
+    	}
     
-    public static XSharedPreferences getXposedXSharedPreferences() {
+    	public static XSharedPreferences getXposedXSharedPreferences() {
     	
-    	return mXSharedPreferences;
+    		return mXSharedPreferences;
     	
-    }
+    	}
     
-    public static String getXposedModulePath() {
+    	public static String getXposedModulePath() {
     	
-    	return mModulePath;
+    		return mModulePath;
     	
-    }
+    	}
     
-    public static XModuleResources getXposedModuleResources() {
+    	public static XModuleResources getXposedModuleResources() {
     	
-    	return mXModuleResources;
+    		return mXModuleResources;
     	
-    }
+    	}
     
-    public static InitPackageResourcesParam getXposedInitPackageResourcesParam() {
+    	public static InitPackageResourcesParam getXposedInitPackageResourcesParam() {
     	
-    	return mInitPackageResourcesParam;
+    		return mInitPackageResourcesParam;
     	
-    }
+    	}
 }
