@@ -37,8 +37,8 @@ public class BlurSettings_Activity extends Activity {
 		int lightTheme = Utils.isSonyXperiaRom() ? R.style.DeviceDefault_Light_Xperia : R.style.DeviceDefault_Light;
 		if (Settings.System.getString(getContentResolver(), APP_THEME_SETTINGS_TAG) != null)
 			theme = Settings.System.getString(getContentResolver(), APP_THEME_SETTINGS_TAG).equals(APP_THEME_SETTINGS_DEFAULT)
-					? lightTheme
-					: R.style.DeviceDefault;
+			? lightTheme
+			: R.style.DeviceDefault;
 		setTheme(theme);
         
 		super.onCreate(savedInstanceState);
