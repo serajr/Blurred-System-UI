@@ -91,82 +91,82 @@ public class SystemUI_PhoneStatusBar {
 					// receiver
 					BroadcastReceiver receiver = new BroadcastReceiver() {
             			
-                        @Override
-                        public void onReceive(Context context, Intent intent) {
-                        	
-                        	String action = intent.getAction();
-                        	Handler handler = new Handler();
-                        	
-    						// alterou a rotação
-                        	if (action.equals(Intent.ACTION_CONFIGURATION_CHANGED)) {
-                        		
-                        		// recents
-//                        		SystemUI_RecentsPanelView.onConfigurationChanged();
-                        		
-                        		// -----------------------------------------------------------------------
-        						// se na rotação do celular o mod estiver habilitado e o painel expandido
-        						// estiver aberto, fecha o painel expandido, forçando o usuário a expandir
-        						// o painel novamente para obtér a imagem desfocada com a rotação atual !!
-        						// -----------------------------------------------------------------------
-                        		
-        						// obtém os campos
-        						boolean mExpandedVisible = XposedHelpers.getBooleanField(param.thisObject, "mExpandedVisible");
-        						
-        						// fecha o painel
-        						if (mBlurredStatusBarExpandedEnabled && mExpandedVisible)
-        							XposedHelpers.callMethod(param.thisObject, "performCollapse");
-        						
-                        	}
-                        	
-                        	// atualiza
-                        	if (action.equals(BlurSettings_Fragment.BLURRED_SYSTEM_UI_UPDATE_INTENT)) {
-                        		
-                            	handler.postDelayed(new Runnable() {
-                                	
-                                    @Override
-                                    public void run() {
-                                    	
-                                    	// recarregam as preferências
-                                		Xposed.getXposedXSharedPreferences().reload();
-                                		
-                                		// atualizam as preferências
-                                		updatePreferences();
-                    					
-                                    }
-                                }, 100);
-                        	}
-                        	
-                        	// mata o SystemUI.apk
-                        	if (action.equals(BlurSettings_Activity.BLURRED_SYSTEM_UI_KILL_SYSTEM_UI_INTENT)) {
-				
-                        		// atrasa em meio segundo
-                        		handler.postDelayed(new Runnable() {
-                                	
-                                    @Override
-                                    public void run() {
-                                    	
-                                    	// mata
-                                    	Process.sendSignal(Process.myPid(), Process.SIGNAL_KILL);
-                                    	
-                                    }
-                             	}, 100);
-                        	}
-                        }
-                    };
+			                        @Override
+			                        public void onReceive(Context context, Intent intent) {
+			                        	
+			                        	String action = intent.getAction();
+			                        	Handler handler = new Handler();
+			                        	
+			    				// alterou a rotaÃ§Ã£o
+			                        	if (action.equals(Intent.ACTION_CONFIGURATION_CHANGED)) {
+			                        		
+			                        		// recents
+			                        		//SystemUI_RecentsPanelView.onConfigurationChanged();
+			                        		
+			                        		// -----------------------------------------------------------------------
+								// se na rotaÃ§Ã£o do celular o mod estiver habilitado e o painel expandido
+								// estiver aberto, fecha o painel expandido, forÃ§ando o usuÃ¡rio a expandir
+								// o painel novamente para obtÃ©r a imagem desfocada com a rotaÃ§Ã£o atual !!
+								// -----------------------------------------------------------------------
+			        		
+								// obtÃ©m os campos
+								boolean mExpandedVisible = XposedHelpers.getBooleanField(param.thisObject, "mExpandedVisible");
+								
+								// fecha o painel
+								if (mBlurredStatusBarExpandedEnabled && mExpandedVisible)
+									XposedHelpers.callMethod(param.thisObject, "performCollapse");
+			        						
+			                        	}
+			                        	
+			                        	// atualiza
+			                        	if (action.equals(BlurSettings_Fragment.BLURRED_SYSTEM_UI_UPDATE_INTENT)) {
+			                        		
+				                            	handler.postDelayed(new Runnable() {
+				                                	
+					                                @Override
+					                                public void run() {
+					                                    	
+					                                	// recarregam as preferÃªncias
+					                                	Xposed.getXposedXSharedPreferences().reload();
+					                                		
+					                                	// atualizam as preferÃªncias
+					                                	updatePreferences();
+					                    					
+					                                }
+				                                }, 100);
+			                        	}
+			                        	
+			                        	// mata o SystemUI.apk
+			                        	if (action.equals(BlurSettings_Activity.BLURRED_SYSTEM_UI_KILL_SYSTEM_UI_INTENT)) {
+							
+			                        		// atrasa em meio segundo
+			                        		handler.postDelayed(new Runnable() {
+			                                	
+				                                    	@Override
+				                                    	public void run() {
+				                                    	
+					                                    	// mata
+					                                    	Process.sendSignal(Process.myPid(), Process.SIGNAL_KILL);
+				                                    	
+				                                	}
+				                             	}, 100);
+			                        	}
+			                       	}
+			                };
                     	
-                    // registra o receiver
-                    IntentFilter intent = new IntentFilter();
-                    intent.addAction(Intent.ACTION_CONFIGURATION_CHANGED);
-                    intent.addAction(BlurSettings_Fragment.BLURRED_SYSTEM_UI_UPDATE_INTENT);
-                    intent.addAction(BlurSettings_Activity.BLURRED_SYSTEM_UI_KILL_SYSTEM_UI_INTENT);
-                    mStatusBarView.getContext().registerReceiver(receiver, intent);
+			                // registra o receiver
+			                IntentFilter intent = new IntentFilter();
+			                intent.addAction(Intent.ACTION_CONFIGURATION_CHANGED);
+			                intent.addAction(BlurSettings_Fragment.BLURRED_SYSTEM_UI_UPDATE_INTENT);
+			                intent.addAction(BlurSettings_Activity.BLURRED_SYSTEM_UI_KILL_SYSTEM_UI_INTENT);
+			                mStatusBarView.getContext().registerReceiver(receiver, intent);
                     
-            		// atualizam as preferências
-            		updatePreferences();
+            				// atualizam as preferÃªncias
+            				updatePreferences();
             		
-            		// fundos transparentes (preferências necessitam de reboot)
-            		// então somente passa por aqui no primeiro boot da rom !!!
-//            		SystemUI_TranslucentBackground.handleTranslucentBackgroundPrefs();
+		            		// fundos transparentes (preferÃªncias necessitam de reboot)
+		            		// entÃ£o somente passa por aqui no primeiro boot da rom !!!
+		            		//SystemUI_TranslucentBackground.handleTranslucentBackgroundPrefs();
             		
 				}
 			});
@@ -181,7 +181,7 @@ public class SystemUI_PhoneStatusBar {
 					if (!mBlurredStatusBarExpandedEnabled)
 						return;
 					
-					// não continua se o blur ja foi aplicado (previne um segundo blur) !!!
+					// nÃ£o continua se o blur ja foi aplicado (previne um segundo blur) !!!
 					if (mBlurredView.getTag().toString().equals("blur_applied"))
 						return;
 					
@@ -225,7 +225,7 @@ public class SystemUI_PhoneStatusBar {
 						@Override
 						public void dominantColor(int color) {
 							
-							// obtém a luminosidade da cor dominante
+							// obtÃ©m a luminosidade da cor dominante
 							double lightness = DisplayUtils.getColorLightness(color);
 							
 							if (lightness >= 0.0 && color <= 1.0) {
@@ -313,7 +313,7 @@ public class SystemUI_PhoneStatusBar {
 				@Override
 				protected Object replaceHookedMethod(MethodHookParam param) throws Throwable {
 				
-					// obtém os campos
+					// obtÃ©m os campos
 					Display mDisplay = (Display) XposedHelpers.getObjectField(param.thisObject, "mDisplay");
 					Dialog mExpandedDialog = (Dialog) XposedHelpers.getObjectField(param.thisObject, "mExpandedDialog");
 					DisplayMetrics mDisplayMetrics = (DisplayMetrics) XposedHelpers.getObjectField(param.thisObject, "mDisplayMetrics");
@@ -321,49 +321,49 @@ public class SystemUI_PhoneStatusBar {
 					// adiciona o mExpandedView no mBlurView
 					createBlurredExpandedView();
 					
-					// código original, fonte:
+					// cÃ³digo original, fonte:
 					// https://code.google.com/p/android-source-browsing/source/browse/packages/SystemUI/src/com/android/systemui/statusbar/phone/PhoneStatusBar.java?repo=platform--frameworks--base&name=android-4.0.3_r1.1
 					
 					WindowManager.LayoutParams lp;
-			        int pixelFormat;
-
-			        // expanded view
-			        pixelFormat = PixelFormat.TRANSLUCENT;
-
-			        lp = mExpandedDialog.getWindow().getAttributes();
-			        lp.x = 0;
-			        
-			        // sufficiently large negative
-			        XposedHelpers.setIntField(param.thisObject, "mTrackingPosition", lp.y = mDisplayMetrics.heightPixels);
-			        
-			        lp.type = WindowManager.LayoutParams.TYPE_STATUS_BAR_SUB_PANEL;
-			        lp.flags = 0
-			                | WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN
-			                | WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
-			                | WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL
-			                | WindowManager.LayoutParams.FLAG_DITHER
-			                | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
-			        
-			        
-			        if ((Boolean) XposedHelpers.callStaticMethod(ActivityManager.class, "isHighEndGfx", mDisplay))
-			        	lp.flags |= WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED;
-			        
-			        lp.format = pixelFormat;
-			        lp.gravity = Gravity.TOP | Gravity.FILL_HORIZONTAL;
-			        lp.setTitle("StatusBarExpanded");
-			        XposedHelpers.setObjectField(param.thisObject, "mExpandedParams", lp);
-			        XposedHelpers.callMethod(param.thisObject, "updateExpandedSize");
-			        
-			        mExpandedDialog.getWindow().setFormat(pixelFormat);
-			        mExpandedDialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
-
-			        // adiciona o mBlurredView ao invés do mExpandedView
-			        mExpandedDialog.setContentView(mBlurredView,
-			                new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-			                                           ViewGroup.LayoutParams.MATCH_PARENT));
-			        
-			        mExpandedDialog.getWindow().setBackgroundDrawable(null);
-			        mExpandedDialog.show();
+				        int pixelFormat;
+	
+				        // expanded view
+				        pixelFormat = PixelFormat.TRANSLUCENT;
+	
+				        lp = mExpandedDialog.getWindow().getAttributes();
+				        lp.x = 0;
+				        
+				        // sufficiently large negative
+				        XposedHelpers.setIntField(param.thisObject, "mTrackingPosition", lp.y = mDisplayMetrics.heightPixels);
+				        
+				        lp.type = WindowManager.LayoutParams.TYPE_STATUS_BAR_SUB_PANEL;
+				        lp.flags = 0
+				                | WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN
+				                | WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
+				                | WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL
+				                | WindowManager.LayoutParams.FLAG_DITHER
+				                | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
+				        
+				        
+				        if ((Boolean) XposedHelpers.callStaticMethod(ActivityManager.class, "isHighEndGfx", mDisplay))
+				        	lp.flags |= WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED;
+				        
+				        lp.format = pixelFormat;
+				        lp.gravity = Gravity.TOP | Gravity.FILL_HORIZONTAL;
+				        lp.setTitle("StatusBarExpanded");
+				        XposedHelpers.setObjectField(param.thisObject, "mExpandedParams", lp);
+				        XposedHelpers.callMethod(param.thisObject, "updateExpandedSize");
+				        
+				        mExpandedDialog.getWindow().setFormat(pixelFormat);
+				        mExpandedDialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+	
+				        // adiciona o mBlurredView ao invÃ©s do mExpandedView
+				        mExpandedDialog.setContentView(mBlurredView,
+				                new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+				                                           ViewGroup.LayoutParams.MATCH_PARENT));
+				        
+				        mExpandedDialog.getWindow().setBackgroundDrawable(null);
+				        mExpandedDialog.show();
 					
 					return null;
 					
@@ -400,8 +400,8 @@ public class SystemUI_PhoneStatusBar {
 		// cria os views
 		mBlurredView = new FrameLayout(context);
 		
-    	// seta o tag de: pronto para receber o blur
-    	mBlurredView.setTag("ready_to_blur");
+	    	// seta o tag de: pronto para receber o blur
+	    	mBlurredView.setTag("ready_to_blur");
     	
 	}
 	
@@ -414,7 +414,7 @@ public class SystemUI_PhoneStatusBar {
 		FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
 		mBlurredView.addView(mExpandedView, lp);
     	
-    	// layout
+    		// layout
 		mBlurredView.requestLayout();
 		
 	}
@@ -428,11 +428,11 @@ public class SystemUI_PhoneStatusBar {
 			if (mBlurredView.getTag().toString().equals("error"))
 				return;
 			
-			// dimensões
-     		int panelHeight = mExpandedView.getMeasuredHeight();
-     		int viewHeight = mBlurredView.getMeasuredHeight();
-				
-     		// alpha
+			// dimensÃµes
+	     		int panelHeight = mExpandedView.getMeasuredHeight();
+	     		int viewHeight = mBlurredView.getMeasuredHeight();
+					
+	     		// alpha
 			float alpha = -1f;
 			
 			// fade in-out ?
@@ -475,7 +475,7 @@ public class SystemUI_PhoneStatusBar {
 			
 			Context context = mExpandedView.getContext(); 
 			
-			// obtém a screenshot da tela com escala reduzida
+			// obtÃ©m a screenshot da tela com escala reduzida
 			mScreenBitmap = DisplayUtils.takeSurfaceScreenshot(context, mBlurScale);
 			
 		}
