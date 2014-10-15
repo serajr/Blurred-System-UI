@@ -32,7 +32,7 @@ public class BlurSettings_Activity extends Activity {
 	@Override
     	public void onCreate(Bundle savedInstanceState) {
 		
-		// seta o tema escolhido ou o padrão
+		// seta o tema escolhido ou o padrão!
 		int theme = R.style.DeviceDefault_Light;
 		int lightTheme = Utils.isSonyXperiaRom() ? R.style.DeviceDefault_Light_Xperia : R.style.DeviceDefault_Light;
 		if (Settings.System.getString(getContentResolver(), APP_THEME_SETTINGS_TAG) != null)
