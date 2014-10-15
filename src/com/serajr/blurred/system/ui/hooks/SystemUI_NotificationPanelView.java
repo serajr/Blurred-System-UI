@@ -46,7 +46,7 @@ public class SystemUI_NotificationPanelView {
 	
 	public static void hook() {
 		
-		// esta classe n„o existe no JB 4.1 !!
+		// esta classe n√£o existe no JB 4.1 !!
 		if (Utils.getAndroidAPILevel() <= 16)
 			return;
 		
@@ -73,10 +73,10 @@ public class SystemUI_NotificationPanelView {
 				@Override
 				protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
 				
-					// 1∞ - mHandleBar
+					// 1¬∞ - mHandleBar
 					try {
 					
-						// obtÈm os campos
+						// obt√©m os campos
 						Drawable mHandleBar = (Drawable) XposedHelpers.getObjectField(param.thisObject, "mHandleBar");
 						
 						// seta o alpha
@@ -87,10 +87,10 @@ public class SystemUI_NotificationPanelView {
 						
 					} catch (NoSuchFieldError e) {}
 					
-					// 2∞ - mHandleView
+					// 2¬∞ - mHandleView
 					try {
 						
-						// obtÈm os campos
+						// obt√©m os campos
 						View mHandleView = (View) XposedHelpers.getObjectField(param.thisObject, "mHandleView");
 						
 						// seta o alpha
@@ -136,20 +136,20 @@ public class SystemUI_NotificationPanelView {
 		mBlurredView = new FrameLayout(context);
 		mInnerBlurredView = new FrameLayout(context);
 		
-		// par‚metros
+		// par√¢metros
 		FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
 		
 		// insere o mInnerBlurredView no mBlurredView
 		mBlurredView.addView(mInnerBlurredView, lp);
 		
-    	// insere o mBlurredView no mNotificationPanelView (posiÁ„o 0)
-    	((ViewGroup) mNotificationPanelView).addView(mBlurredView, 0, lp);
-    	
-    	// layout
-    	mNotificationPanelView.requestLayout();
-    	
-    	// seta o tag de: pronto para receber o blur
-    	mBlurredView.setTag("ready_to_blur");
+	    	// insere o mBlurredView no mNotificationPanelView (posi√ß√£o 0)
+	    	((ViewGroup) mNotificationPanelView).addView(mBlurredView, 0, lp);
+	    	
+	    	// layout
+	    	mNotificationPanelView.requestLayout();
+	    	
+	    	// seta o tag de: pronto para receber o blur
+	    	mBlurredView.setTag("ready_to_blur");
     	
 	}
 	
@@ -162,9 +162,9 @@ public class SystemUI_NotificationPanelView {
 			if (mBlurredView.getTag().toString().equals("error"))
 				return;
 			
-			// dimensıes
-     		int panelHeight = mNotificationPanelView.getMeasuredHeight();
-     		int viewHeight = mBlurredView.getMeasuredHeight();
+			// dimens√µes
+	     		int panelHeight = mNotificationPanelView.getMeasuredHeight();
+	     		int viewHeight = mBlurredView.getMeasuredHeight();
 				
 			// alpha
 			float alpha = -1f;
@@ -205,7 +205,7 @@ public class SystemUI_NotificationPanelView {
 						
 					}
 					
-					// corrige as dimensıes do mInnerBlurredView 
+					// corrige as dimens√µes do mInnerBlurredView 
 					int[] dimens = BlurTask.getRealScreenDimensions();
 					if (mNotificationPanelView.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE)
 						mInnerBlurredView.getLayoutParams().width = dimens[0];
@@ -240,7 +240,7 @@ public class SystemUI_NotificationPanelView {
 			@Override
 			public void dominantColor(int color) {
 				
-				// obtÈm a luminosidade da cor dominante
+				// obt√©m a luminosidade da cor dominante
 				double lightness = DisplayUtils.getColorLightness(color);
 				
 				if (lightness >= 0.0 && color <= 1.0) {
@@ -333,7 +333,6 @@ public class SystemUI_NotificationPanelView {
 		private static BlurEngine mBlurEngine;
 		private static BlurTaskCallback mCallback;
 		
-		//private Bitmap mSmallBitmap;
 		private Bitmap mScreenBitmap;
 			
 		public static void setBlurEngine(BlurEngine blurEngine) {
@@ -359,10 +358,10 @@ public class SystemUI_NotificationPanelView {
 			
 			Context context = mNotificationPanelView.getContext(); 
 			
-			// obtÈm o tamamho real da tela
+			// obt√©m o tamamho real da tela
 			mScreenDimens = DisplayUtils.getRealScreenDimensions(context);
 			
-			// obtÈm a screenshot da tela com escala reduzida
+			// obt√©m a screenshot da tela com escala reduzida
 			mScreenBitmap = DisplayUtils.takeSurfaceScreenshot(context, mBlurScale);
 			
 		}
