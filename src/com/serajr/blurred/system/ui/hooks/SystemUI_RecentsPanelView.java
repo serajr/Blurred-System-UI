@@ -54,7 +54,7 @@ public class SystemUI_RecentsPanelView {
 			XposedBridge.hookAllConstructors(RecentsPanelView.class, new XC_MethodHook() {
 				
 				@Override
-	            protected void afterHookedMethod(MethodHookParam param) throws Throwable {
+	            		protected void afterHookedMethod(MethodHookParam param) throws Throwable {
 					
 					// guarda
 					mRecentsPanelView = (RecentsPanelView) param.thisObject;
@@ -72,29 +72,29 @@ public class SystemUI_RecentsPanelView {
 					"dispatchDraw", Canvas.class, new XC_MethodHook() {
 				
 				@Override
-	            protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
+	            		protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
 					
 					// ------------------
 					// beforeHookedMethod
 					// ------------------
 					
-					// objeto é o mRecentsPanelView ?
+					// objeto Ã© o mRecentsPanelView ?
 					if (param.thisObject == mRecentsPanelView) {
 					
 						// ----------------------------------------------------
-						// necessário essa verificação, pois android <= 4.3 não
-						// tem o método dispatchDraw dentro do RecentsPanelView
-						// então o hook acontece dentro do ViewGroup, que passa
-						// por todo o sistema. é mRecentsPanelView ? continua !  
+						// necessÃ¡rio essa verificaÃ§Ã£o, pois android <= 4.3 nÃ£o
+						// tem o mÃ©todo dispatchDraw dentro do RecentsPanelView
+						// entÃ£o o hook acontece dentro do ViewGroup, que passa
+						// por todo o sistema. Ã© mRecentsPanelView ? continua !  
 						// ----------------------------------------------------
 						
 						// continua ?
 						if (mBlurredScreenBitmap != null) {
 							
-							// parâmetros
+							// parÃ¢metros
 							Canvas canvas = (Canvas) param.args[0];
 							
-							// verifica a localização (x, y) do mRecentsPanelView 
+							// verifica a localizaÃ§Ã£o (x, y) do mRecentsPanelView 
 							int[] location = new int[2];
 							mRecentsPanelView.getLocationOnScreen(location);
 							int x = location[0];
@@ -121,19 +121,19 @@ public class SystemUI_RecentsPanelView {
 			XposedHelpers.findAndHookMethod(RecentsPanelView.class, "showIfReady", new XC_MethodHook() {
 				
 				@Override
-	            protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
+	            		protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
 					
 					// continua ?
 					if (!mBlurredRecentAppsEnabled)
 						return;
 					
-					// obtém o recents_bg_protect
+					// obtÃ©m o recents_bg_protect
 					View view = null;
 					int viewResId = mRecentsPanelView.getResources().getIdentifier("recents_bg_protect", "id", Xposed.SYSTEM_UI_PACKAGE_NAME);
 					if (viewResId != 0)						
 						view = mRecentsPanelView.findViewById(viewResId);
 					
-					// seta o fundo padrão transparente para o recents_bg_protect
+					// seta o fundo padrÃ£o transparente para o recents_bg_protect
 					if (view != null)
 						view.setBackground(new ColorDrawable(Color.TRANSPARENT));
 					
@@ -144,24 +144,24 @@ public class SystemUI_RecentsPanelView {
 			XposedHelpers.findAndHookMethod(RecentsPanelView.class, "dismiss", new XC_MethodHook() {
 				
 				@Override
-	            protected void afterHookedMethod(MethodHookParam param) throws Throwable {
+	            		protected void afterHookedMethod(MethodHookParam param) throws Throwable {
 					
-					// padrões
+					// padrÃµes
 					defaults();
 					
 				}
 			});
 			
-			// >= 4.2 (<= 4.1 não tem esse método)
+			// >= 4.2 (<= 4.1 nÃ£o tem esse mÃ©todo)
 			if (Utils.getAndroidAPILevel() >= 17) {
 				
 				// dismissAndGoBack
 				XposedHelpers.findAndHookMethod(RecentsPanelView.class, "dismissAndGoBack", new XC_MethodHook() {
 					
 					@Override
-		            protected void afterHookedMethod(MethodHookParam param) throws Throwable {
+		            		protected void afterHookedMethod(MethodHookParam param) throws Throwable {
 						
-						// padrões
+						// padrÃµes
 						defaults();
 						
 					}
@@ -185,7 +185,7 @@ public class SystemUI_RecentsPanelView {
 		mBlurLightColorFilter = prefs.getInt(BlurSettings_Fragment.BLUR_LIGHT_COLOR_PREFERENCE_KEY, BlurSettings_Fragment.BLUR_LIGHT_COLOR_PREFERENCE_DEFAULT);
 		mBlurredRecentAppsEnabled = prefs.getBoolean(BlurSettings_Fragment.RECENT_APPS_ENABLED_PREFERENCE_KEY, BlurSettings_Fragment.RECENT_APPS_ENABLED_PREFERENCE_DEFAULT);
 		
-		// padrões
+		// padrÃµes
 		defaults();
 		
 	}
@@ -193,10 +193,10 @@ public class SystemUI_RecentsPanelView {
 	public static void onConfigurationChanged() {
 		
 		// -----------------
-		// alterou a rotação
+		// alterou a rotaÃ§Ã£o
 		// -----------------
 		
-		// padrões
+		// padrÃµes
 		defaults();
 		
 	}
@@ -247,7 +247,7 @@ public class SystemUI_RecentsPanelView {
 			@Override
 			public void dominantColor(int color) {
 				
-				// obtém a luminosidade da cor dominante
+				// obtÃ©m a luminosidade da cor dominante
 				double lightness = DisplayUtils.getColorLightness(color);
 				
 				if (lightness >= 0.0 && color <= 1.0) {
@@ -301,18 +301,18 @@ public class SystemUI_RecentsPanelView {
 			return;
 		
 		// ------------------------
-		// seta o background padrão
+		// seta o background padrÃ£o
 		// ------------------------
 		
 		Resources res = mRecentsPanelView.getResources();
 		
-		// obtém o recents_bg_protect
+		// obtÃ©m o recents_bg_protect
 		View view = null;
 		int viewResId = res.getIdentifier("recents_bg_protect", "id", Xposed.SYSTEM_UI_PACKAGE_NAME);
 		if (viewResId != 0)
 			view = mRecentsPanelView.findViewById(viewResId);
 		
-		// obtém o fundo padrão
+		// obtÃ©m o fundo padrÃ£o
 		Drawable viewBg = null;
 		int viewBgResId = res.getIdentifier("status_bar_recents_background", "drawable", Xposed.SYSTEM_UI_PACKAGE_NAME);
 		if (viewBgResId != 0) {
@@ -324,7 +324,7 @@ public class SystemUI_RecentsPanelView {
 			} catch (NotFoundException e) {
 				
 				// --------------------
-				// erro não esperado !!
+				// erro nÃ£o esperado !!
 				// --------------------
 				
 				e.printStackTrace();
@@ -332,16 +332,16 @@ public class SystemUI_RecentsPanelView {
 			}
 		}
 		
-		// não encontrou o drawable por
+		// nÃ£o encontrou o drawable por
 		// algum motivo inesperado !!!!
 		if (viewBg == null) {
 			
-			// carrega o drawable do módulo
+			// carrega o drawable do mÃ³dulo
 			viewBg = Xposed.getXposedModuleResources().getDrawable(R.drawable.status_bar_recents_background);
 			
 		}
 		
-		// seta o fundo padrão para o recents_bg_protect
+		// seta o fundo padrÃ£o para o recents_bg_protect
 		if (view != null && viewBg != null)
 			view.setBackground(viewBg);
 		
@@ -379,10 +379,10 @@ public class SystemUI_RecentsPanelView {
 			
 			Context context = mBlurUtils.getContext();
 			
-			// obtém o tamamho real da tela
+			// obtÃ©m o tamamho real da tela
 			mScreenDimens = DisplayUtils.getRealScreenDimensions(context);
 			
-			// obtém a screenshot da tela com escala reduzida
+			// obtÃ©m a screenshot da tela com escala reduzida
 			mScreenBitmap = DisplayUtils.takeSurfaceScreenshot(context, mBlurScale);
 			
 		}
