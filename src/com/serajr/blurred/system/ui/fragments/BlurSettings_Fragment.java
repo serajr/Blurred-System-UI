@@ -68,163 +68,163 @@ public class BlurSettings_Fragment extends PreferenceFragment implements OnShare
 		super.onCreate(savedInstanceState);
 	        
 		// muito importante !!!
-	    getPreferenceManager().setSharedPreferencesMode(Context.MODE_WORLD_READABLE);
+	    	getPreferenceManager().setSharedPreferencesMode(Context.MODE_WORLD_READABLE);
 	        
-	    // adiciona em branco
-	    addPreferencesFromResource(R.xml.preferences);
+	    	// adiciona em branco
+	    	addPreferencesFromResource(R.xml.preferences);
 	        
-	    // prefs
-	    SharedPreferences prefs = getPreferenceManager().getSharedPreferences();
+	    	// prefs
+	    	SharedPreferences prefs = getPreferenceManager().getSharedPreferences();
 	        
-        // categoria - painéis
-        PreferenceCategory blur = new PreferenceCategory(getActivity());
-        blur.setTitle(R.string.panels_category);
-        getPreferenceScreen().addPreference(blur);
+	        // categoria - painéis
+	        PreferenceCategory blur = new PreferenceCategory(getActivity());
+	        blur.setTitle(R.string.panels_category);
+	        getPreferenceScreen().addPreference(blur);
+		        
+	        // status bar expandida
+	        SwitchPreference statusBarExpanded = new SwitchPreference(getActivity());
+	        statusBarExpanded.setKey(STATUS_BAR_EXPANDED_ENABLED_PREFERENCE_KEY);
+	        statusBarExpanded.setTitle(R.string.panels_status_bar_expanded_title);
+	        statusBarExpanded.setDefaultValue(STATUS_BAR_EXPANDED_ENABLED_PREFERENCE_DEFAULT);
+	        getPreferenceScreen().addPreference(statusBarExpanded);
 	        
-        // status bar expandida
-        SwitchPreference statusBarExpanded = new SwitchPreference(getActivity());
-        statusBarExpanded.setKey(STATUS_BAR_EXPANDED_ENABLED_PREFERENCE_KEY);
-        statusBarExpanded.setTitle(R.string.panels_status_bar_expanded_title);
-        statusBarExpanded.setDefaultValue(STATUS_BAR_EXPANDED_ENABLED_PREFERENCE_DEFAULT);
-        getPreferenceScreen().addPreference(statusBarExpanded);
-        
-        // aplicações recentes
-        SwitchPreference enabled = new SwitchPreference(getActivity());
-        enabled.setKey(RECENT_APPS_ENABLED_PREFERENCE_KEY);
-        enabled.setTitle(R.string.panels_recent_apps_title);
-        enabled.setDefaultValue(RECENT_APPS_ENABLED_PREFERENCE_DEFAULT);
-        getPreferenceScreen().addPreference(enabled);
-        
-        // categoria - configurações do desfoque
-        PreferenceCategory blurSettings = new PreferenceCategory(getActivity());
-        blurSettings.setTitle(R.string.blur_settings_category);
-        getPreferenceScreen().addPreference(blurSettings);
-        
-        // escala
-        CharSequence[] scaleEntryValues = { "10", "20", "30", "40", "50" };
-        ListPreference scale = new ListPreference(getActivity());
-        scale.setKey(BLUR_SCALE_PREFERENCE_KEY);
-        scale.setTitle(R.string.blur_scale_title);
-        scale.setEntries(mScaleEntries);
-        scale.setEntryValues(scaleEntryValues);
-        scale.setDefaultValue(BLUR_SCALE_PREFERENCE_DEFAULT);
-        scale.setSummary(getScaleSummary(prefs.getString(BLUR_SCALE_PREFERENCE_KEY, BLUR_SCALE_PREFERENCE_DEFAULT)));
-        getPreferenceScreen().addPreference(scale);
-        
-        // raio
-        CharSequence[] radiusEntries = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25" };
-        ListPreference radius = new ListPreference(getActivity());
-        radius.setKey(BLUR_RADIUS_PREFERENCE_KEY);
-        radius.setTitle(R.string.blur_radius_title);
-        radius.setEntries(radiusEntries);
-        radius.setEntryValues(radiusEntries);
-        radius.setDefaultValue(BLUR_RADIUS_PREFERENCE_DEFAULT);
-        radius.setSummary(prefs.getString(BLUR_RADIUS_PREFERENCE_KEY, BLUR_RADIUS_PREFERENCE_DEFAULT));
-        getPreferenceScreen().addPreference(radius);
-        
-        // cor clara
-        ColorPickerPreference lightColor = new ColorPickerPreference(getActivity());
-        lightColor.setKey(BLUR_LIGHT_COLOR_PREFERENCE_KEY);
-        lightColor.setTitle(R.string.blur_light_color_title);
-        lightColor.setDefaultValue(prefs.getInt(BLUR_LIGHT_COLOR_PREFERENCE_KEY, BLUR_LIGHT_COLOR_PREFERENCE_DEFAULT));
-        lightColor.setAlphaSliderEnabled(false);
-        lightColor.setHexValueEnabled(true);
-        getPreferenceScreen().addPreference(lightColor);
-        
-        // cor mista
-        ColorPickerPreference mixedColor = new ColorPickerPreference(getActivity());
-        mixedColor.setKey(BLUR_MIXED_COLOR_PREFERENCE_KEY);
-        mixedColor.setTitle(R.string.blur_mixed_color_title);
-        mixedColor.setDefaultValue(prefs.getInt(BLUR_MIXED_COLOR_PREFERENCE_KEY, BLUR_MIXED_COLOR_PREFERENCE_DEFAULT));
-        mixedColor.setAlphaSliderEnabled(false);
-        mixedColor.setHexValueEnabled(true);
-        getPreferenceScreen().addPreference(mixedColor);
-        
-        // cor escura
-        ColorPickerPreference darkColor = new ColorPickerPreference(getActivity());
-        darkColor.setKey(BLUR_DARK_COLOR_PREFERENCE_KEY);
-        darkColor.setTitle(R.string.blur_dark_color_title);
-        darkColor.setDefaultValue(prefs.getInt(BLUR_DARK_COLOR_PREFERENCE_KEY, BLUR_DARK_COLOR_PREFERENCE_DEFAULT));
-        darkColor.setAlphaSliderEnabled(false);
-        darkColor.setHexValueEnabled(true);
-        getPreferenceScreen().addPreference(darkColor);
-        
-        // categoria - fundo transparente
-        PreferenceCategory notifications = new PreferenceCategory(getActivity());
-        notifications.setTitle(R.string.translucent_background_category);
-        getPreferenceScreen().addPreference(notifications);
-        
-        // header transparente
-        XXCheckBoxPreference translucentHeader = new XXCheckBoxPreference(getActivity());
-        translucentHeader.setKey(TRANSLUCENT_HEADER_PREFERENCE_KEY);
-        translucentHeader.setTitle(R.string.translucent_header_title);
-        translucentHeader.setSummary(R.string.translucent_header_summary);
-        translucentHeader.setDefaultValue(TRANSLUCENT_HEADER_PREFERENCE_DEFAULT);
-        getPreferenceScreen().addPreference(translucentHeader);
-        
-        // quick settings transparente
-        XXCheckBoxPreference translucentQuickSettings = new XXCheckBoxPreference(getActivity());
-        translucentQuickSettings.setKey(TRANSLUCENT_QUICK_SETTINGS_PREFERENCE_KEY);
-        translucentQuickSettings.setTitle(R.string.translucent_quick_settings_title);
-        translucentQuickSettings.setSummary(R.string.translucent_quick_settings_summary);
-        translucentQuickSettings.setDefaultValue(TRANSLUCENT_QUICK_SETTINGS_PREFERENCE_DEFAULT);
-        getPreferenceScreen().addPreference(translucentQuickSettings);
-        
-        // notificações transparentes
-        CheckBoxPreference translucentNotifications = new CheckBoxPreference(getActivity());
-        translucentNotifications.setKey(TRANSLUCENT_NOTIFICATIONS_PREFERENCE_KEY);
-        translucentNotifications.setTitle(R.string.translucent_notifications_title);
-        translucentNotifications.setSummary(R.string.translucent_notifications_summary);
-        translucentNotifications.setDefaultValue(TRANSLUCENT_NOTIFICATIONS_PREFERENCE_DEFAULT);
-        getPreferenceScreen().addPreference(translucentNotifications);
-        
-        // barra da alça de arraste transparente
-        CharSequence[] alphaEntries = { "0.0 - " + getString(R.string.translucent_title), "0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7", "0.8", "0.9", "1.0 - " + getString(R.string.opaque_title) };
-        CharSequence[] alphaEntryValues = { "0.0", "0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7", "0.8", "0.9", "1.0" };
-        ListPreference dragHandle = new ListPreference(getActivity());
-        dragHandle.setKey(DRAG_HANDLE_TRANSLUCENCY_PREFERENCE_KEY);
-        dragHandle.setTitle(R.string.translucent_drag_handle_title);
-        dragHandle.setEntries(alphaEntries);
-        dragHandle.setEntryValues(alphaEntryValues);
-        dragHandle.setDefaultValue(DRAG_HANDLE_TRANSLUCENCY_PREFERENCE_DEFAULT);
-        dragHandle.setSummary(getDragHandleSummary(prefs.getString(DRAG_HANDLE_TRANSLUCENCY_PREFERENCE_KEY, DRAG_HANDLE_TRANSLUCENCY_PREFERENCE_DEFAULT)));
-        getPreferenceScreen().addPreference(dragHandle);
-        
-        // categoria - ajustes
-        PreferenceCategory adjustments = new PreferenceCategory(getActivity());
-        adjustments.setTitle(R.string.adjustments_category);
-        getPreferenceScreen().addPreference(adjustments);
-        
-        // fade in/out
-        CheckBoxPreference fadeInOut = new CheckBoxPreference(getActivity());
-        fadeInOut.setKey(BLURRED_FADE_IN_OUT_PREFERENCE_KEY);
-        fadeInOut.setTitle(R.string.adjustments_fade_in_out_title);
-        fadeInOut.setSummary(R.string.adjustments_fade_in_out_summary);
-        fadeInOut.setDefaultValue(BLURRED_FADE_IN_OUT_PREFERENCE_DEFAULT);
-        getPreferenceScreen().addPreference(fadeInOut);
+	        // aplicações recentes
+	        SwitchPreference enabled = new SwitchPreference(getActivity());
+	        enabled.setKey(RECENT_APPS_ENABLED_PREFERENCE_KEY);
+	        enabled.setTitle(R.string.panels_recent_apps_title);
+	        enabled.setDefaultValue(RECENT_APPS_ENABLED_PREFERENCE_DEFAULT);
+	        getPreferenceScreen().addPreference(enabled);
+	        
+	        // categoria - configurações do desfoque
+	        PreferenceCategory blurSettings = new PreferenceCategory(getActivity());
+	        blurSettings.setTitle(R.string.blur_settings_category);
+	        getPreferenceScreen().addPreference(blurSettings);
+	        
+	        // escala
+	        CharSequence[] scaleEntryValues = { "10", "20", "30", "40", "50" };
+	        ListPreference scale = new ListPreference(getActivity());
+	        scale.setKey(BLUR_SCALE_PREFERENCE_KEY);
+	        scale.setTitle(R.string.blur_scale_title);
+	        scale.setEntries(mScaleEntries);
+	        scale.setEntryValues(scaleEntryValues);
+	        scale.setDefaultValue(BLUR_SCALE_PREFERENCE_DEFAULT);
+	        scale.setSummary(getScaleSummary(prefs.getString(BLUR_SCALE_PREFERENCE_KEY, BLUR_SCALE_PREFERENCE_DEFAULT)));
+	        getPreferenceScreen().addPreference(scale);
+	        
+	        // raio
+	        CharSequence[] radiusEntries = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25" };
+	        ListPreference radius = new ListPreference(getActivity());
+	        radius.setKey(BLUR_RADIUS_PREFERENCE_KEY);
+	        radius.setTitle(R.string.blur_radius_title);
+	        radius.setEntries(radiusEntries);
+	        radius.setEntryValues(radiusEntries);
+	        radius.setDefaultValue(BLUR_RADIUS_PREFERENCE_DEFAULT);
+	        radius.setSummary(prefs.getString(BLUR_RADIUS_PREFERENCE_KEY, BLUR_RADIUS_PREFERENCE_DEFAULT));
+	        getPreferenceScreen().addPreference(radius);
+	        
+	        // cor clara
+	        ColorPickerPreference lightColor = new ColorPickerPreference(getActivity());
+	        lightColor.setKey(BLUR_LIGHT_COLOR_PREFERENCE_KEY);
+	        lightColor.setTitle(R.string.blur_light_color_title);
+	        lightColor.setDefaultValue(prefs.getInt(BLUR_LIGHT_COLOR_PREFERENCE_KEY, BLUR_LIGHT_COLOR_PREFERENCE_DEFAULT));
+	        lightColor.setAlphaSliderEnabled(false);
+	        lightColor.setHexValueEnabled(true);
+	        getPreferenceScreen().addPreference(lightColor);
+	        
+	        // cor mista
+	        ColorPickerPreference mixedColor = new ColorPickerPreference(getActivity());
+	        mixedColor.setKey(BLUR_MIXED_COLOR_PREFERENCE_KEY);
+	        mixedColor.setTitle(R.string.blur_mixed_color_title);
+	        mixedColor.setDefaultValue(prefs.getInt(BLUR_MIXED_COLOR_PREFERENCE_KEY, BLUR_MIXED_COLOR_PREFERENCE_DEFAULT));
+	        mixedColor.setAlphaSliderEnabled(false);
+	        mixedColor.setHexValueEnabled(true);
+	        getPreferenceScreen().addPreference(mixedColor);
+	        
+	        // cor escura
+	        ColorPickerPreference darkColor = new ColorPickerPreference(getActivity());
+	        darkColor.setKey(BLUR_DARK_COLOR_PREFERENCE_KEY);
+	        darkColor.setTitle(R.string.blur_dark_color_title);
+	        darkColor.setDefaultValue(prefs.getInt(BLUR_DARK_COLOR_PREFERENCE_KEY, BLUR_DARK_COLOR_PREFERENCE_DEFAULT));
+	        darkColor.setAlphaSliderEnabled(false);
+	        darkColor.setHexValueEnabled(true);
+	        getPreferenceScreen().addPreference(darkColor);
+	        
+	        // categoria - fundo transparente
+	        PreferenceCategory notifications = new PreferenceCategory(getActivity());
+	        notifications.setTitle(R.string.translucent_background_category);
+	        getPreferenceScreen().addPreference(notifications);
+	        
+	        // header transparente
+	        XXCheckBoxPreference translucentHeader = new XXCheckBoxPreference(getActivity());
+	        translucentHeader.setKey(TRANSLUCENT_HEADER_PREFERENCE_KEY);
+	        translucentHeader.setTitle(R.string.translucent_header_title);
+	        translucentHeader.setSummary(R.string.translucent_header_summary);
+	        translucentHeader.setDefaultValue(TRANSLUCENT_HEADER_PREFERENCE_DEFAULT);
+	        getPreferenceScreen().addPreference(translucentHeader);
+	        
+	        // quick settings transparente
+	        XXCheckBoxPreference translucentQuickSettings = new XXCheckBoxPreference(getActivity());
+	        translucentQuickSettings.setKey(TRANSLUCENT_QUICK_SETTINGS_PREFERENCE_KEY);
+	        translucentQuickSettings.setTitle(R.string.translucent_quick_settings_title);
+	        translucentQuickSettings.setSummary(R.string.translucent_quick_settings_summary);
+	        translucentQuickSettings.setDefaultValue(TRANSLUCENT_QUICK_SETTINGS_PREFERENCE_DEFAULT);
+	        getPreferenceScreen().addPreference(translucentQuickSettings);
+	        
+	        // notificações transparentes
+	        CheckBoxPreference translucentNotifications = new CheckBoxPreference(getActivity());
+	        translucentNotifications.setKey(TRANSLUCENT_NOTIFICATIONS_PREFERENCE_KEY);
+	        translucentNotifications.setTitle(R.string.translucent_notifications_title);
+	        translucentNotifications.setSummary(R.string.translucent_notifications_summary);
+	        translucentNotifications.setDefaultValue(TRANSLUCENT_NOTIFICATIONS_PREFERENCE_DEFAULT);
+	        getPreferenceScreen().addPreference(translucentNotifications);
+	        
+	        // barra da alça de arraste transparente
+	        CharSequence[] alphaEntries = { "0.0 - " + getString(R.string.translucent_title), "0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7", "0.8", "0.9", "1.0 - " + getString(R.string.opaque_title) };
+	        CharSequence[] alphaEntryValues = { "0.0", "0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7", "0.8", "0.9", "1.0" };
+	        ListPreference dragHandle = new ListPreference(getActivity());
+	        dragHandle.setKey(DRAG_HANDLE_TRANSLUCENCY_PREFERENCE_KEY);
+	        dragHandle.setTitle(R.string.translucent_drag_handle_title);
+	        dragHandle.setEntries(alphaEntries);
+	        dragHandle.setEntryValues(alphaEntryValues);
+	        dragHandle.setDefaultValue(DRAG_HANDLE_TRANSLUCENCY_PREFERENCE_DEFAULT);
+	        dragHandle.setSummary(getDragHandleSummary(prefs.getString(DRAG_HANDLE_TRANSLUCENCY_PREFERENCE_KEY, DRAG_HANDLE_TRANSLUCENCY_PREFERENCE_DEFAULT)));
+	        getPreferenceScreen().addPreference(dragHandle);
+	        
+	        // categoria - ajustes
+	        PreferenceCategory adjustments = new PreferenceCategory(getActivity());
+	        adjustments.setTitle(R.string.adjustments_category);
+	        getPreferenceScreen().addPreference(adjustments);
+	        
+	        // fade in/out
+	        CheckBoxPreference fadeInOut = new CheckBoxPreference(getActivity());
+	        fadeInOut.setKey(BLURRED_FADE_IN_OUT_PREFERENCE_KEY);
+	        fadeInOut.setTitle(R.string.adjustments_fade_in_out_title);
+	        fadeInOut.setSummary(R.string.adjustments_fade_in_out_summary);
+	        fadeInOut.setDefaultValue(BLURRED_FADE_IN_OUT_PREFERENCE_DEFAULT);
+	        getPreferenceScreen().addPreference(fadeInOut);
 	        
 	}
 	
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
-    	super.onViewCreated(view, savedInstanceState);
-
-    	// adiciona o cabeçalho
-    	ListView lv = getListView();
-    	TextView tv = new TextView(view.getContext());
-        tv.setPadding(0, 0, 0, DisplayUtils.getDimensionForDensity(view.getResources(), 4));
-        tv.setText(R.string.app_description);
-        tv.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
-        lv.addHeaderView(tv);
+	    	super.onViewCreated(view, savedInstanceState);
+	
+	    	// adiciona o cabeçalho
+	    	ListView lv = getListView();
+	    	TextView tv = new TextView(view.getContext());
+	        tv.setPadding(0, 0, 0, DisplayUtils.getDimensionForDensity(view.getResources(), 4));
+	        tv.setText(R.string.app_description);
+	        tv.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
+	        lv.addHeaderView(tv);
         	
 	}
 	
 	@Override
 	public void onResume() {
-	    super.onResume();
+	    	super.onResume();
 	    
-	    // registra
-	    getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
+		// registra
+		getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
 	    
 	}
 
