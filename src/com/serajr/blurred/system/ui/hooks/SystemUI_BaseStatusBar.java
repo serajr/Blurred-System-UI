@@ -65,7 +65,7 @@ public class SystemUI_BaseStatusBar {
 				
 			} catch (NoSuchMethodError e) {
 				
-				// erro, não encontrou com os 2 parâmetros acima !
+				// erro, não encontrou com os 2 parâmetros acima!
 				
 				// 3 parâmetros - Entry.class, ViewGroup.class, int.class
 				inflateViews = XposedHelpers.findMethodExact(BaseStatusBar.class, "inflateViews", Entry.class, ViewGroup.class, int.class);
