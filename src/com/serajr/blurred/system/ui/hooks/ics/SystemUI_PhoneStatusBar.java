@@ -72,7 +72,7 @@ public class SystemUI_PhoneStatusBar {
 					mStatusBarView = (PhoneStatusBarView) XposedHelpers.getObjectField(param.thisObject, "mStatusBarView");
 					mExpandedView = (View) XposedHelpers.getObjectField(param.thisObject, "mExpandedView");
 					
-					// ExpandedView - onMeasure
+					// LinearLayout - onMeasure
 					XposedHelpers.findAndHookMethod(LinearLayout.class, "onMeasure", int.class, int.class, new XC_MethodHook() {
 						
 						@Override
