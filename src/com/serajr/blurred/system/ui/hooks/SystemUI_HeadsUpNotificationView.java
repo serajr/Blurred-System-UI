@@ -15,7 +15,7 @@ public class SystemUI_HeadsUpNotificationView {
 	
 	public static void hook() {
 		
-		// esta classe (HeadsUpNotificationView) não existe no JB 4.3 !!
+		// esta classe (HeadsUpNotificationView) não existe no JB 4.3!
 		if (Utils.getAndroidAPILevel() <= 18)
 			return;
 		
