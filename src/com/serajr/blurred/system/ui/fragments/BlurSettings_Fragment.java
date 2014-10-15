@@ -245,7 +245,7 @@ public class BlurSettings_Fragment extends PreferenceFragment implements OnShare
 		if (key.equals(TRANSLUCENT_HEADER_PREFERENCE_KEY) ||
 			key.equals(TRANSLUCENT_QUICK_SETTINGS_PREFERENCE_KEY)) {
 			
-			// para por aqui !!
+			// para por aqui !
 			return;
 			
 		}
