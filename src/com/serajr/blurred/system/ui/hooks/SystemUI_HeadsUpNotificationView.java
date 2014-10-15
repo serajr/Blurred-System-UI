@@ -15,7 +15,7 @@ public class SystemUI_HeadsUpNotificationView {
 	
 	public static void hook() {
 		
-		// esta classe (HeadsUpNotificationView) n„o existe no JB 4.3 !!
+		// esta classe (HeadsUpNotificationView) n√£o existe no JB 4.3 !!
 		if (Utils.getAndroidAPILevel() <= 18)
 			return;
 		
@@ -30,7 +30,7 @@ public class SystemUI_HeadsUpNotificationView {
 					// guarda
 					mContentHolder = (ViewGroup) XposedHelpers.getObjectField(param.thisObject, "mContentHolder"); 
 					
-		        }
+		        	}
 			});
 			
 		} catch (Exception e) {
