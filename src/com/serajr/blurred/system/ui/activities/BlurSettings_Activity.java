@@ -30,9 +30,9 @@ public class BlurSettings_Activity extends Activity {
 	private String mAppTheme;
 	
 	@Override
-    public void onCreate(Bundle savedInstanceState) {
+    	public void onCreate(Bundle savedInstanceState) {
 		
-		// seta o tema escolhido ou o padr„o
+		// seta o tema escolhido ou o padr√£o
 		int theme = R.style.DeviceDefault_Light;
 		int lightTheme = Utils.isSonyXperiaRom() ? R.style.DeviceDefault_Light_Xperia : R.style.DeviceDefault_Light;
 		if (Settings.System.getString(getContentResolver(), APP_THEME_SETTINGS_TAG) != null)
@@ -43,16 +43,16 @@ public class BlurSettings_Activity extends Activity {
         
 		super.onCreate(savedInstanceState);
 		
-        // action bar
-      	ActionBar actionBar = getActionBar();
-      	if (actionBar != null) {
+        	// action bar
+      		ActionBar actionBar = getActionBar();
+      		if (actionBar != null) {
       		
-	      	actionBar.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-	      	actionBar.setStackedBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+	      		actionBar.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+	      		actionBar.setStackedBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 	      	
-	      	try {
+	      		try {
 	      		
-	      		mAppInfo = getString(R.string.app_name) + " - v" + getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
+	      			mAppInfo = getString(R.string.app_name) + " - v" + getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
 				actionBar.setTitle(mAppInfo);
 				
 			} catch (NameNotFoundException e) {
@@ -60,10 +60,10 @@ public class BlurSettings_Activity extends Activity {
 				e.printStackTrace();
 				
 			}
-      	}
+      		}
       	
-      	// mostra o fragmento como sendo o layout
-        getFragmentManager().beginTransaction().replace(android.R.id.content, new BlurSettings_Fragment()).commit();
+      		// mostra o fragmento como sendo o layout
+        	getFragmentManager().beginTransaction().replace(android.R.id.content, new BlurSettings_Fragment()).commit();
       	
 	}
 	
@@ -119,11 +119,11 @@ public class BlurSettings_Activity extends Activity {
 		
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setTitle(R.string.theme_menu_title);
-        builder.setSingleChoiceItems(getResources().getStringArray(R.array.theme_entries), mAppTheme.equals(APP_THEME_SETTINGS_DEFAULT) ? 0 : 1, new OnClickListener() {
+        	builder.setSingleChoiceItems(getResources().getStringArray(R.array.theme_entries), mAppTheme.equals(APP_THEME_SETTINGS_DEFAULT) ? 0 : 1, new OnClickListener() {
 			
 			public void onClick(DialogInterface dialog, int which) {
 				
-				// salva o tipo de informaÁ„o selecionada
+				// salva o tipo de informa√ß√£o selecionada
 				String[] values = getResources().getStringArray(R.array.theme_values);
 				mAppTheme = values[which];
 				
@@ -136,11 +136,11 @@ public class BlurSettings_Activity extends Activity {
 				// salva
 				Settings.System.putString(getContentResolver(), APP_THEME_SETTINGS_TAG, mAppTheme);
 				
-			    // fecha
-			    dialog.dismiss();
+			    	// fecha
+			    	dialog.dismiss();
 			    
-			    // mostra a menssagem
-			    Toast.makeText(BlurSettings_Activity.this, getString(R.string.theme_menu_message), Toast.LENGTH_LONG).show();
+			    	// mostra a menssagem
+			    	Toast.makeText(BlurSettings_Activity.this, getString(R.string.theme_menu_message), Toast.LENGTH_LONG).show();
 			    
 			}
 		});
@@ -153,8 +153,8 @@ public class BlurSettings_Activity extends Activity {
 			}
 		});
         
-        AlertDialog dialog = builder.create();
-        dialog.show();
+        	AlertDialog dialog = builder.create();
+        	dialog.show();
 		
 	}
 	
@@ -162,25 +162,25 @@ public class BlurSettings_Activity extends Activity {
 		
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setTitle(R.string.restart_menu_title);
-        builder.setMessage(R.string.restart_menu_message);
-        builder.setNegativeButton(android.R.string.cancel, null);
-        builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+        	builder.setMessage(R.string.restart_menu_message);
+        	builder.setNegativeButton(android.R.string.cancel, null);
+        	builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
         	
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-            	
-            	// envia o intent
+	            	@Override
+	            	public void onClick(DialogInterface dialog, int which) {
+	            	
+	            		// envia o intent
 				Intent intent = new Intent(BLURRED_SYSTEM_UI_KILL_SYSTEM_UI_INTENT);
 				BlurSettings_Activity.this.sendBroadcast(intent);
-            	
+	            	
 				// termina a app
 				finish();
-                
-    		}
-        });
+	                
+	    		}
+        	});
         
-        AlertDialog dialog = builder.create();
-        dialog.show();
+        	AlertDialog dialog = builder.create();
+        	dialog.show();
 		
 	}
 	
@@ -198,21 +198,21 @@ public class BlurSettings_Activity extends Activity {
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setIcon(R.drawable.blurred_system_ui);
 		builder.setTitle(mAppInfo);
-        builder.setMessage(about);
-        builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-        	
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-            	
-            	// dismiss
-    			dialog.dismiss();
-            	
-    		}
-        });
-        builder.setCancelable(false);
-        
-        AlertDialog dialog = builder.create();
-        dialog.show();
+	        builder.setMessage(about);
+	        builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+	        	
+	            @Override
+	            public void onClick(DialogInterface dialog, int which) {
+	            	
+	            	// dismiss
+	    			dialog.dismiss();
+	            	
+	    		}
+	        });
+	        builder.setCancelable(false);
+	        
+	        AlertDialog dialog = builder.create();
+	        dialog.show();
 		
 	}
 }
