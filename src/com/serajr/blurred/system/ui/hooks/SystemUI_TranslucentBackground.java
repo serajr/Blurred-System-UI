@@ -40,7 +40,7 @@ public class SystemUI_TranslucentBackground {
 					try {
 						
 						// ----------------------------------------------------
-						// PhoneStatusBar - mÈtodo flipToNotifications existe ?
+						// PhoneStatusBar - m√©todo flipToNotifications existe ?
 						// ----------------------------------------------------
 						
 						// flipToNotifications (samsung)
@@ -48,7 +48,7 @@ public class SystemUI_TranslucentBackground {
 						XposedBridge.hookMethod(flipToNotifications, new XC_MethodHook() {
 							
 							@Override
-				            protected void afterHookedMethod(MethodHookParam param) throws Throwable {
+				            		protected void afterHookedMethod(MethodHookParam param) throws Throwable {
 								
 								// -------------------------------------------
 								// PhoneStatusBar - campo mScrollView existe ?
@@ -82,7 +82,7 @@ public class SystemUI_TranslucentBackground {
 					try {
 						
 						// -----------------------------------------------
-						// PhoneStatusBar - mÈtodo flipToSettings existe ?
+						// PhoneStatusBar - m√©todo flipToSettings existe ?
 						// -----------------------------------------------
 						
 						// flipToSettings (samsung)
@@ -90,7 +90,7 @@ public class SystemUI_TranslucentBackground {
 						XposedBridge.hookMethod(flipToSettings, new XC_MethodHook() {
 							
 							@Override
-				            protected void afterHookedMethod(MethodHookParam param) throws Throwable {
+				            		protected void afterHookedMethod(MethodHookParam param) throws Throwable {
 								
 								// -------------------------------------------
 								// PhoneStatusBar - campo mScrollView existe ?
@@ -128,14 +128,14 @@ public class SystemUI_TranslucentBackground {
 						try {
 						
 							// -----------------------------------------------
-							// QuickSettingButton - mÈtodo initLayout existe ?
+							// QuickSettingButton - m√©todo initLayout existe ?
 							// -----------------------------------------------
 
 							Method initLayout = XposedHelpers.findMethodExact(QuickSettingButton, "initLayout", int.class, int.class, int.class, int.class, int.class, int.class, int.class);
 							XposedBridge.hookMethod(initLayout, new XC_MethodHook() {
 								
 								@Override
-					            protected void afterHookedMethod(MethodHookParam param) throws Throwable {
+					            		protected void afterHookedMethod(MethodHookParam param) throws Throwable {
 									
 									// seta o background
 									((View) param.thisObject).setBackground(new ColorDrawable(Color.TRANSPARENT));
@@ -162,7 +162,7 @@ public class SystemUI_TranslucentBackground {
 						XposedBridge.hookAllConstructors(QuickSettingsTileView, new XC_MethodHook() {
 							
 							@Override
-				            protected void afterHookedMethod(MethodHookParam param) throws Throwable {
+				            		protected void afterHookedMethod(MethodHookParam param) throws Throwable {
 								
 								// seta o background
 								View view = (View) param.thisObject;
@@ -184,7 +184,7 @@ public class SystemUI_TranslucentBackground {
 						XposedBridge.hookAllConstructors(QuickSettingsBasicTile, new XC_MethodHook() {
 							
 							@Override
-				            protected void afterHookedMethod(MethodHookParam param) throws Throwable {
+				            		protected void afterHookedMethod(MethodHookParam param) throws Throwable {
 								
 								// seta o background
 								View view = (View) param.thisObject;
@@ -217,12 +217,12 @@ public class SystemUI_TranslucentBackground {
 						// troca
 						res.setReplacement(resId, new XResources.DrawableLoader() {
 							
-						    @Override
-						    public Drawable newDrawable(XResources res, int id) throws Throwable {
+						    	@Override
+						    	public Drawable newDrawable(XResources res, int id) throws Throwable {
 						    	
-						        return new ColorDrawable(Color.TRANSPARENT);
+						        	return new ColorDrawable(Color.TRANSPARENT);
 						        
-						    }
+						    	}
 						});
 					}
 					
@@ -233,12 +233,12 @@ public class SystemUI_TranslucentBackground {
 						// troca
 						res.setReplacement(resId, new XResources.DrawableLoader() {
 							
-						    @Override
-						    public Drawable newDrawable(XResources res, int id) throws Throwable {
+						    	@Override
+						    	public Drawable newDrawable(XResources res, int id) throws Throwable {
 						    	
-						        return new ColorDrawable(Color.TRANSPARENT);
+						        	return new ColorDrawable(Color.TRANSPARENT);
 						        
-						    }
+						    	}
 						});
 					}
 					
@@ -249,12 +249,12 @@ public class SystemUI_TranslucentBackground {
 						// troca
 						res.setReplacement(resId, new XResources.DrawableLoader() {
 							
-						    @Override
-						    public Drawable newDrawable(XResources res, int id) throws Throwable {
+						    	@Override
+						    	public Drawable newDrawable(XResources res, int id) throws Throwable {
 						    	
-						        return new ColorDrawable(Color.TRANSPARENT);
+						        	return new ColorDrawable(Color.TRANSPARENT);
 						        
-						    }
+						    	}
 						});
 					}
 					
@@ -265,12 +265,12 @@ public class SystemUI_TranslucentBackground {
 						// troca
 						res.setReplacement(resId, new XResources.DrawableLoader() {
 							
-						    @Override
-						    public Drawable newDrawable(XResources res, int id) throws Throwable {
+						    	@Override
+						    	public Drawable newDrawable(XResources res, int id) throws Throwable {
 						    	
-						        return modRes.getDrawable(R.drawable.ic_notify_button_bg);
+						        	return modRes.getDrawable(R.drawable.ic_notify_button_bg);
 						        
-						    }
+						    	}
 						});
 					}
 					
@@ -281,12 +281,12 @@ public class SystemUI_TranslucentBackground {
 						// troca
 						res.setReplacement(resId, new XResources.DrawableLoader() {
 							
-						    @Override
-						    public Drawable newDrawable(XResources res, int id) throws Throwable {
+						    	@Override
+						    	public Drawable newDrawable(XResources res, int id) throws Throwable {
 						    	
-						    	return new ColorDrawable(Color.TRANSPARENT);
+						    		return new ColorDrawable(Color.TRANSPARENT);
 						        
-						    }
+						    	}
 						});
 					}
 					
@@ -297,12 +297,12 @@ public class SystemUI_TranslucentBackground {
 						// troca
 						res.setReplacement(resId, new XResources.DrawableLoader() {
 							
-						    @Override
-						    public Drawable newDrawable(XResources res, int id) throws Throwable {
+							@Override
+						    	public Drawable newDrawable(XResources res, int id) throws Throwable {
 						    	
-						    	return new ColorDrawable(Color.TRANSPARENT);
+						    		return new ColorDrawable(Color.TRANSPARENT);
 						        
-						    }
+						    	}
 						});
 					}
 					
@@ -313,12 +313,12 @@ public class SystemUI_TranslucentBackground {
 						// troca
 						res.setReplacement(resId, new XResources.DrawableLoader() {
 							
-						    @Override
-						    public Drawable newDrawable(XResources res, int id) throws Throwable {
+						    	@Override
+						    	public Drawable newDrawable(XResources res, int id) throws Throwable {
 						    	
-						    	return modRes.getDrawable(R.drawable.tw_clear_button_bg);
+						    		return modRes.getDrawable(R.drawable.tw_clear_button_bg);
 						        
-						    }
+						    	}
 						});
 					}
 				}
@@ -333,12 +333,12 @@ public class SystemUI_TranslucentBackground {
 						// troca
 						res.setReplacement(resId, new XResources.DrawableLoader() {
 							
-						    @Override
-						    public Drawable newDrawable(XResources res, int id) throws Throwable {
+						    	@Override
+						    	public Drawable newDrawable(XResources res, int id) throws Throwable {
 						    	
-						        return new ColorDrawable(Color.TRANSPARENT);
+						        	return new ColorDrawable(Color.TRANSPARENT);
 						        
-						    }
+						    	}
 						});
 					}
 					
@@ -349,12 +349,12 @@ public class SystemUI_TranslucentBackground {
 						// troca
 						res.setReplacement(resId, new XResources.DrawableLoader() {
 							
-						    @Override
-						    public Drawable newDrawable(XResources res, int id) throws Throwable {
+						    	@Override
+						    	public Drawable newDrawable(XResources res, int id) throws Throwable {
 						    	
-						        return modRes.getDrawable(R.drawable.statusbar_tools_button_frame_top);
+						        	return modRes.getDrawable(R.drawable.statusbar_tools_button_frame_top);
 						        
-						    }
+						    	}
 						});
 					}
 					
@@ -365,12 +365,12 @@ public class SystemUI_TranslucentBackground {
 						// troca
 						res.setReplacement(resId, new XResources.DrawableLoader() {
 							
-						    @Override
-						    public Drawable newDrawable(XResources res, int id) throws Throwable {
+						    	@Override
+						    	public Drawable newDrawable(XResources res, int id) throws Throwable {
 						    	
-						        return modRes.getDrawable(R.drawable.statusbar_tools_button_frame_bottom);
+						        	return modRes.getDrawable(R.drawable.statusbar_tools_button_frame_bottom);
 						        
-						    }
+						    	}
 						});
 					}
 					
@@ -381,12 +381,12 @@ public class SystemUI_TranslucentBackground {
 						// troca
 						res.setReplacement(resId, new XResources.DrawableLoader() {
 							
-						    @Override
-						    public Drawable newDrawable(XResources res, int id) throws Throwable {
+						    	@Override
+						    	public Drawable newDrawable(XResources res, int id) throws Throwable {
 						    	
-						        return modRes.getDrawable(R.drawable.qs_tile_background);
+						        	return modRes.getDrawable(R.drawable.qs_tile_background);
 						        
-						    }
+						    	}
 						});
 					}
 					
@@ -397,12 +397,12 @@ public class SystemUI_TranslucentBackground {
 						// troca
 						res.setReplacement(resId, new XResources.DrawableLoader() {
 							
-						    @Override
-						    public Drawable newDrawable(XResources res, int id) throws Throwable {
+						    	@Override
+						    	public Drawable newDrawable(XResources res, int id) throws Throwable {
 						    	
-						        return new ColorDrawable(Color.TRANSPARENT);
+						        	return new ColorDrawable(Color.TRANSPARENT);
 						        
-						    }
+						    	}
 						});
 					}
 					
@@ -413,12 +413,12 @@ public class SystemUI_TranslucentBackground {
 						// troca
 						res.setReplacement(resId, new XResources.DrawableLoader() {
 							
-						    @Override
-						    public Drawable newDrawable(XResources res, int id) throws Throwable {
+						    	@Override
+						    	public Drawable newDrawable(XResources res, int id) throws Throwable {
 						    	
-						        return new ColorDrawable(Color.TRANSPARENT);
+						        	return new ColorDrawable(Color.TRANSPARENT);
 						        
-						    }
+						    	}
 						});
 					}
 					
@@ -429,12 +429,12 @@ public class SystemUI_TranslucentBackground {
 						// troca
 						res.setReplacement(resId, new XResources.DrawableLoader() {
 							
-						    @Override
-						    public Drawable newDrawable(XResources res, int id) throws Throwable {
+						    	@Override
+						    	public Drawable newDrawable(XResources res, int id) throws Throwable {
 						    	
-						        return new ColorDrawable(Color.TRANSPARENT);
+						        	return new ColorDrawable(Color.TRANSPARENT);
 						        
-						    }
+						    	}
 						});
 					}
 					
@@ -445,12 +445,12 @@ public class SystemUI_TranslucentBackground {
 						// troca
 						res.setReplacement(resId, new XResources.DrawableLoader() {
 							
-						    @Override
-						    public Drawable newDrawable(XResources res, int id) throws Throwable {
+						    	@Override
+						    	public Drawable newDrawable(XResources res, int id) throws Throwable {
 						    	
-						        return new ColorDrawable(Color.TRANSPARENT);
+						        	return new ColorDrawable(Color.TRANSPARENT);
 						        
-						    }
+						    	}
 						});
 					}
 					
@@ -461,12 +461,12 @@ public class SystemUI_TranslucentBackground {
 						// troca
 						res.setReplacement(resId, new XResources.DrawableLoader() {
 							
-						    @Override
-						    public Drawable newDrawable(XResources res, int id) throws Throwable {
+						    	@Override
+						    	public Drawable newDrawable(XResources res, int id) throws Throwable {
 						    	
-						        return new ColorDrawable(Color.TRANSPARENT);
+						        	return new ColorDrawable(Color.TRANSPARENT);
 						        
-						    }
+						    	}
 						});
 					}
 					
@@ -477,12 +477,12 @@ public class SystemUI_TranslucentBackground {
 						// troca
 						res.setReplacement(resId, new XResources.DrawableLoader() {
 							
-						    @Override
-						    public Drawable newDrawable(XResources res, int id) throws Throwable {
+						    	@Override
+						    	public Drawable newDrawable(XResources res, int id) throws Throwable {
 						    	
-						        return modRes.getDrawable(R.drawable.indi_noti_sim_btn);
+						        	return modRes.getDrawable(R.drawable.indi_noti_sim_btn);
 						        
-						    }
+						    	}
 						});
 					}
 					
@@ -493,12 +493,12 @@ public class SystemUI_TranslucentBackground {
 						// troca
 						res.setReplacement(resId, new XResources.DrawableLoader() {
 							
-						    @Override
-						    public Drawable newDrawable(XResources res, int id) throws Throwable {
+						    	@Override
+						    	public Drawable newDrawable(XResources res, int id) throws Throwable {
 						    	
-						        return new ColorDrawable(Color.TRANSPARENT);
+						        	return new ColorDrawable(Color.TRANSPARENT);
 						        
-						    }
+						    	}
 						});
 					}
 					
@@ -509,12 +509,12 @@ public class SystemUI_TranslucentBackground {
 						// troca
 						res.setReplacement(resId, new XResources.DrawableLoader() {
 							
-						    @Override
-						    public Drawable newDrawable(XResources res, int id) throws Throwable {
+						    	@Override
+						    	public Drawable newDrawable(XResources res, int id) throws Throwable {
 						    	
-						        return modRes.getDrawable(R.drawable.ir_control_noti_tab_bg);
+						        	return modRes.getDrawable(R.drawable.ir_control_noti_tab_bg);
 						        
-						    }
+						    	}
 						});
 					}
 					
@@ -525,12 +525,12 @@ public class SystemUI_TranslucentBackground {
 						// troca
 						res.setReplacement(resId, new XResources.DrawableLoader() {
 							
-						    @Override
-						    public Drawable newDrawable(XResources res, int id) throws Throwable {
+						    	@Override
+						    	public Drawable newDrawable(XResources res, int id) throws Throwable {
 						    	
-						        return modRes.getDrawable(R.drawable.indi_noti_brightness_panel_bg);
+						        	return modRes.getDrawable(R.drawable.indi_noti_brightness_panel_bg);
 						        
-						    }
+						    	}
 						});
 					}
 					
@@ -541,13 +541,13 @@ public class SystemUI_TranslucentBackground {
 						// troca
 						res.setReplacement(resId, new XResources.DrawableLoader() {
 							
-						    @Override
-						    public Drawable newDrawable(XResources res, int id) throws Throwable {
+						    	@Override
+						    	public Drawable newDrawable(XResources res, int id) throws Throwable {
 						    	
-						    	// utiliza o indi_noti_brightness_panel_bg
-						        return modRes.getDrawable(R.drawable.indi_noti_brightness_panel_bg);
+						    		// utiliza o indi_noti_brightness_panel_bg
+						        	return modRes.getDrawable(R.drawable.indi_noti_brightness_panel_bg);
 						        
-						    }
+						    	}
 						});
 					}
 					
@@ -558,13 +558,13 @@ public class SystemUI_TranslucentBackground {
 						// troca
 						res.setReplacement(resId, new XResources.DrawableLoader() {
 							
-						    @Override
-						    public Drawable newDrawable(XResources res, int id) throws Throwable {
+						    	@Override
+						    	public Drawable newDrawable(XResources res, int id) throws Throwable {
 						    	
-						    	// utiliza o qs_tile_background
-						    	return modRes.getDrawable(R.drawable.qs_tile_background);
+						    		// utiliza o qs_tile_background
+						    		return modRes.getDrawable(R.drawable.qs_tile_background);
 						        
-						    }
+						    	}
 						});
 					}
 					
@@ -575,13 +575,13 @@ public class SystemUI_TranslucentBackground {
 						// troca
 						res.setReplacement(resId, new XResources.DrawableLoader() {
 							
-						    @Override
-						    public Drawable newDrawable(XResources res, int id) throws Throwable {
+						    	@Override
+						    	public Drawable newDrawable(XResources res, int id) throws Throwable {
 						    	
-						    	// utiliza o qs_tile_background
-						    	return modRes.getDrawable(R.drawable.qs_tile_background);
+						    		// utiliza o qs_tile_background
+						    		return modRes.getDrawable(R.drawable.qs_tile_background);
 						        
-						    }
+						    	}
 						});
 					}
 					
@@ -592,13 +592,13 @@ public class SystemUI_TranslucentBackground {
 						// troca
 						res.setReplacement(resId, new XResources.DrawableLoader() {
 							
-						    @Override
-						    public Drawable newDrawable(XResources res, int id) throws Throwable {
+						    	@Override
+						    	public Drawable newDrawable(XResources res, int id) throws Throwable {
 						    	
-						    	// utiliza o qs_tile_background
-						    	return modRes.getDrawable(R.drawable.qs_tile_background);
+						    		// utiliza o qs_tile_background
+						    		return modRes.getDrawable(R.drawable.qs_tile_background);
 						        
-						    }
+						    	}
 						});
 					}
 					
@@ -609,12 +609,12 @@ public class SystemUI_TranslucentBackground {
 						// troca
 						res.setReplacement(resId, new XResources.DrawableLoader() {
 							
-						    @Override
-						    public Drawable newDrawable(XResources res, int id) throws Throwable {
+						    	@Override
+						    	public Drawable newDrawable(XResources res, int id) throws Throwable {
 						    	
-						        return new ColorDrawable(Color.TRANSPARENT);
+						        	return new ColorDrawable(Color.TRANSPARENT);
 						        
-						    }
+						    	}
 						});
 					}
 					
@@ -625,12 +625,12 @@ public class SystemUI_TranslucentBackground {
 						// troca
 						res.setReplacement(resId, new XResources.DrawableLoader() {
 							
-						    @Override
-						    public Drawable newDrawable(XResources res, int id) throws Throwable {
+						    	@Override
+						    	public Drawable newDrawable(XResources res, int id) throws Throwable {
 						    	
-						        return new ColorDrawable(Color.TRANSPARENT);
+						        	return new ColorDrawable(Color.TRANSPARENT);
 						        
-						    }
+						    	}
 						});
 					}
 				}
@@ -674,8 +674,8 @@ public class SystemUI_TranslucentBackground {
 			
 			}
 			
-			// somente em casos onde o header tem esse id, que n„o È padr„o xperia !!!
-			// possivelmente portado por alguÈm e essa pessoa alterou o nome do id !!!
+			// somente em casos onde o header tem esse id, que n√£o √© padr√£o xperia !!!
+			// possivelmente portado por algu√©m e essa pessoa alterou o nome do id !!!
 			resId = res.getIdentifier("expand_header", "id", Xposed.SYSTEM_UI_PACKAGE_NAME);
 			if (resId != 0) {
 				
@@ -690,7 +690,7 @@ public class SystemUI_TranslucentBackground {
 					view = SystemUI_PhoneStatusBar.mStatusBarWindow.findViewById(resId);
 					if (view != null) {
 						
-						// obtÈm o parente do id clock_expanded 
+						// obt√©m o parente do id clock_expanded 
 						view = (View) view.getParent();
 						if (view != null)
 							view.setBackground(new ColorDrawable(Color.TRANSPARENT));
@@ -738,8 +738,8 @@ public class SystemUI_TranslucentBackground {
 			if (view != null)
 				view.setBackground(new ColorDrawable(Color.TRANSPARENT));
 			
-			// somente em casos onde o header tem esse id, que n„o È padr„o xperia !!!
-			// possivelmente portado por alguÈm e essa pessoa alterou o nome do id !!!
+			// somente em casos onde o header tem esse id, que n√£o √© padr√£o xperia !!!
+			// possivelmente portado por algu√©m e essa pessoa alterou o nome do id !!!
 			resId = res.getIdentifier("expand_header", "id", Xposed.SYSTEM_UI_PACKAGE_NAME);
 			if (resId != 0) {
 			
