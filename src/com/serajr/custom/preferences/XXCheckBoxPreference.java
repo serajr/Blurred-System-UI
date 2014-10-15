@@ -14,39 +14,39 @@ import android.view.View;
 public class XXCheckBoxPreference extends CheckBoxPreference {
 	
 	public XXCheckBoxPreference(Context context) {
-    	super(context);
-        
-    }
+	    	super(context);
+	        
+	}
 	
 	public XXCheckBoxPreference(Context context, AttributeSet attrs) {
-    	super(context, attrs);
+    		super(context, attrs);
         
-    }
+    	}
 	
 	public XXCheckBoxPreference(Context context, AttributeSet attrs, int defStyle) {
-    	super(context, attrs, defStyle);
+    		super(context, attrs, defStyle);
         
-    }
+    	}
 	
 	@Override
-    protected void onBindView(View view) {
+    	protected void onBindView(View view) {
 		super.onBindView(view);
 		
-        Context context = view.getContext();
-        
-        // obtém o drawable do attributo (0)
-        int[] attrs = new int[] { android.R.attr.selectableItemBackground };
-        TypedArray typedArray = context.getTheme().obtainStyledAttributes(attrs);
-        Drawable bg = typedArray.getDrawable(0);
-        typedArray.recycle();
-        
-        // cria
-        Drawable[] layers = new Drawable[2];
-        layers[0] = bg;
-        layers[1] = context.getResources().getDrawable(R.drawable.reboot_top_right);
-        
-        // seta
-        setBackgroundAndKeepPadding(view, new LayerDrawable(layers));
+	        Context context = view.getContext();
+	        
+	        // obtÃ©m o drawable do attributo (0)
+	        int[] attrs = new int[] { android.R.attr.selectableItemBackground };
+	        TypedArray typedArray = context.getTheme().obtainStyledAttributes(attrs);
+	        Drawable bg = typedArray.getDrawable(0);
+	        typedArray.recycle();
+	        
+	        // cria
+	        Drawable[] layers = new Drawable[2];
+	        layers[0] = bg;
+	        layers[1] = context.getResources().getDrawable(R.drawable.reboot_top_right);
+	        
+	        // seta
+	        setBackgroundAndKeepPadding(view, new LayerDrawable(layers));
         
 	}
 	
