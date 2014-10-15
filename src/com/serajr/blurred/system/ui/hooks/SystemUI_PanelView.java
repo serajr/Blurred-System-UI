@@ -12,7 +12,7 @@ public class SystemUI_PanelView {
 	
 	public static void hook() {
 		
-		// esta classe (PanelView) n„o existe no JB 4.1 !!
+		// esta classe (PanelView) n√£o existe no JB 4.1 !!
 		if (Utils.getAndroidAPILevel() <= 16)
 			return;
 		
@@ -28,7 +28,7 @@ public class SystemUI_PanelView {
 					if (param.thisObject instanceof NotificationPanelView)
 						SystemUI_NotificationPanelView.handleFadeInOut();
 					
-		        }
+		        	}
 			});
 			
 		} catch (Exception e) {
