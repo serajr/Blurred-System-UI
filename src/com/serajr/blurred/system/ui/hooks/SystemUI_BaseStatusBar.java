@@ -36,7 +36,7 @@ public class SystemUI_BaseStatusBar {
 			XposedBridge.hookAllConstructors(BaseStatusBar.class, new XC_MethodHook() {
 				
 				@Override
-	            protected void afterHookedMethod(MethodHookParam param) throws Throwable {
+	            		protected void afterHookedMethod(MethodHookParam param) throws Throwable {
 					
 					// guarda
 					mNotificationData = (NotificationData) XposedHelpers.getObjectField(param.thisObject, "mNotificationData");
@@ -48,7 +48,7 @@ public class SystemUI_BaseStatusBar {
 			XposedHelpers.findAndHookMethod(BaseStatusBar.class, "toggleRecentApps", new XC_MethodHook() {
 				
 				@Override
-	            protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
+	            		protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
 					
 					// blur
 					SystemUI_RecentsPanelView.blur();
@@ -56,18 +56,18 @@ public class SystemUI_BaseStatusBar {
 				}
 			});
 			
-			// acha o mÈtodo exato
+			// acha o m√©todo exato
 			Method inflateViews;
 			try {
 				
-				// 2 par‚metros - Entry.class, ViewGroup.class
+				// 2 par√¢metros - Entry.class, ViewGroup.class
 				inflateViews = XposedHelpers.findMethodExact(BaseStatusBar.class, "inflateViews", Entry.class, ViewGroup.class);
 				
 			} catch (NoSuchMethodError e) {
 				
-				// erro, n„o encontrou com os 2 par‚metros acima !
+				// erro, n√£o encontrou com os 2 par√¢metros acima !
 				
-				// 3 par‚metros - Entry.class, ViewGroup.class, int.class
+				// 3 par√¢metros - Entry.class, ViewGroup.class, int.class
 				inflateViews = XposedHelpers.findMethodExact(BaseStatusBar.class, "inflateViews", Entry.class, ViewGroup.class, int.class);
 				
 			}
@@ -76,9 +76,9 @@ public class SystemUI_BaseStatusBar {
 			XposedBridge.hookMethod(inflateViews, new XC_MethodHook() {
 				
 				@Override
-	            protected void afterHookedMethod(MethodHookParam param) throws Throwable {
+	            		protected void afterHookedMethod(MethodHookParam param) throws Throwable {
 					
-					// notificaÁıes transparentes ?
+					// notifica√ß√µes transparentes ?
 					if (!mTranslucentNotifications)
 						return;
 				
@@ -86,13 +86,13 @@ public class SystemUI_BaseStatusBar {
 					ViewGroup parent = (ViewGroup) param.args[1];
 					if (SystemUI_HeadsUpNotificationView.mContentHolder != null) {
 						
-						// È ?
+						// √© ?
 						if (parent == SystemUI_HeadsUpNotificationView.mContentHolder)
 							return;
 					
 					}
 					
-					// obtÈm os dados da notificaÁ„o
+					// obt√©m os dados da notifica√ß√£o
 					Entry entry = (Entry) param.args[0];
 		            
 					// seta o fundo transparente
@@ -109,13 +109,13 @@ public class SystemUI_BaseStatusBar {
 				XposedHelpers.findAndHookMethod(BaseStatusBar.class, "updateNotificationViews", Entry.class, StatusBarNotification.class, new XC_MethodHook() {
 					
 					@Override
-		            protected void afterHookedMethod(MethodHookParam param) throws Throwable {
+		            		protected void afterHookedMethod(MethodHookParam param) throws Throwable {
 						
-						// notificaÁıes transparentes ?
+						// notifica√ß√µes transparentes ?
 						if (!mTranslucentNotifications)
 							return;
 					
-						// obtÈm os dados da notificaÁ„o
+						// obt√©m os dados da notifica√ß√£o
 						Entry entry = (Entry) param.args[0];
 			            
 						// seta o fundo transparente
@@ -139,13 +139,13 @@ public class SystemUI_BaseStatusBar {
 						new XC_MethodHook() {
 					
 					@Override
-		            protected void afterHookedMethod(MethodHookParam param) throws Throwable {
+		            		protected void afterHookedMethod(MethodHookParam param) throws Throwable {
 						
-						// notificaÁıes transparentes ?
+						// notifica√ß√µes transparentes ?
 						if (!mTranslucentNotifications)
 							return;
 					
-						// obtÈm os dados da notificaÁ„o
+						// obt√©m os dados da notifica√ß√£o
 						Entry entry = mNotificationData.findByKey((IBinder) param.args[0]);
 			            
 						// seta o fundo transparente
@@ -168,7 +168,7 @@ public class SystemUI_BaseStatusBar {
 		// atualiza
 		mTranslucentNotifications = prefs.getBoolean(BlurSettings_Fragment.TRANSLUCENT_NOTIFICATIONS_PREFERENCE_KEY, BlurSettings_Fragment.TRANSLUCENT_NOTIFICATIONS_PREFERENCE_DEFAULT);
 		
-		// atualiza tb as notificaÁıes visÌveis (se necess·rio)
+		// atualiza tb as notifica√ß√µes vis√≠veis (se necess√°rio)
 		updateVisibleNotificationsBackground();
 		
 	}
@@ -179,22 +179,22 @@ public class SystemUI_BaseStatusBar {
 		if (mNotificationData == null)
 			return;
 		
-		// passa por todas as notificaÁıes visÌveis
+		// passa por todas as notifica√ß√µes vis√≠veis
 		for (int i = 0; i < mNotificationData.size(); i++) {
 			
-			// obtÈm os dados da notificaÁ„o
+			// obt√©m os dados da notifica√ß√£o
 			Entry entry = mNotificationData.get(i);
             
 			// seta o fundo transparente
 			if (entry != null)
 				setTranslucentNotificationBackground(entry);
 			
-        }
+        	}
 	}
 	
 	private static void setTranslucentNotificationBackground(Entry entry) {
 		
-		// vista root da notificaÁ„o - somente remove os backgrounds !!
+		// vista root da notifica√ß√£o - somente remove os backgrounds !!
 		View row = Utils.getAndroidAPILevel() >= 19
 				// >= 4.4
 				// ExpandableNotificationRow row
@@ -235,69 +235,69 @@ public class SystemUI_BaseStatusBar {
 	
 	private static void setTranslucentNotificationBackground(View view, boolean translucent) {
 		
-		// notificaÁıes transparentes ?
+		// notifica√ß√µes transparentes ?
 		if (mTranslucentNotifications) {
 			
-			// obtÈm o resources
+			// obt√©m o resources
 			Resources res = view.getResources();
 			
-			// obtÈm todos os views dessa notificaÁ„o
+			// obt√©m todos os views dessa notifica√ß√£o
 			ArrayList<View> children = Utils.getAllChildrenViews(view);
 			for (View child : children) {
 		    	
-		    	// continua ?
-		    	if (child != null) { 
-		    		
-		    		// obtÈm o id
-		    		int resId = child.getId();
-		    		
-		    		// id v·lido ?
-		    		if (resId != 0) {
-		    			
-		    			try {
-		    		
-		    				// acha o nome do id
-		    				String nameResIs = resId != 0 ? res.getResourceEntryName(resId) : "";
-				    		
-				    		// existe um background ?
-				    		if (child.getBackground() != null) {
-				    			
-				    			//Log.d("child_id_name", nameResIs + " | " + child.getClass().toString());
-				    			
-				    			// despresa se se for um desses id's...
-				    			if (nameResIs.contains("icon") ||
-				    				nameResIs.contains("glow") ||
-				    				nameResIs.contains("divider") ||
-				    				// heads up notifications background !!
-				    				nameResIs.contains("content_holder"))
-				    				continue;
+			    	// continua ?
+			    	if (child != null) { 
+			    		
+			    		// obt√©m o id
+			    		int resId = child.getId();
+			    		
+			    		// id v√°lido ?
+			    		if (resId != 0) {
+			    			
+			    			try {
+			    		
+			    				// acha o nome do id
+			    				String nameResIs = resId != 0 ? res.getResourceEntryName(resId) : "";
+					    		
+					    		// existe um background ?
+					    		if (child.getBackground() != null) {
+					    			
+					    			//Log.d("child_id_name", nameResIs + " | " + child.getClass().toString());
+					    			
+					    			// despresa se se for um desses id's...
+					    			if (nameResIs.contains("icon") ||
+					    				nameResIs.contains("glow") ||
+					    				nameResIs.contains("divider") ||
+					    				// heads up notifications background !!
+					    				nameResIs.contains("content_holder"))
+					    				continue;
+					    				
+				    				// remove o fundo e limpa o cache
+				    				child.setBackground(null);
+				    				child.destroyDrawingCache();
 				    				
-			    				// remove o fundo e limpa o cache
-			    				child.setBackground(null);
-			    				child.destroyDrawingCache();
+				    				// resedenha
+				    				child.invalidate();
+					    			
+					    		}
 			    				
-			    				// resedenha
-			    				child.invalidate();
-				    			
-				    		}
+		    				} catch (NotFoundException e) {
 		    				
-		    			} catch (NotFoundException e) {
+		    					// erro !!!
+		    					continue;
 		    				
-		    				// erro !!!
-		    				continue;
-		    				
+		    				}
 		    			}
 		    		}
-		    	}
-		    }
+			}
 			
-		    // seta o background transparente
+		    	// seta o background transparente
 			if (translucent)
 				view.setBackground(Xposed.getXposedModuleResources().getDrawable(R.drawable.notification_bg));
 			
 		} else {
 			
-			// seta o background padr„o do framework
+			// seta o background padr√£o do framework
 			if (translucent)
 				view.setBackgroundResource(com.android.internal.R.drawable.notification_bg);
 			
