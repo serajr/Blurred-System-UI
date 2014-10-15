@@ -46,7 +46,6 @@ public class Xposed implements IXposedHookZygoteInit, IXposedHookInitPackageReso
     	
 	    	mClassLoader = lpparam.classLoader;
 	    	
-	    	// SYSTEM UI
 	    	if (lpparam.packageName.equals(SYSTEM_UI_PACKAGE_NAME)) {
 	    		
 	    		// setam os class loaderes parentes
