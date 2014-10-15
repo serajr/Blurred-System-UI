@@ -1,49 +1,47 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.serajr.blurred.system.ui"
-    android:versionCode="190"
-    android:versionName="1.9" >
+    	package="com.serajr.blurred.system.ui"
+    	android:versionCode="190"
+    	android:versionName="1.9" >
 	
-    <uses-permission android:name="android.permission.READ_SETTINGS"/>
-    <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
-    <uses-permission android:name="com.sonymobile.permission.SYSTEM_UI_VISIBILITY_EXTENSIONS" />
+	<uses-permission android:name="android.permission.READ_SETTINGS"/>
+	<uses-permission android:name="android.permission.WRITE_SETTINGS"/>
+	<uses-permission android:name="com.sonymobile.permission.SYSTEM_UI_VISIBILITY_EXTENSIONS" />
     
-    <uses-sdk
-        android:minSdkVersion="15"
-        android:targetSdkVersion="19" />
+    	<uses-sdk
+        	android:minSdkVersion="15"
+        	android:targetSdkVersion="19" />
 
-    <application
-        android:allowBackup="true"
-        android:icon="@drawable/blurred_system_ui"
-        android:label="@string/app_name"
-        android:theme="@style/Translucent" >
+    	<application
+        	android:allowBackup="true"
+        	android:icon="@drawable/blurred_system_ui"
+        	android:label="@string/app_name"
+        	android:theme="@style/Translucent" >
         
-        <!-- dados do exposed framework -->
-        <meta-data
-            android:name="xposedmodule"
-            android:value="true" />
+        	<!-- dados do exposed framework -->
+        	<meta-data
+            		android:name="xposedmodule"
+            		android:value="true" />
         
-        <meta-data
-            android:name="xposedminversion"
-            android:value="2.0*"/>
+        	<meta-data
+            		android:name="xposedminversion"
+            		android:value="2.0*"/>
         
-        <meta-data
-            android:name="xposeddescription"
-            android:value="@string/app_description"/>
+        	<meta-data
+            	android:name="xposeddescription"
+            	android:value="@string/app_description"/>
         
-        <!-- tela do programa -->
-        <activity
-            android:name=".activities.BlurSettings_Activity"
-            android:label="@string/app_name"
-            android:icon="@drawable/blurred_system_ui"
-            android:configChanges="orientation|keyboardHidden|screenSize" >
+        	<!-- tela do programa -->
+        	<activity
+            		android:name=".activities.BlurSettings_Activity"
+            		android:label="@string/app_name"
+            		android:icon="@drawable/blurred_system_ui"
+            		android:configChanges="orientation|keyboardHidden|screenSize" >
             
-            <intent-filter>
-        	<action android:name="android.intent.action.MAIN" />
-        	<category android:name="android.intent.category.LAUNCHER" />
-    	    </intent-filter>
+            		<intent-filter>
+        			<action android:name="android.intent.action.MAIN" />
+        			<category android:name="android.intent.category.LAUNCHER" />
+    	    		</intent-filter>
     		
-        </activity>
-        
-    </application>
-
+        	</activity>
+    	</application>
 </manifest>
