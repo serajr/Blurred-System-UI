@@ -1,6 +1,5 @@
 <resources>
 
-	<string name="app_name">Blurred System UI</string>
     <string name="app_description">Erstellt von: SERAJR (2014) | 4.1+</string>
    
     <string name="theme_menu_title">Theme</string>
