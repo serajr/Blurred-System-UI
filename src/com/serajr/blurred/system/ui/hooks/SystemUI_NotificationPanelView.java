@@ -73,19 +73,24 @@ public class SystemUI_NotificationPanelView {
 				@Override
 				protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
 				
-					// 1° - mHandleBar
-					try {
+					// somente kk e superior
+					if (Utils.getAndroidAPILevel() >= 19) {
 					
-						// obtém os campos
-						Drawable mHandleBar = (Drawable) XposedHelpers.getObjectField(param.thisObject, "mHandleBar");
+						// 1° - mHandleBar - drawable
+						try {
 						
-						// seta o alpha
-						if (mHandleBar.getAlpha() != (int) (255 * mHandleBarAlpha))
-							mHandleBar.setAlpha((int) (255 * mHandleBarAlpha));
-						
-						return;
-						
-					} catch (NoSuchFieldError e) {}
+							// obtém os campos
+							Drawable mHandleBar = (Drawable) XposedHelpers.getObjectField(param.thisObject, "mHandleBar");
+							
+							// seta o alpha
+							if (mHandleBar.getAlpha() != (int) (255 * mHandleBarAlpha))
+								mHandleBar.setAlpha((int) (255 * mHandleBarAlpha));
+							
+							return;
+							
+						} catch (NoSuchFieldError e) {}
+					
+					}
 					
 					// 2° - mHandleView
 					try {
