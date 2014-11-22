@@ -43,7 +43,7 @@ public class SystemUI_TranslucentBackground {
 						// PhoneStatusBar - método flipToNotifications existe ?
 						// ----------------------------------------------------
 						
-						// flipToNotifications (samsung)
+						// flipToNotifications (samsung / htc)
 						Method flipToNotifications = XposedHelpers.findMethodExact(PhoneStatusBar.class, "flipToNotifications");
 						XposedBridge.hookMethod(flipToNotifications, new XC_MethodHook() {
 							
@@ -57,7 +57,7 @@ public class SystemUI_TranslucentBackground {
 								try {
 									
 									// seta o background
-									ScrollView mScrollView = (ScrollView) XposedHelpers.getObjectField(param.thisObject, "mScrollView");
+									View mScrollView = (View) XposedHelpers.getObjectField(param.thisObject, "mScrollView");
 									if (mScrollView != null)
 										mScrollView.setBackground(new ColorDrawable(Color.TRANSPARENT));
 									
@@ -99,7 +99,7 @@ public class SystemUI_TranslucentBackground {
 								try {
 									
 									// seta o background
-									ScrollView mScrollView = (ScrollView) XposedHelpers.getObjectField(param.thisObject, "mScrollView");
+									View mScrollView = (View) XposedHelpers.getObjectField(param.thisObject, "mScrollView");
 									if (mScrollView != null)
 										mScrollView.setBackground(new ColorDrawable(Color.TRANSPARENT));
 									
