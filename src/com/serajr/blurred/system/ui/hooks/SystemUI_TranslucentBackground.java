@@ -138,7 +138,9 @@ public class SystemUI_TranslucentBackground {
 					            		protected void afterHookedMethod(MethodHookParam param) throws Throwable {
 									
 									// seta o background
-									((View) param.thisObject).setBackground(new ColorDrawable(Color.TRANSPARENT));
+									View view = (View) param.thisObject;
+									if (view != null)
+										view.setBackground(new ColorDrawable(Color.TRANSPARENT));
 									
 								}
 							});
@@ -166,7 +168,8 @@ public class SystemUI_TranslucentBackground {
 								
 								// seta o background
 								View view = (View) param.thisObject;
-								view.setBackground(modRes.getDrawable(R.drawable.qs_tile_background));
+								if (view != null)
+									view.setBackground(modRes.getDrawable(R.drawable.qs_tile_background));
 								
 							}
 						});
@@ -188,7 +191,8 @@ public class SystemUI_TranslucentBackground {
 								
 								// seta o background
 								View view = (View) param.thisObject;
-								view.setBackground(modRes.getDrawable(R.drawable.qs_tile_background));
+								if (view != null)
+									view.setBackground(modRes.getDrawable(R.drawable.qs_tile_background));
 								
 							}
 						});
