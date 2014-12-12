@@ -28,7 +28,6 @@ public class SystemUI_TranslucentBackground {
 		
 		try {
 		
-			final XModuleResources modRes = Xposed.getXposedModuleResources();
 			XSharedPreferences prefs = Xposed.getXposedXSharedPreferences();
 			
 			// handleLoadPackage
@@ -169,7 +168,7 @@ public class SystemUI_TranslucentBackground {
 								// seta o background
 								View view = (View) param.thisObject;
 								if (view != null)
-									view.setBackground(modRes.getDrawable(R.drawable.qs_tile_background));
+									view.setBackground(Xposed.getXposedModuleResources().getDrawable(R.drawable.qs_tile_background));
 								
 							}
 						});
@@ -192,7 +191,7 @@ public class SystemUI_TranslucentBackground {
 								// seta o background
 								View view = (View) param.thisObject;
 								if (view != null)
-									view.setBackground(modRes.getDrawable(R.drawable.qs_tile_background));
+									view.setBackground(Xposed.getXposedModuleResources().getDrawable(R.drawable.qs_tile_background));
 								
 							}
 						});
@@ -209,6 +208,7 @@ public class SystemUI_TranslucentBackground {
 				
 				String pkg = Xposed.SYSTEM_UI_PACKAGE_NAME;
 				XResources res = Xposed.getXposedInitPackageResourcesParam().res;
+				final XModuleResources modRes = Xposed.getXposedModuleResources();
 				int resId = 0;
 				
 				// header
